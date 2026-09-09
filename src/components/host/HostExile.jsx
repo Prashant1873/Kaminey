@@ -52,14 +52,14 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
           </div>
 
           <div>
-            <div className="text-label" style={{ color: 'var(--loss-text)', marginBottom: '8px' }}>
-              THE VERDICT OF THE ROUND-TABLE
+            <div className="badge-loss" style={{ marginBottom: '6px', fontSize: '0.75rem', padding: '4px 12px' }}>
+              ⚖️ THE VERDICT
             </div>
-            <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '8px' }}>
-              {exiledPlayer.name} HAS BEEN BANISHED
+            <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
+              {exiledPlayer.name} IS BANISHED
             </h1>
-            <p className="text-body" style={{ color: 'var(--on-surface-variant)', maxWidth: '600px', margin: '0 auto' }}>
-              By democratic vote of the haveli, the gates are locked behind them. But did you catch a traitor, or banish an innocent?
+            <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.9375rem' }}>
+              Unmasking secret identity...
             </p>
           </div>
 

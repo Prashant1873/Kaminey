@@ -40,17 +40,15 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
         <Moon size={54} color="var(--loss)" />
       </div>
 
-      <div style={{ maxWidth: '700px' }}>
-        <div className="badge-loss" style={{ marginBottom: '12px', fontSize: '0.875rem', padding: '6px 16px' }}>
-          THE NIGHT CONCLAVE
+      <div style={{ maxWidth: '600px' }}>
+        <div className="badge-loss" style={{ marginBottom: '8px', fontSize: '0.8125rem', padding: '4px 14px' }}>
+          🌙 THE MIDNIGHT CONCLAVE
         </div>
-        <h1 className="text-display" style={{ color: '#ffffff', marginBottom: '16px', letterSpacing: '-0.02em' }}>
-          NIGHT HAS FALLEN OVER THE HAVELI
+        <h1 className="text-display" style={{ color: '#ffffff', marginBottom: '8px' }}>
+          NIGHT IN THE HAVELI
         </h1>
-        <p style={{ fontSize: '1.25rem', color: '#9aa0a6', lineHeight: 1.5 }}>
-          The innocents sleep in their quarters.
-          <br />
-          Meanwhile, the <strong style={{ color: 'var(--loss)' }}>Kaminey</strong> are whispering in the shadows, choosing their next sacrifice...
+        <p style={{ fontSize: '1.1rem', color: '#9aa0a6' }}>
+          Innocents sleep. <strong style={{ color: 'var(--loss)' }}>Kaminey</strong> are whispering in secret...
         </p>
       </div>
 
@@ -58,32 +56,33 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
       <div style={{
         background: '#121827',
         border: '1px solid rgba(255, 86, 48, 0.25)',
-        borderRadius: 'var(--rounded-2xl)',
-        padding: '24px 36px',
-        maxWidth: '520px',
+        borderRadius: 'var(--rounded-xl)',
+        padding: '18px 24px',
+        maxWidth: '480px',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '14px',
-        boxShadow: '0 12px 36px rgba(0,0,0,0.5)'
+        gap: '10px',
+        boxShadow: '0 12px 36px rgba(0,0,0,0.5)',
+        boxSizing: 'border-box'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{
-            width: '12px',
-            height: '12px',
+            width: '10px',
+            height: '10px',
             borderRadius: 'var(--rounded-full)',
             backgroundColor: nightMurderSelected ? 'var(--simsim-neon)' : 'var(--loss)',
             boxShadow: nightMurderSelected ? 'var(--shadow-glow-neon)' : 'var(--shadow-glow-loss)',
             animation: 'pulse-subtle 1.2s infinite'
           }} />
-          <span style={{ fontSize: '1rem', fontWeight: 700, color: '#ffffff' }}>
-            {nightMurderSelected ? 'Target Marked in the Shadows' : 'Kaminey are deliberating on mobile...'}
+          <span style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#ffffff' }}>
+            {nightMurderSelected ? 'Target Marked in the Shadows 🎯' : 'Kaminey are voting on their phones...'}
           </span>
         </div>
-        <p style={{ fontSize: '0.875rem', color: '#80868b' }}>
-          Silence in the living room. Look down at your personal phone.
-        </p>
+        <div style={{ fontSize: '0.8125rem', color: '#80868b' }}>
+          Eyes on your own screen!
+        </div>
       </div>
 
       {/* Host Control to Wake Haveli */}
@@ -92,12 +91,12 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
         onClick={onProceed}
         className="btn-danger spring-btn"
         style={{
-          padding: '16px 36px',
-          fontSize: '1.125rem'
+          padding: '16px 32px',
+          fontSize: '1.0625rem'
         }}
       >
-        <Skull size={20} />
-        <span>Sunrise Approaches — Announce Morning</span>
+        <Skull size={18} />
+        <span>BREAK THE DAWN 🌅</span>
       </button>
     </div>
   );

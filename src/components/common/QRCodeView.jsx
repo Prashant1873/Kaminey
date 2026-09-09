@@ -6,10 +6,10 @@ export default function QRCodeView({ roomCode, size = 180 }) {
   const canvasRef = useRef(null);
   const [copied, setCopied] = useState(false);
 
-  // Generate full join URL based on current browser window location
+  // Generate full join URL based on hash router format to prevent 404s on refresh
   const joinUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}${window.location.pathname}?join=${roomCode}`
-    : `https://kaminey.game/?join=${roomCode}`;
+    ? `${window.location.origin}${window.location.pathname}#/join/${roomCode}`
+    : `https://kaminey.game/#/join/${roomCode}`;
 
   useEffect(() => {
     if (canvasRef.current && roomCode) {

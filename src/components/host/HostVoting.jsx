@@ -44,31 +44,30 @@ export default function HostVoting({
       {/* Header */}
       <div style={{
         background: 'linear-gradient(135deg, rgba(0, 61, 155, 0.08), rgba(0, 82, 204, 0.05))',
-        borderRadius: 'var(--rounded-2xl)',
-        padding: '24px 20px',
+        borderRadius: 'var(--rounded-xl)',
+        padding: '18px 20px',
         border: '1px solid rgba(0, 61, 155, 0.15)'
       }}>
         <div style={{
           display: 'inline-flex',
           alignItems: 'center',
-          gap: '8px',
+          gap: '6px',
           background: 'var(--primary)',
           color: '#ffffff',
-          padding: '6px 16px',
+          padding: '4px 14px',
           borderRadius: 'var(--rounded-full)',
-          fontSize: '0.8125rem',
+          fontSize: '0.75rem',
           fontWeight: 800,
-          marginBottom: '10px'
+          marginBottom: '8px'
         }}>
-          <Vote size={16} />
-          THE SECRET BALLOT
+          <Vote size={14} />
+          THE SECRET BALLOT ⚖️
         </div>
-        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '8px' }}>
-          CAST YOUR VOTES ON MOBILE
+        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
+          CAST YOUR VOTES
         </h1>
-        <p className="text-body" style={{ color: 'var(--on-surface-variant)', maxWidth: '650px', margin: '0 auto' }}>
-          Every living guest must vote to banish a suspected Kamina, or vote to Skip.
-          Look at your own device to vote in absolute secrecy!
+        <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.9375rem' }}>
+          Submit your secret ballot on your phone.
         </p>
       </div>
 

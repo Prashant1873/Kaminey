@@ -18,7 +18,14 @@ import { sounds } from '../../audio/soundEffects';
 const BOT_NAMES = ['Aarav', 'Meera', 'Rohan', 'Ananya', 'Kabir', 'Tara', 'Arjun', 'Diya', 'Vikram', 'Pooja'];
 
 export default function HostBaseStation({ onExit }) {
-  const [roomCode] = useState(() => generateRoomCode());
+  const [roomCode] = useState(() => {
+    const saved = sessionStorage.getItem('kaminey_host_room');
+    if (saved) return saved;
+    const newCode = generateRoomCode();
+    sessionStorage.setItem('kaminey_host_room', newCode);
+    return newCode;
+  });
+
   const [networkStatus, setNetworkStatus] = useState('Initializing base station...');
   const [phase, setPhase] = useState('LOBBY');
   const [players, setPlayers] = useState([]);
@@ -95,22 +102,6 @@ export default function HostBaseStation({ onExit }) {
     if (!msg || !msg.type) return;
 
     switch (msg.type) {
-      case 'PLAYER_HELLO': {
-        const { id, name, avatarId } = msg.payload;
-        setPlayers(prev => {
-          if (prev.some(p => p.id === id)) return prev;
-          return [...prev, {
-            id,
-            name: name || `Guest ${prev.length + 1}`,
-            avatarId: avatarId || 'lion',
-            isAlive: true,
-            isExiled: false,
-            isBot: false
-          }];
-        });
-        break;
-      }
-
       case 'NIGHT_VOTE': {
         const { targetId } = msg.payload;
         setNightVotes(prev => ({
@@ -130,7 +121,6 @@ export default function HostBaseStation({ onExit }) {
       }
 
       case 'TASK_COMPLETED': {
-        // Player marked social dare as done
         break;
       }
 
@@ -145,9 +135,31 @@ export default function HostBaseStation({ onExit }) {
       roomCode,
       (playerData) => {
         setPlayers(prev => {
-          if (prev.some(p => p.id === playerData.id)) return prev;
+          // If player with this exact ID already exists, update info (reconnect)
+          const index = prev.findIndex(p => p.id === playerData.id);
+          if (index >= 0) {
+            const updated = [...prev];
+            updated[index] = {
+              ...updated[index],
+              name: playerData.name || updated[index].name,
+              avatarId: playerData.avatarId || updated[index].avatarId
+            };
+            return updated;
+          }
+          // Disambiguate duplicate names so every player is clearly identifiable
+          let finalName = (playerData.name || '').trim();
+          if (!finalName) {
+            finalName = `Guest ${prev.length + 1}`;
+          }
+          const duplicateCount = prev.filter(p => p.name.toLowerCase() === finalName.toLowerCase()).length;
+          if (duplicateCount > 0) {
+            finalName = `${finalName} (${duplicateCount + 1})`;
+          }
+
           return [...prev, {
-            ...playerData,
+            id: playerData.id,
+            name: finalName,
+            avatarId: playerData.avatarId || 'lion',
             isAlive: true,
             isExiled: false,
             isBot: false
@@ -156,7 +168,7 @@ export default function HostBaseStation({ onExit }) {
       },
       handlePlayerMessage,
       (playerId) => {
-        // Player left
+        // Player disconnected
       },
       (status) => {
         setNetworkStatus(status);

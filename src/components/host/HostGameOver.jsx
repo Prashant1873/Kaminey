@@ -55,19 +55,17 @@ export default function HostGameOver({ winner, players, roles, onRestart }) {
       </div>
 
       <div>
-        <div className={isBholeWin ? 'badge-gain' : 'badge-loss'} style={{ fontSize: '0.875rem', padding: '6px 18px', marginBottom: '12px' }}>
-          MATCH CONCLUSION
+        <div className={isBholeWin ? 'badge-gain' : 'badge-loss'} style={{ fontSize: '0.8125rem', padding: '4px 16px', marginBottom: '8px' }}>
+          {isBholeWin ? '🕊️ INNOCENTS TRIUMPH' : '🎭 TRAITORS CONQUER'}
         </div>
         <h1 className="text-display" style={{
           color: isBholeWin ? 'var(--gain-text)' : 'var(--loss-text)',
-          marginBottom: '10px'
+          marginBottom: '6px'
         }}>
-          {isBholeWin ? 'THE BHOLE PREVAIL! INNOCENTS WIN!' : 'THE KAMINEY HAVE CONQUERED THE HAVELI!'}
+          {isBholeWin ? 'BHOLE WIN THE GAME!' : 'KAMINEY WIN THE GAME!'}
         </h1>
-        <p className="text-headline" style={{ color: 'var(--on-surface-variant)', maxWidth: '680px', margin: '0 auto', fontWeight: 500 }}>
-          {isBholeWin
-            ? 'Every single Kamina was unmasked and banished from the haveli. Truth and unity triumph!'
-            : 'The traitors successfully divided and eliminated the innocents until they seized complete control.'}
+        <p style={{ color: 'var(--on-surface-variant)', fontSize: '1rem' }}>
+          {isBholeWin ? 'All traitors were identified and banished!' : 'The traitors eliminated enough innocents to take control!'}
         </p>
       </div>
 

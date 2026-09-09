@@ -4,9 +4,9 @@
 
 import Peer from 'peerjs';
 
-const PEER_PREFIX = 'kaminey-v1-';
+const PEER_PREFIX = 'kaminey-v2-';
 
-// Generate 6-character room code (e.g. "HAVELI", "SHIKAR", "JUNGLE")
+// Generate 6-character room code
 export function generateRoomCode() {
   const words = ['HAVELI', 'SHIKAR', 'JUNGLE', 'CHETAK', 'TOOFAN', 'RAAJAH', 'DIWAAN', 'BAAZIG', 'SULTAN', 'MALANG', 'JADUVI', 'BEGUM'];
   const base = words[Math.floor(Math.random() * words.length)];
@@ -28,52 +28,52 @@ export class HostNetwork {
   }
 
   init() {
-    this.onStatusChange?.('Connecting host to network...');
-    
-    // Create peer with deterministic room ID
+    this.onStatusChange?.('Connecting host base to network...');
+
     this.peer = new Peer(this.peerId, {
       debug: 1
     });
 
-    this.peer.on('open', (id) => {
+    this.peer.on('open', () => {
       this.isReady = true;
-      this.onStatusChange?.('Host online. Waiting for players...');
+      this.onStatusChange?.('Online — Ready for guests');
     });
 
     this.peer.on('connection', (conn) => {
       conn.on('open', () => {
-        // Player connected
-        const playerId = conn.metadata?.playerId || conn.peer;
-        this.connections.set(playerId, conn);
-        this.onPlayerJoin?.({
-          id: playerId,
-          name: conn.metadata?.name || 'Guest',
-          avatarId: conn.metadata?.avatarId || 'lion'
-        }, conn);
+        // Player channel opened. Wait for explicit JOIN payload with persistent playerId
       });
 
       conn.on('data', (data) => {
-        this.onPlayerMessage?.(data, conn.metadata?.playerId || conn.peer);
+        if (data && data.type === 'PLAYER_JOIN') {
+          const { id, name, avatarId } = data.payload;
+          const playerId = id || conn.peer;
+          conn.playerId = playerId;
+          this.connections.set(playerId, conn);
+          this.onPlayerJoin?.({ id: playerId, name, avatarId }, conn);
+        } else {
+          const playerId = conn.playerId || conn.peer;
+          this.onPlayerMessage?.(data, playerId);
+        }
       });
 
       conn.on('close', () => {
-        const playerId = conn.metadata?.playerId || conn.peer;
+        const playerId = conn.playerId || conn.peer;
         this.connections.delete(playerId);
         this.onPlayerLeave?.(playerId);
       });
 
       conn.on('error', (err) => {
-        console.warn('Connection error with peer:', err);
+        console.warn('Host connection peer error:', err);
       });
     });
 
     this.peer.on('error', (err) => {
       console.error('Host Peer error:', err);
       if (err.type === 'unavailable-id') {
-        // Room code already taken, regenerate
-        this.onStatusChange?.('Room code in use. Generating new code...');
+        this.onStatusChange?.('Room code active. Reconnecting...');
       } else {
-        this.onStatusChange?.(`Network status: ${err.type}`);
+        this.onStatusChange?.(`Status: ${err.type}`);
       }
     });
   }
@@ -96,7 +96,6 @@ export class HostNetwork {
     });
   }
 
-  // Direct message to a specific player
   sendToPlayer(playerId, type, data) {
     const conn = this.connections.get(playerId);
     if (conn && conn.open) {
@@ -123,51 +122,50 @@ export class PlayerNetwork {
     this.onStatusChange = onStatusChange;
     this.peer = null;
     this.conn = null;
-    this.reconnectAttempts = 0;
   }
 
   init() {
-    this.onStatusChange?.('Connecting to living room base...');
+    this.onStatusChange?.('Connecting...');
     this.peer = new Peer(undefined, {
       debug: 1
     });
 
-    this.peer.on('open', (myPeerId) => {
+    this.peer.on('open', () => {
       this.connectToHost();
     });
 
     this.peer.on('error', (err) => {
       console.error('Player Peer error:', err);
-      this.onStatusChange?.(`Connection error: ${err.message || err.type}`);
+      this.onStatusChange?.('Room offline or invalid code');
     });
   }
 
   connectToHost() {
-    this.onStatusChange?.(`Joining room ${this.roomCode}...`);
+    this.onStatusChange?.(`Joining ${this.roomCode}...`);
     this.conn = this.peer.connect(this.hostPeerId, {
-      metadata: this.playerData,
       reliable: true
     });
 
     this.conn.on('open', () => {
-      this.onStatusChange?.('Connected! Entering lobby...');
-      this.send('PLAYER_HELLO', this.playerData);
+      this.onStatusChange?.('Connected!');
+      // Send unambiguous JOIN message with our unique player ID, name, avatar
+      this.send('PLAYER_JOIN', this.playerData);
     });
 
     this.conn.on('data', (msg) => {
-      if (msg.type === 'STATE_SYNC') {
+      if (msg && msg.type === 'STATE_SYNC') {
         this.onStateSync?.(msg.payload);
       }
     });
 
     this.conn.on('close', () => {
-      this.onStatusChange?.('Disconnected from host.');
+      this.onStatusChange?.('Disconnected from host');
       this.onDisconnect?.();
     });
 
     this.conn.on('error', (err) => {
       console.error('Host connection error:', err);
-      this.onStatusChange?.('Could not reach room. Check code.');
+      this.onStatusChange?.('Connection lost');
     });
   }
 

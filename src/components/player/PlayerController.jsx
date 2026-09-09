@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Header from '../common/Header';
 import PlayerJoin from './PlayerJoin';
 import PlayerRoleReveal from './PlayerRoleReveal';
@@ -13,41 +13,60 @@ import { getAvatarById } from '../../data/animalAvatars';
 import { Wifi, Clock, Users, ArrowLeft } from 'lucide-react';
 
 export default function PlayerController({ initialRoomCode = '', onExit }) {
-  const [playerData, setPlayerData] = useState(null); // { id, name, avatarId }
+  const [playerData, setPlayerData] = useState(() => {
+    try {
+      const saved = sessionStorage.getItem('kaminey_player_session');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    return null;
+  });
+
   const [networkStatus, setNetworkStatus] = useState('');
   const [gameState, setGameState] = useState(null); // Synced state from host
   const networkRef = useRef(null);
 
-  const handleJoin = ({ roomCode, name, avatarId }) => {
-    const id = `player-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
-    const newPlayer = { id, name, avatarId, roomCode };
-    setPlayerData(newPlayer);
-
+  const connectWithData = useCallback((data) => {
+    if (networkRef.current) {
+      networkRef.current.destroy();
+    }
     const net = new PlayerNetwork(
-      roomCode,
-      newPlayer,
+      data.roomCode,
+      data,
       (incomingState) => {
         setGameState(incomingState);
       },
       () => {
-        setNetworkStatus('Lost connection to host. Reconnecting...');
+        setNetworkStatus('Reconnecting to base...');
       },
       (status) => {
         setNetworkStatus(status);
       }
     );
-
     networkRef.current = net;
     net.init();
+  }, []);
+
+  const handleJoin = ({ roomCode, name, avatarId }) => {
+    const id = `player-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`;
+    const newPlayer = { id, name, avatarId, roomCode };
+    try {
+      sessionStorage.setItem('kaminey_player_session', JSON.stringify(newPlayer));
+    } catch (e) {}
+    setPlayerData(newPlayer);
+    connectWithData(newPlayer);
   };
 
+  // Reconnect automatically on mount if session was saved (e.g. after refresh)
   useEffect(() => {
+    if (playerData && !networkRef.current) {
+      connectWithData(playerData);
+    }
     return () => {
       if (networkRef.current) {
         networkRef.current.destroy();
       }
     };
-  }, []);
+  }, [playerData, connectWithData]);
 
   const handleNightTargetSelect = (targetId) => {
     if (networkRef.current) {
@@ -126,40 +145,137 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                 width: '100%',
                 maxWidth: '440px',
                 margin: '0 auto',
-                padding: '24px 14px',
+                padding: '20px 14px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 textAlign: 'center',
-                gap: '18px',
+                gap: '16px',
                 boxSizing: 'border-box'
               }}>
+                {/* My Persona Card */}
                 <div style={{
-                  fontSize: '3.75rem',
-                  lineHeight: 1,
-                  filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
+                  width: '100%',
+                  background: 'linear-gradient(135deg, var(--surface-container-lowest), var(--surface-container-low))',
+                  borderRadius: 'var(--rounded-2xl)',
+                  padding: '24px 16px',
+                  border: '1px solid var(--outline-variant)',
+                  boxShadow: 'var(--shadow-resting)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  boxSizing: 'border-box'
                 }}>
-                  {myAvatar.emoji}
-                </div>
-                <div>
-                  <h1 className="text-headline" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
-                    YOU ARE IN THE HAVELI
+                  <div style={{
+                    fontSize: '4.5rem',
+                    lineHeight: 1,
+                    filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.12))',
+                    animation: 'float-slow 3s infinite ease-in-out',
+                    marginBottom: '8px'
+                  }}>
+                    {myAvatar.emoji}
+                  </div>
+                  <h1 className="text-headline" style={{ color: 'var(--primary)', marginBottom: '2px' }}>
+                    {playerData.name}
                   </h1>
-                  <p style={{ fontSize: '1rem', fontWeight: 700 }}>
-                    {playerData.name} ({myAvatar.name})
-                  </p>
-                  <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem', marginTop: '6px' }}>
-                    Connected to living room base <strong>{playerData.roomCode}</strong>.
-                    <br />
-                    Relax while other guests enter. The host will start the mystery shortly!
-                  </p>
-                </div>
+                  <span className="badge-neutral" style={{ fontSize: '0.75rem', marginBottom: '12px' }}>
+                    {myAvatar.title}
+                  </span>
 
-                <div className="card-interactive" style={{ width: '100%', padding: '14px', boxSizing: 'border-box' }}>
-                  <div style={{ fontSize: '0.8125rem', color: 'var(--outline)', fontWeight: 600 }}>
-                    PLAYERS IN ROOM: {gameState?.players?.length || 1}
+                  <div style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    background: 'rgba(0, 61, 155, 0.08)',
+                    padding: '6px 12px',
+                    borderRadius: 'var(--rounded-full)',
+                    fontSize: '0.75rem',
+                    fontWeight: 700,
+                    color: 'var(--primary)'
+                  }}>
+                    <Wifi size={14} /> Room: {playerData.roomCode}
                   </div>
                 </div>
+
+                {/* Living Room Guests Roster */}
+                <div className="card-interactive" style={{ width: '100%', padding: '14px', boxSizing: 'border-box' }}>
+                  <div style={{
+                    fontSize: '0.75rem',
+                    fontWeight: 800,
+                    letterSpacing: '0.05em',
+                    color: 'var(--on-surface-variant)',
+                    marginBottom: '10px',
+                    textAlign: 'left'
+                  }}>
+                    GUESTS IN COURTYARD ({gameState?.players?.length || 1})
+                  </div>
+
+                  <div style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '6px',
+                    justifyContent: 'flex-start'
+                  }}>
+                    {gameState?.players?.map(p => {
+                      const av = getAvatarById(p.avatarId);
+                      const isMe = p.id === playerData.id;
+                      return (
+                        <span
+                          key={p.id}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            background: isMe ? 'var(--primary-container)' : 'var(--surface-container-low)',
+                            color: isMe ? '#ffffff' : 'var(--on-surface)',
+                            padding: '4px 10px',
+                            borderRadius: 'var(--rounded-full)',
+                            fontSize: '0.75rem',
+                            fontWeight: isMe ? 700 : 500,
+                            border: '1px solid var(--outline-variant)'
+                          }}
+                        >
+                          <span>{av.emoji}</span>
+                          <span>{p.name} {isMe && '(You)'}</span>
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Animated Waiting indicator */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  fontSize: '0.8125rem',
+                  color: 'var(--on-surface-variant)',
+                  fontWeight: 600
+                }}>
+                  <span className="animate-spin" style={{ display: 'inline-block' }}>⏳</span>
+                  <span>Waiting for host to start the haveli mystery...</span>
+                </div>
+
+                {/* Change identity button */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (networkRef.current) networkRef.current.destroy();
+                    sessionStorage.removeItem('kaminey_player_session');
+                    setPlayerData(null);
+                  }}
+                  className="spring-btn"
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: 'var(--outline)',
+                    fontSize: '0.75rem',
+                    cursor: 'pointer',
+                    textDecoration: 'underline'
+                  }}
+                >
+                  Change Name or Avatar
+                </button>
               </div>
             )}
 
@@ -188,20 +304,62 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
               <div style={{
                 maxWidth: '440px',
                 margin: '0 auto',
-                padding: '36px 16px',
+                padding: '30px 16px',
                 textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '20px'
+                gap: '16px'
               }}>
-                <div style={{ fontSize: '4rem' }}>🌅</div>
+                <div style={{
+                  fontSize: '4.5rem',
+                  lineHeight: 1,
+                  animation: 'float-slow 3s infinite ease-in-out'
+                }}>
+                  🌅
+                </div>
+
                 <h1 className="text-headline" style={{ color: 'var(--on-surface)' }}>
-                  DAWN HAS BROKEN
+                  DAWN BREAKS
                 </h1>
-                <p className="text-body" style={{ color: 'var(--on-surface-variant)' }}>
-                  Look up at the living room screen to find out who survived the night!
-                </p>
+
+                {gameState?.morningVictim ? (
+                  <div style={{
+                    background: 'var(--surface-container-lowest)',
+                    border: '2px solid var(--loss)',
+                    borderRadius: 'var(--rounded-xl)',
+                    padding: '16px',
+                    width: '100%',
+                    boxSizing: 'border-box'
+                  }}>
+                    <div style={{ fontSize: '2.5rem', marginBottom: '4px' }}>
+                      {getAvatarById(gameState.morningVictim.avatarId).emoji}
+                    </div>
+                    <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--loss-text)' }}>
+                      {gameState.morningVictim.name} was eliminated!
+                    </div>
+                    <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px' }}>
+                      Check the living room screen for the crime scene report!
+                    </p>
+                  </div>
+                ) : (
+                  <div style={{
+                    background: 'var(--surface-container-lowest)',
+                    border: '2px solid var(--gain)',
+                    borderRadius: 'var(--rounded-xl)',
+                    padding: '16px',
+                    width: '100%',
+                    boxSizing: 'border-box'
+                  }}>
+                    <div style={{ fontSize: '2.5rem', marginBottom: '4px' }}>🛡️</div>
+                    <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--gain-text)' }}>
+                      Peaceful Dawn!
+                    </div>
+                    <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px' }}>
+                      No one was harmed during the night!
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 
@@ -236,20 +394,42 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
               <div style={{
                 maxWidth: '440px',
                 margin: '0 auto',
-                padding: '36px 16px',
+                padding: '30px 16px',
                 textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '20px'
+                gap: '16px'
               }}>
-                <div style={{ fontSize: '4rem' }}>⚖️</div>
+                <div style={{ fontSize: '4.5rem', lineHeight: 1 }}>⚖️</div>
                 <h1 className="text-headline" style={{ color: 'var(--primary)' }}>
-                  THE VERDICT
+                  COUNCIL VERDICT
                 </h1>
-                <p className="text-body" style={{ color: 'var(--on-surface-variant)' }}>
-                  Check the living room base station to see who was banished and whether they were a Kamina or a Bhola!
-                </p>
+
+                {gameState?.exiledPlayer ? (
+                  <div style={{
+                    background: 'var(--surface-container-lowest)',
+                    border: '2px solid var(--primary)',
+                    borderRadius: 'var(--rounded-xl)',
+                    padding: '16px',
+                    width: '100%',
+                    boxSizing: 'border-box'
+                  }}>
+                    <div style={{ fontSize: '2.5rem', marginBottom: '4px' }}>
+                      {gameState.exiledPlayer.avatarId ? getAvatarById(gameState.exiledPlayer.avatarId).emoji : '🏛️'}
+                    </div>
+                    <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--primary)' }}>
+                      {gameState.exiledPlayer.name} has been banished!
+                    </div>
+                    <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px' }}>
+                      Look up at the TV base station to reveal their true secret identity!
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-body" style={{ color: 'var(--on-surface-variant)' }}>
+                    Watch the TV base station for the unmasking!
+                  </p>
+                )}
               </div>
             )}
 
@@ -258,20 +438,35 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
               <div style={{
                 maxWidth: '440px',
                 margin: '0 auto',
-                padding: '36px 16px',
+                padding: '30px 16px',
                 textAlign: 'center',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '20px'
+                gap: '16px'
               }}>
-                <div style={{ fontSize: '4rem' }}>🏆</div>
+                <div style={{ fontSize: '5rem', lineHeight: 1 }}>🏆</div>
                 <h1 className="text-headline" style={{ color: 'var(--primary)' }}>
-                  MATCH COMPLETED!
+                  {gameState?.winner === 'kaminey' ? '😈 KAMINEY WON' : '🕊️ BHOLE TRIUMPHED'}
                 </h1>
-                <p className="text-body" style={{ color: 'var(--on-surface-variant)' }}>
-                  Look at the living room screen for the complete role reveal of every player in the haveli!
+                <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
+                  Look at the living room screen for the full roster unmasking!
                 </p>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (networkRef.current) networkRef.current.destroy();
+                    sessionStorage.removeItem('kaminey_player_session');
+                    setPlayerData(null);
+                    setGameState(null);
+                    onExit();
+                  }}
+                  className="btn-primary spring-btn"
+                  style={{ width: '100%', padding: '14px', marginTop: '10px' }}
+                >
+                  PLAY ANOTHER MATCH 🔄
+                </button>
               </div>
             )}
           </>

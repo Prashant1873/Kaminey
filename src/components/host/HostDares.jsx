@@ -18,32 +18,18 @@ export default function HostDares({ players, onCallDiscussion }) {
       {/* Top Banner */}
       <div style={{
         background: 'linear-gradient(135deg, rgba(0, 61, 155, 0.05), rgba(255, 159, 10, 0.08))',
-        borderRadius: 'var(--rounded-2xl)',
-        padding: '28px 20px',
+        borderRadius: 'var(--rounded-xl)',
+        padding: '20px 16px',
         border: '1px solid rgba(255, 159, 10, 0.2)'
       }}>
-        <div style={{
-          width: '60px',
-          height: '60px',
-          borderRadius: 'var(--rounded-full)',
-          background: 'var(--warning)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          margin: '0 auto 16px auto',
-          fontSize: '1.8rem',
-          boxShadow: 'var(--shadow-resting)'
-        }}>
-          🎯
+        <div className="badge-warning" style={{ fontSize: '0.75rem', padding: '4px 12px', marginBottom: '8px' }}>
+          🎯 SECRET PARTY MISCHIEF
         </div>
-        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '8px' }}>
-          SOCIAL TASKS & DISTRACTIONS ACTIVE
+        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
+          TASKS IN PROGRESS
         </h1>
-        <p className="text-headline" style={{ color: 'var(--on-surface)', maxWidth: '700px', margin: '0 auto' }}>
-          Every living guest has received a secret party task on their phone!
-        </p>
-        <p className="text-body" style={{ color: 'var(--on-surface-variant)', maxWidth: '600px', margin: '8px auto 0 auto' }}>
-          Roam the living room. Look closely: is someone making weird conversation, yawning on purpose, or fetching water just to distract you from the murders?
+        <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.9375rem' }}>
+          Guests have received secret dares on their phones. Observe who is acting weird!
         </p>
       </div>
 

@@ -32,32 +32,30 @@ export default function HostDiscussion({
       {/* Emergency Header */}
       <div style={{
         background: 'linear-gradient(135deg, rgba(0, 61, 155, 0.08), rgba(255, 86, 48, 0.08))',
-        borderRadius: 'var(--rounded-2xl)',
-        padding: '24px 20px',
+        borderRadius: 'var(--rounded-xl)',
+        padding: '18px 20px',
         border: '1px solid rgba(0, 61, 155, 0.15)'
       }}>
         <div style={{
           display: 'inline-flex',
           alignItems: 'center',
-          gap: '8px',
+          gap: '6px',
           background: 'var(--loss)',
           color: '#ffffff',
-          padding: '6px 16px',
+          padding: '4px 14px',
           borderRadius: 'var(--rounded-full)',
-          fontSize: '0.8125rem',
+          fontSize: '0.75rem',
           fontWeight: 800,
-          letterSpacing: '0.04em',
-          marginBottom: '12px'
+          marginBottom: '8px'
         }}>
-          <AlertCircle size={16} />
-          EMERGENCY ROUND-TABLE
+          <AlertCircle size={14} />
+          EMERGENCY COUNCIL
         </div>
-        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '8px' }}>
-          WHO AMONG US IS A KAMINA?
+        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
+          WHO IS THE KAMINA?
         </h1>
-        <p className="text-body" style={{ color: 'var(--on-surface-variant)', maxWidth: '650px', margin: '0 auto' }}>
-          Review the night's murder and everyone's bizarre behavior during the tasks.
-          Debate openly. When the clock runs out, everyone must cast their secret ballot!
+        <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.9375rem' }}>
+          Debate openly. Click any player below to give them the floor 🎙️
         </p>
       </div>
 

@@ -1,27 +1,37 @@
 import React, { useState } from 'react';
-import { ANIMAL_AVATARS } from '../../data/animalAvatars';
-import { Sparkles, ArrowRight, User } from 'lucide-react';
+import { ANIMAL_AVATARS, getAvatarById } from '../../data/animalAvatars';
+import { Sparkles, ArrowRight, Dices, User } from 'lucide-react';
+
+const SPY_NAMES = ['Kabir', 'Simran', 'Dev', 'Zoya', 'Rocky', 'Tara', 'Arjun', 'Maya', 'Veer', 'Pooja', 'Rohan', 'Ananya', 'Sameer', 'Kavya'];
 
 export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
   const [roomCode, setRoomCode] = useState(initialRoomCode);
   const [name, setName] = useState('');
-  const [selectedAvatarId, setSelectedAvatarId] = useState('lion');
+  // Randomize initial avatar so multiple players never collide by default
+  const [selectedAvatarId, setSelectedAvatarId] = useState(() => {
+    const randomIndex = Math.floor(Math.random() * ANIMAL_AVATARS.length);
+    return ANIMAL_AVATARS[randomIndex].id;
+  });
   const [error, setError] = useState('');
+
+  const activeAvatar = getAvatarById(selectedAvatarId);
+
+  const rollRandomName = () => {
+    const randomName = SPY_NAMES[Math.floor(Math.random() * SPY_NAMES.length)];
+    setName(randomName);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!roomCode.trim()) {
-      setError('Please enter the 6-character room code.');
+      setError('Enter 6-character room code');
       return;
     }
-    if (!name.trim()) {
-      setError('Please enter your player name.');
-      return;
-    }
+    const finalName = name.trim() || SPY_NAMES[Math.floor(Math.random() * SPY_NAMES.length)];
     setError('');
     onJoin({
       roomCode: roomCode.trim().toUpperCase(),
-      name: name.trim(),
+      name: finalName,
       avatarId: selectedAvatarId
     });
   };
@@ -37,49 +47,51 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
       gap: '16px',
       boxSizing: 'border-box'
     }}>
-      {/* Brand Header */}
-      <div style={{ textAlign: 'center' }}>
+      {/* Active Persona Banner */}
+      <div style={{
+        textAlign: 'center',
+        padding: '16px',
+        background: 'linear-gradient(135deg, var(--surface-container-low), var(--surface-container-lowest))',
+        borderRadius: 'var(--rounded-2xl)',
+        border: '1px solid var(--outline-variant)',
+        boxShadow: 'var(--shadow-resting)'
+      }}>
         <div style={{
-          width: '54px',
-          height: '54px',
-          borderRadius: 'var(--rounded-xl)',
-          background: 'linear-gradient(135deg, var(--primary-container), var(--primary))',
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '1.75rem',
-          boxShadow: 'var(--shadow-glow-primary)',
-          marginBottom: '8px'
+          fontSize: '3.5rem',
+          lineHeight: 1,
+          marginBottom: '6px',
+          filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.12))',
+          animation: 'float-slow 3s infinite ease-in-out'
         }}>
-          🎭
+          {activeAvatar.emoji}
         </div>
-        <h1 className="text-headline" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
-          JOIN KAMINEY
-        </h1>
-        <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem' }}>
-          Enter the room code from the living room screen and choose your animal persona.
-        </p>
+        <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--primary)' }}>
+          {activeAvatar.name}
+        </div>
+        <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
+          {activeAvatar.title}
+        </div>
       </div>
 
       {/* Form Card */}
-      <form onSubmit={handleSubmit} className="card-interactive" style={{ display: 'flex', flexDirection: 'column', gap: '16px', boxSizing: 'border-box' }}>
+      <form onSubmit={handleSubmit} className="card-interactive" style={{ display: 'flex', flexDirection: 'column', gap: '14px', boxSizing: 'border-box' }}>
         {error && (
           <div className="badge-loss" style={{ padding: '8px 12px', borderRadius: 'var(--rounded-md)', fontSize: '0.8125rem' }}>
             {error}
           </div>
         )}
 
-        {/* Room Code Input */}
+        {/* Room Code */}
         <div>
           <label className="text-label" style={{ display: 'block', marginBottom: '4px', color: 'var(--on-surface-variant)' }}>
-            Room Code:
+            ROOM CODE
           </label>
           <input
             type="text"
             maxLength={6}
             value={roomCode}
             onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
-            placeholder="e.g. SHER42"
+            placeholder="e.g. HAVELI42"
             className="input-base tabular-nums"
             style={{
               textAlign: 'center',
@@ -93,35 +105,56 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
           />
         </div>
 
-        {/* Player Name Input */}
+        {/* Player Name with Dice Quick Fill */}
         <div>
-          <label className="text-label" style={{ display: 'block', marginBottom: '4px', color: 'var(--on-surface-variant)' }}>
-            Your Name:
-          </label>
-          <div style={{ position: 'relative' }}>
-            <input
-              type="text"
-              maxLength={18}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="e.g. Kabir or Priya"
-              className="input-base"
-              style={{ boxSizing: 'border-box' }}
-              required
-            />
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+            <label className="text-label" style={{ color: 'var(--on-surface-variant)' }}>
+              YOUR NAME
+            </label>
+            <button
+              type="button"
+              onClick={rollRandomName}
+              className="spring-btn"
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: 'var(--primary)',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+                cursor: 'pointer',
+                padding: '2px 4px'
+              }}
+              title="Roll a random secret name"
+            >
+              <Dices size={14} />
+              <span>Roll Name</span>
+            </button>
           </div>
+
+          <input
+            type="text"
+            maxLength={18}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter name or tap Roll Name"
+            className="input-base"
+            style={{ boxSizing: 'border-box' }}
+          />
         </div>
 
-        {/* Animal Avatar Selector */}
+        {/* Avatar Grid */}
         <div>
           <label className="text-label" style={{ display: 'block', marginBottom: '6px', color: 'var(--on-surface-variant)' }}>
-            Choose Your Animal Icon:
+            CHOOSE AVATAR ({ANIMAL_AVATARS.length})
           </label>
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(4, 1fr)',
             gap: '6px',
-            maxHeight: '200px',
+            maxHeight: '180px',
             overflowY: 'auto',
             padding: '2px',
             boxSizing: 'border-box'
@@ -159,14 +192,14 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
           </div>
         </div>
 
-        {/* Submit Button */}
+        {/* Action Button */}
         <button
           type="submit"
           className="btn-primary spring-btn"
-          style={{ width: '100%', padding: '14px', fontSize: '1rem', boxSizing: 'border-box' }}
+          style={{ width: '100%', padding: '14px', fontSize: '1rem', boxSizing: 'border-box', marginTop: '6px' }}
         >
-          <span>Enter Living Room Conclave</span>
-          <ArrowRight size={16} />
+          <span>ENTER THE HAVELI</span>
+          <ArrowRight size={18} />
         </button>
       </form>
     </div>

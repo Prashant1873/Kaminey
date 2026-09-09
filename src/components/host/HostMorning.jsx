@@ -36,16 +36,14 @@ export default function HostMorning({ victim, onProceed }) {
       </div>
 
       <div>
-        <div className="text-label" style={{ color: victim ? 'var(--loss-text)' : 'var(--gain-text)', marginBottom: '8px' }}>
-          BREAKFAST IN THE HAVELI
+        <div className="badge-loss" style={{ color: victim ? 'var(--loss-text)' : 'var(--gain-text)', marginBottom: '6px', fontSize: '0.75rem', padding: '4px 12px' }}>
+          {victim ? '🩸 BLOOD AT DAWN' : '🛡️ MORNING LIGHT'}
         </div>
-        <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '12px' }}>
-          {victim ? 'A TRAGEDY HAS OCCURRED' : 'A PEACEFUL NIGHT IN THE HAVELI'}
+        <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
+          {victim ? `${victim.name.toUpperCase()} WAS KILLED!` : 'NO ONE WAS MURDERED!'}
         </h1>
-        <p className="text-body" style={{ color: 'var(--on-surface-variant)', maxWidth: '600px', margin: '0 auto' }}>
-          {victim
-            ? 'The guests gathered in the courtyard at dawn, but one chair remained empty...'
-            : 'Miraculously, the night passed without any bloodshed. All guests survived.'}
+        <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.9375rem' }}>
+          {victim ? 'One chair was found empty at breakfast...' : 'Everyone survived the night unharmed.'}
         </p>
       </div>
 
@@ -54,61 +52,57 @@ export default function HostMorning({ victim, onProceed }) {
         <div
           className="card-interactive"
           style={{
-            padding: '32px',
-            maxWidth: '460px',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '14px',
-            border: '2px solid rgba(255, 86, 48, 0.3)',
-            backgroundColor: '#fff9f8'
-          }}
-        >
-          <div style={{
-            fontSize: '4.5rem',
-            lineHeight: 1,
-            filter: 'grayscale(60%) opacity(0.85)'
-          }}>
-            {victimAvatar.emoji}
-          </div>
-          <div>
-            <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--loss-text)' }}>
-              {victim.name}
-            </div>
-            <div style={{ fontSize: '0.875rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
-              {victimAvatar.name} ({victimAvatar.title})
-            </div>
-          </div>
-          <div className="badge-loss" style={{ fontSize: '0.8125rem', padding: '6px 14px' }}>
-            MURDERED BY THE KAMINEY
-          </div>
-          <p style={{ fontSize: '0.8125rem', color: 'var(--outline)', marginTop: '4px' }}>
-            {victim.name} is now a silent Ghost. They may observe but cannot speak during trials.
-          </p>
-        </div>
-      ) : (
-        <div
-          className="card-interactive"
-          style={{
-            padding: '32px',
-            maxWidth: '460px',
+            padding: '24px 20px',
+            maxWidth: '420px',
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             gap: '12px',
-            border: '2px solid rgba(54, 179, 126, 0.3)',
-            backgroundColor: '#f6fbf8'
+            border: '2px solid rgba(255, 86, 48, 0.3)',
+            backgroundColor: '#fff9f8',
+            boxSizing: 'border-box'
           }}
         >
-          <ShieldCheck size={54} color="var(--gain-text)" />
-          <div style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--gain-text)' }}>
-            Everyone Survived
+          <div style={{
+            fontSize: '4rem',
+            lineHeight: 1,
+            filter: 'grayscale(50%)'
+          }}>
+            {victimAvatar.emoji}
           </div>
-          <p style={{ fontSize: '0.875rem', color: 'var(--on-surface-variant)' }}>
-            The Kaminey hesitated or failed to agree on a target. The Bhole breathe a sigh of relief.
-          </p>
+          <div>
+            <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--loss-text)' }}>
+              {victim.name}
+            </div>
+            <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
+              {victimAvatar.name} ({victimAvatar.title})
+            </div>
+          </div>
+          <div className="badge-loss" style={{ fontSize: '0.75rem', padding: '4px 12px' }}>
+            MURDERED BY KAMINEY
+          </div>
+        </div>
+      ) : (
+        <div
+          className="card-interactive"
+          style={{
+            padding: '24px 20px',
+            maxWidth: '420px',
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '10px',
+            border: '2px solid rgba(54, 179, 126, 0.3)',
+            backgroundColor: '#f6fbf8',
+            boxSizing: 'border-box'
+          }}
+        >
+          <ShieldCheck size={48} color="var(--gain-text)" />
+          <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--gain-text)' }}>
+            All Guests Survived
+          </div>
         </div>
       )}
 
@@ -119,11 +113,11 @@ export default function HostMorning({ victim, onProceed }) {
         className="btn-primary spring-btn"
         style={{
           padding: '16px 36px',
-          fontSize: '1.125rem'
+          fontSize: '1.0625rem'
         }}
       >
-        <span>Proceed to Tasks & Round-Table</span>
-        <ArrowRight size={20} />
+        <span>CONTINUE TO COUNCIL 📢</span>
+        <ArrowRight size={18} />
       </button>
     </div>
   );

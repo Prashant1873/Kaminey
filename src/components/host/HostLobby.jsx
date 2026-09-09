@@ -31,20 +31,22 @@ export default function HostLobby({
       {/* Top Banner */}
       <div style={{
         textAlign: 'center',
-        padding: '20px',
-        background: 'linear-gradient(135deg, rgba(0, 61, 155, 0.06), rgba(40, 90, 185, 0.04))',
-        borderRadius: 'var(--rounded-2xl)',
-        border: '1px solid rgba(0, 61, 155, 0.12)'
+        padding: '16px 20px',
+        background: 'linear-gradient(135deg, rgba(0, 61, 155, 0.05), rgba(40, 90, 185, 0.03))',
+        borderRadius: 'var(--rounded-xl)',
+        border: '1px solid rgba(0, 61, 155, 0.1)'
       }}>
-        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '8px' }}>
-          THE HAVELI CONCLAVE
+        <div className="badge-loss" style={{ fontSize: '0.75rem', padding: '4px 12px', marginBottom: '6px' }}>
+          🏰 THE HAVELI COURTYARD
+        </div>
+        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
+          GATHER YOUR SUSPECTS
         </h1>
-        <p className="text-body" style={{ color: 'var(--on-surface-variant)', maxWidth: '600px', margin: '0 auto' }}>
-          Keep this screen in the living room. Every guest connects from their phone.
-          Secret roles will be assigned privately. Who among you is a <strong style={{ color: 'var(--loss)' }}>Kamina</strong>?
+        <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
+          Scan the QR code below from your phone to join.
         </p>
         {networkStatus && (
-          <div style={{ marginTop: '10px', fontSize: '0.8125rem', color: 'var(--secondary)', fontWeight: 600 }}>
+          <div style={{ marginTop: '6px', fontSize: '0.75rem', color: 'var(--gain-text)', fontWeight: 700 }}>
             ● {networkStatus}
           </div>
         )}
