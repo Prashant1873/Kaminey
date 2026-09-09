@@ -12,14 +12,16 @@ export default function PlayerGhost({ playerName, isExiled }) {
 
   return (
     <div style={{
+      width: '100%',
       maxWidth: '420px',
       margin: '0 auto',
-      padding: '36px 16px',
+      padding: '24px 14px',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       textAlign: 'center',
-      gap: '24px'
+      gap: '18px',
+      boxSizing: 'border-box'
     }}>
       <div style={{
         width: '80px',

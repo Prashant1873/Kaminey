@@ -53,8 +53,10 @@ export default function HostLobby({
       {/* Main Grid: QR & Settings (Left) vs Joined Players (Right) */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-        gap: '24px'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+        gap: '16px',
+        width: '100%',
+        boxSizing: 'border-box'
       }}>
         {/* Left Column: QR Code & Game Rules */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>

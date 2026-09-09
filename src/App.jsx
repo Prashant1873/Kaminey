@@ -80,20 +80,22 @@ export default function App() {
       <main style={{
         flex: 1,
         maxWidth: '1080px',
+        width: '100%',
         margin: '0 auto',
-        padding: '40px 20px',
+        padding: '24px 16px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         textAlign: 'center',
-        gap: '36px'
+        gap: '24px',
+        boxSizing: 'border-box'
       }}>
         {/* Title & Tagline */}
-        <div>
-          <div className="badge-loss" style={{ fontSize: '0.8125rem', padding: '6px 16px', marginBottom: '14px' }}>
+        <div style={{ width: '100%' }}>
+          <div className="badge-loss" style={{ fontSize: '0.75rem', padding: '4px 12px', marginBottom: '12px' }}>
             A Social Deduction House Party Mystery
           </div>
-          <h1 className="text-display" style={{ color: 'var(--primary)', maxWidth: '800px', margin: '0 auto 14px auto' }}>
+          <h1 className="text-display" style={{ color: 'var(--primary)', maxWidth: '800px', margin: '0 auto 10px auto' }}>
             WHO CAN YOU TRUST IN THE HAVELI?
           </h1>
           <p className="text-headline" style={{ color: 'var(--on-surface-variant)', maxWidth: '640px', margin: '0 auto', fontWeight: 500 }}>
@@ -104,28 +106,30 @@ export default function App() {
         {/* Dual Primary Action Cards */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '24px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gap: '16px',
           width: '100%',
-          maxWidth: '780px'
+          maxWidth: '780px',
+          boxSizing: 'border-box'
         }}>
           {/* Host Card (Living Room TV) */}
           <div
             className="card-interactive"
             style={{
-              padding: '32px 24px',
+              padding: '24px 18px',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'space-between',
-              gap: '20px',
+              gap: '16px',
               textAlign: 'center',
-              border: '2px solid rgba(0, 82, 204, 0.2)'
+              border: '2px solid rgba(0, 82, 204, 0.2)',
+              boxSizing: 'border-box'
             }}
           >
             <div style={{
-              width: '72px',
-              height: '72px',
+              width: '60px',
+              height: '60px',
               borderRadius: 'var(--rounded-xl)',
               background: 'linear-gradient(135deg, var(--primary-container), var(--primary))',
               display: 'flex',
@@ -133,14 +137,14 @@ export default function App() {
               justifyContent: 'center',
               boxShadow: 'var(--shadow-glow-primary)'
             }}>
-              <Tv size={36} color="#ffffff" />
+              <Tv size={30} color="#ffffff" />
             </div>
 
             <div>
-              <h2 className="text-title" style={{ fontSize: '1.375rem', marginBottom: '6px' }}>
+              <h2 className="text-title" style={{ fontSize: '1.25rem', marginBottom: '4px' }}>
                 Host Living Room Game
               </h2>
-              <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
+              <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem' }}>
                 For the hall TV, tablet, or laptop. Generates the 6-character code, QR code, timed discussions, and morning murder reveals.
               </p>
             </div>
@@ -149,10 +153,10 @@ export default function App() {
               type="button"
               onClick={() => setMode('HOST')}
               className="btn-primary spring-btn"
-              style={{ width: '100%', padding: '14px', fontSize: '1rem' }}
+              style={{ width: '100%', padding: '12px', fontSize: '0.9375rem' }}
             >
               <span>Launch Base Station</span>
-              <ArrowRight size={18} />
+              <ArrowRight size={16} />
             </button>
           </div>
 
@@ -160,19 +164,20 @@ export default function App() {
           <div
             className="card-interactive"
             style={{
-              padding: '32px 24px',
+              padding: '24px 18px',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'space-between',
-              gap: '20px',
+              gap: '16px',
               textAlign: 'center',
-              border: '2px solid rgba(40, 90, 185, 0.2)'
+              border: '2px solid rgba(40, 90, 185, 0.2)',
+              boxSizing: 'border-box'
             }}
           >
             <div style={{
-              width: '72px',
-              height: '72px',
+              width: '60px',
+              height: '60px',
               borderRadius: 'var(--rounded-xl)',
               background: 'linear-gradient(135deg, var(--secondary), var(--secondary-container))',
               display: 'flex',
@@ -180,14 +185,14 @@ export default function App() {
               justifyContent: 'center',
               boxShadow: 'var(--shadow-resting)'
             }}>
-              <Smartphone size={36} color="#ffffff" />
+              <Smartphone size={30} color="#ffffff" />
             </div>
 
             <div>
-              <h2 className="text-title" style={{ fontSize: '1.375rem', marginBottom: '6px' }}>
+              <h2 className="text-title" style={{ fontSize: '1.25rem', marginBottom: '4px' }}>
                 Join from Your Phone
               </h2>
-              <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
+              <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem' }}>
                 Pick your animal persona, secretly peek at your confidential role, execute social distraction tasks, and cast trial ballots.
               </p>
             </div>
@@ -196,10 +201,10 @@ export default function App() {
               type="button"
               onClick={() => setMode('PLAYER')}
               className="btn-secondary spring-btn"
-              style={{ width: '100%', padding: '14px', fontSize: '1rem', backgroundColor: 'var(--surface-container-low)' }}
+              style={{ width: '100%', padding: '12px', fontSize: '0.9375rem', backgroundColor: 'var(--surface-container-low)' }}
             >
               <span>Join with Room Code</span>
-              <ArrowRight size={18} />
+              <ArrowRight size={16} />
             </button>
           </div>
         </div>
@@ -208,38 +213,39 @@ export default function App() {
         <div style={{
           width: '100%',
           maxWidth: '860px',
-          marginTop: '16px',
+          marginTop: '8px',
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: '16px',
-          textAlign: 'left'
+          gap: '12px',
+          textAlign: 'left',
+          boxSizing: 'border-box'
         }}>
-          <div className="card-interactive" style={{ padding: '20px' }}>
-            <div style={{ fontSize: '1.75rem', marginBottom: '8px' }}>🎭</div>
-            <div style={{ fontWeight: 700, fontSize: '1.0625rem', marginBottom: '4px', color: 'var(--loss-text)' }}>
+          <div className="card-interactive" style={{ padding: '16px' }}>
+            <div style={{ fontSize: '1.5rem', marginBottom: '6px' }}>🎭</div>
+            <div style={{ fontWeight: 700, fontSize: '0.9375rem', marginBottom: '4px', color: 'var(--loss-text)' }}>
               Kaminey (Traitors)
             </div>
-            <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', lineHeight: 1.45 }}>
+            <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', lineHeight: 1.4 }}>
               A hidden minority who know each other's identities. Conspire each night on phone to secretly eliminate one innocent.
             </p>
           </div>
 
-          <div className="card-interactive" style={{ padding: '20px' }}>
-            <div style={{ fontSize: '1.75rem', marginBottom: '8px' }}>🕊️</div>
-            <div style={{ fontWeight: 700, fontSize: '1.0625rem', marginBottom: '4px', color: 'var(--primary)' }}>
+          <div className="card-interactive" style={{ padding: '16px' }}>
+            <div style={{ fontSize: '1.5rem', marginBottom: '6px' }}>🕊️</div>
+            <div style={{ fontWeight: 700, fontSize: '0.9375rem', marginBottom: '4px', color: 'var(--primary)' }}>
               Bhole (Innocents)
             </div>
-            <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', lineHeight: 1.45 }}>
+            <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', lineHeight: 1.4 }}>
               Unaware of roles. Must complete social tasks, spot suspicious behavior during debates, and banish the Kaminey.
             </p>
           </div>
 
-          <div className="card-interactive" style={{ padding: '20px' }}>
-            <div style={{ fontSize: '1.75rem', marginBottom: '8px' }}>🎯</div>
-            <div style={{ fontWeight: 700, fontSize: '1.0625rem', marginBottom: '4px', color: 'var(--warning-text)' }}>
+          <div className="card-interactive" style={{ padding: '16px' }}>
+            <div style={{ fontSize: '1.5rem', marginBottom: '6px' }}>🎯</div>
+            <div style={{ fontWeight: 700, fontSize: '0.9375rem', marginBottom: '4px', color: 'var(--warning-text)' }}>
               Secret Party Dares
             </div>
-            <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', lineHeight: 1.45 }}>
+            <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', lineHeight: 1.4 }}>
               Hilarious living room tasks (fetching chai, yawn contagion, debates) that distract Bhole and let Kaminey scheme in plain sight.
             </p>
           </div>

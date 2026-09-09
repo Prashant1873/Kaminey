@@ -11,25 +11,27 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
 
   return (
     <div style={{
-      maxWidth: '440px',
+      width: '100%',
+      maxWidth: '420px',
       margin: '0 auto',
-      padding: '24px 16px',
+      padding: '16px 14px',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       textAlign: 'center',
-      gap: '20px'
+      gap: '14px',
+      boxSizing: 'border-box'
     }}>
       {/* Warning Notice */}
-      <div className="badge-loss" style={{ padding: '8px 14px', fontSize: '0.8125rem' }}>
-        <ShieldAlert size={16} />
-        <span>Look away from other players' screens!</span>
+      <div className="badge-loss" style={{ padding: '6px 12px', fontSize: '0.75rem' }}>
+        <ShieldAlert size={14} />
+        <span>Keep your phone tilted away from others!</span>
       </div>
 
-      <h1 className="text-display" style={{ color: 'var(--primary)', fontSize: '1.75rem' }}>
+      <h1 className="text-headline" style={{ color: 'var(--primary)' }}>
         YOUR SECRET ROLE
       </h1>
-      <p className="text-body" style={{ color: 'var(--on-surface-variant)' }}>
+      <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem' }}>
         Press and hold the envelope below to peek at your confidential identity.
         Release your finger to instantly hide it again.
       </p>
@@ -44,12 +46,15 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
         className="card-interactive secret-reveal-box"
         style={{
           width: '100%',
-          minHeight: '340px',
+          minHeight: '260px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '24px 20px',
+          padding: '20px 14px',
+          boxSizing: 'border-box',
+          touchAction: 'none',
+          WebkitTouchCallout: 'none',
           background: isRevealed
             ? (isKamina ? 'linear-gradient(135deg, #1c0505, #2f0b0b)' : 'linear-gradient(135deg, #051b34, #082950)')
             : 'var(--surface-container-lowest)',

@@ -21,13 +21,16 @@ export default function PlayerNight({
 
   return (
     <div className="theme-simsim-night" style={{
-      minHeight: '85vh',
-      padding: '24px 16px',
+      width: '100%',
+      minHeight: 'auto',
+      flex: 1,
+      padding: '20px 14px',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       textAlign: 'center',
-      gap: '24px'
+      gap: '16px',
+      boxSizing: 'border-box'
     }}>
       {/* Top Ambience */}
       <div style={{

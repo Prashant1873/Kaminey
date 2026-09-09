@@ -20,13 +20,15 @@ export default function PlayerDares({ currentDare, onCompleteTask }) {
 
   return (
     <div style={{
+      width: '100%',
       maxWidth: '440px',
       margin: '0 auto',
-      padding: '24px 16px',
+      padding: '16px 14px',
       display: 'flex',
       flexDirection: 'column',
-      gap: '20px',
-      textAlign: 'center'
+      gap: '16px',
+      textAlign: 'center',
+      boxSizing: 'border-box'
     }}>
       <div style={{
         width: '64px',

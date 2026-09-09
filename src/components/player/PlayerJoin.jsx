@@ -28,48 +28,50 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
 
   return (
     <div style={{
-      maxWidth: '480px',
+      width: '100%',
+      maxWidth: '440px',
       margin: '0 auto',
-      padding: '24px 20px',
+      padding: '16px 14px',
       display: 'flex',
       flexDirection: 'column',
-      gap: '24px'
+      gap: '16px',
+      boxSizing: 'border-box'
     }}>
       {/* Brand Header */}
       <div style={{ textAlign: 'center' }}>
         <div style={{
-          width: '64px',
-          height: '64px',
+          width: '54px',
+          height: '54px',
           borderRadius: 'var(--rounded-xl)',
           background: 'linear-gradient(135deg, var(--primary-container), var(--primary))',
           display: 'inline-flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '2rem',
+          fontSize: '1.75rem',
           boxShadow: 'var(--shadow-glow-primary)',
-          marginBottom: '12px'
+          marginBottom: '8px'
         }}>
           🎭
         </div>
-        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '6px' }}>
+        <h1 className="text-headline" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
           JOIN KAMINEY
         </h1>
-        <p className="text-body" style={{ color: 'var(--on-surface-variant)' }}>
+        <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem' }}>
           Enter the room code from the living room screen and choose your animal persona.
         </p>
       </div>
 
       {/* Form Card */}
-      <form onSubmit={handleSubmit} className="card-interactive" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <form onSubmit={handleSubmit} className="card-interactive" style={{ display: 'flex', flexDirection: 'column', gap: '16px', boxSizing: 'border-box' }}>
         {error && (
-          <div className="badge-loss" style={{ padding: '8px 12px', borderRadius: 'var(--rounded-md)' }}>
+          <div className="badge-loss" style={{ padding: '8px 12px', borderRadius: 'var(--rounded-md)', fontSize: '0.8125rem' }}>
             {error}
           </div>
         )}
 
         {/* Room Code Input */}
         <div>
-          <label className="text-label" style={{ display: 'block', marginBottom: '6px', color: 'var(--on-surface-variant)' }}>
+          <label className="text-label" style={{ display: 'block', marginBottom: '4px', color: 'var(--on-surface-variant)' }}>
             Room Code:
           </label>
           <input
@@ -81,10 +83,11 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
             className="input-base tabular-nums"
             style={{
               textAlign: 'center',
-              fontSize: '1.5rem',
+              fontSize: '1.35rem',
               fontWeight: 800,
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase'
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              boxSizing: 'border-box'
             }}
             required
           />
@@ -92,7 +95,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
 
         {/* Player Name Input */}
         <div>
-          <label className="text-label" style={{ display: 'block', marginBottom: '6px', color: 'var(--on-surface-variant)' }}>
+          <label className="text-label" style={{ display: 'block', marginBottom: '4px', color: 'var(--on-surface-variant)' }}>
             Your Name:
           </label>
           <div style={{ position: 'relative' }}>
@@ -103,6 +106,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. Kabir or Priya"
               className="input-base"
+              style={{ boxSizing: 'border-box' }}
               required
             />
           </div>
@@ -110,16 +114,17 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
 
         {/* Animal Avatar Selector */}
         <div>
-          <label className="text-label" style={{ display: 'block', marginBottom: '8px', color: 'var(--on-surface-variant)' }}>
+          <label className="text-label" style={{ display: 'block', marginBottom: '6px', color: 'var(--on-surface-variant)' }}>
             Choose Your Animal Icon:
           </label>
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '8px',
-            maxHeight: '220px',
+            gap: '6px',
+            maxHeight: '200px',
             overflowY: 'auto',
-            padding: '4px'
+            padding: '2px',
+            boxSizing: 'border-box'
           }}>
             {ANIMAL_AVATARS.map(avatar => {
               const isSelected = avatar.id === selectedAvatarId;
@@ -133,17 +138,21 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
                     background: isSelected ? 'var(--primary-container)' : 'var(--surface-container-low)',
                     color: isSelected ? '#ffffff' : 'var(--on-surface)',
                     border: isSelected ? '2px solid var(--primary)' : '1px solid var(--outline-variant)',
-                    borderRadius: 'var(--rounded-xl)',
-                    padding: '10px 6px',
+                    borderRadius: 'var(--rounded-lg)',
+                    padding: '8px 4px',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    gap: '4px',
+                    gap: '2px',
+                    minWidth: 0,
+                    boxSizing: 'border-box',
                     boxShadow: isSelected ? 'var(--shadow-glow-primary)' : 'none'
                   }}
                 >
-                  <span style={{ fontSize: '1.75rem', lineHeight: 1 }}>{avatar.emoji}</span>
-                  <span style={{ fontSize: '0.6875rem', fontWeight: 700 }}>{avatar.name}</span>
+                  <span style={{ fontSize: '1.5rem', lineHeight: 1 }}>{avatar.emoji}</span>
+                  <span style={{ fontSize: '0.625rem', fontWeight: 700, width: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', textAlign: 'center' }}>
+                    {avatar.name}
+                  </span>
                 </button>
               );
             })}
@@ -154,10 +163,10 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
         <button
           type="submit"
           className="btn-primary spring-btn"
-          style={{ width: '100%', padding: '16px', fontSize: '1.125rem' }}
+          style={{ width: '100%', padding: '14px', fontSize: '1rem', boxSizing: 'border-box' }}
         >
           <span>Enter Living Room Conclave</span>
-          <ArrowRight size={18} />
+          <ArrowRight size={16} />
         </button>
       </form>
     </div>

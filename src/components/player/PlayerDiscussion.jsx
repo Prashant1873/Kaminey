@@ -8,12 +8,14 @@ export default function PlayerDiscussion({ players, myPlayerId }) {
 
   return (
     <div style={{
+      width: '100%',
       maxWidth: '440px',
       margin: '0 auto',
-      padding: '20px 16px',
+      padding: '16px 14px',
       display: 'flex',
       flexDirection: 'column',
-      gap: '20px'
+      gap: '16px',
+      boxSizing: 'border-box'
     }}>
       <div style={{ textAlign: 'center' }}>
         <div className="badge-loss" style={{ marginBottom: '8px', fontSize: '0.75rem' }}>

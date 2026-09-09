@@ -70,7 +70,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
   // If not joined yet, show Join Form
   if (!playerData) {
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ minHeight: '100dvh', width: '100%', maxWidth: '100vw', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}>
         <Header isHost={false} onLeave={onExit} />
         <PlayerJoin initialRoomCode={initialRoomCode} onJoin={handleJoin} />
       </div>
@@ -87,7 +87,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
   const mySecret = gameState?.mySecret || {};
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ minHeight: '100dvh', width: '100%', maxWidth: '100vw', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}>
       <Header
         isHost={false}
         roomCode={playerData.roomCode}
@@ -103,7 +103,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
       {networkStatus && (
         <div style={{
           backgroundColor: 'var(--surface-container-low)',
-          padding: '6px 16px',
+          padding: '6px 14px',
           fontSize: '0.75rem',
           textAlign: 'center',
           color: 'var(--on-surface-variant)',
@@ -114,7 +114,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
       )}
 
       {/* Main Screen according to Phase */}
-      <main style={{ flex: 1, paddingBottom: '30px' }}>
+      <main style={{ flex: 1, paddingBottom: '24px', width: '100%', boxSizing: 'border-box' }}>
         {/* If Player is dead/exiled and match is in progress, show Ghost Spectator mode */}
         {isDead && phase !== 'LOBBY' && phase !== 'ROLE_REVEAL' && phase !== 'GAME_OVER' ? (
           <PlayerGhost playerName={playerData.name} isExiled={isExiled} />
@@ -123,37 +123,39 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
             {/* LOBBY PHASE */}
             {phase === 'LOBBY' && (
               <div style={{
+                width: '100%',
                 maxWidth: '440px',
                 margin: '0 auto',
-                padding: '40px 20px',
+                padding: '24px 14px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 textAlign: 'center',
-                gap: '24px'
+                gap: '18px',
+                boxSizing: 'border-box'
               }}>
                 <div style={{
-                  fontSize: '4.5rem',
+                  fontSize: '3.75rem',
                   lineHeight: 1,
                   filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.1))'
                 }}>
                   {myAvatar.emoji}
                 </div>
                 <div>
-                  <h1 className="text-display" style={{ fontSize: '1.75rem', color: 'var(--primary)', marginBottom: '4px' }}>
+                  <h1 className="text-headline" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
                     YOU ARE IN THE HAVELI
                   </h1>
-                  <p style={{ fontSize: '1.125rem', fontWeight: 700 }}>
+                  <p style={{ fontSize: '1rem', fontWeight: 700 }}>
                     {playerData.name} ({myAvatar.name})
                   </p>
-                  <p className="text-body" style={{ color: 'var(--on-surface-variant)', marginTop: '8px' }}>
+                  <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem', marginTop: '6px' }}>
                     Connected to living room base <strong>{playerData.roomCode}</strong>.
                     <br />
                     Relax while other guests enter. The host will start the mystery shortly!
                   </p>
                 </div>
 
-                <div className="card-interactive" style={{ width: '100%', padding: '16px' }}>
+                <div className="card-interactive" style={{ width: '100%', padding: '14px', boxSizing: 'border-box' }}>
                   <div style={{ fontSize: '0.8125rem', color: 'var(--outline)', fontWeight: 600 }}>
                     PLAYERS IN ROOM: {gameState?.players?.length || 1}
                   </div>
