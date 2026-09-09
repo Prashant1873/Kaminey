@@ -70,8 +70,6 @@ export default function HowToPlayModal({ isOpen, onClose }) {
         position: 'fixed',
         inset: 0,
         backgroundColor: 'rgba(0, 0, 0, 0.75)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
         zIndex: 100,
         display: 'flex',
         alignItems: 'center',

@@ -38,11 +38,9 @@ export default function HostLobby({
       <div style={{
         textAlign: 'center',
         padding: '20px 24px',
-        background: 'linear-gradient(180deg, rgba(229, 184, 105, 0.08) 0%, rgba(15, 17, 24, 0.6) 100%)',
+        background: 'linear-gradient(180deg, rgba(229, 184, 105, 0.08) 0%, var(--surface-container) 100%)',
         borderRadius: 'var(--rounded-2xl)',
         border: '1px solid rgba(229, 184, 105, 0.15)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)'
       }}>
         <div style={{
           display: 'inline-flex',

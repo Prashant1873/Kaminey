@@ -63,9 +63,7 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
 
       {/* Atmospheric Night Indicator */}
       <div style={{
-        background: 'rgba(18, 21, 31, 0.75)',
-        backdropFilter: 'blur(24px)',
-        WebkitBackdropFilter: 'blur(24px)',
+        background: 'rgba(18, 21, 31, 0.95)',
         border: '1px solid rgba(239, 68, 68, 0.25)',
         borderRadius: 'var(--rounded-xl)',
         padding: '18px 24px',

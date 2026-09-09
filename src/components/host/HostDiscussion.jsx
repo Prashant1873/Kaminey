@@ -81,9 +81,7 @@ export default function HostDiscussion({
       {/* Spotlighted Player Bar (if Host clicked someone) */}
       {spotlightPlayer && spotlightAvatar && (
         <div style={{
-          background: 'rgba(22, 26, 38, 0.85)',
-          backdropFilter: 'blur(24px)',
-          WebkitBackdropFilter: 'blur(24px)',
+          background: 'var(--surface-container-high)',
           borderRadius: 'var(--rounded-xl)',
           padding: '16px 24px',
           border: '2px solid var(--primary)',

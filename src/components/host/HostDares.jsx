@@ -179,10 +179,8 @@ export default function HostDares({
               <div
                 key={p.id}
                 style={{
-                  background: 'rgba(18, 22, 32, 0.65)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  backdropFilter: 'blur(16px)',
-                  WebkitBackdropFilter: 'blur(16px)',
+                  background: 'var(--surface-container-high)',
+                  border: '1px solid var(--outline-variant)',
                   borderRadius: 'var(--rounded-full)',
                   padding: '6px 14px',
                   display: 'flex',

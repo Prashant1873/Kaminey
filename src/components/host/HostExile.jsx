@@ -85,8 +85,6 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
               backgroundColor: revealed
                 ? (isKamina ? 'rgba(16, 185, 129, 0.12)' : 'rgba(239, 68, 68, 0.12)')
                 : 'rgba(18, 22, 32, 0.72)',
-              backdropFilter: 'blur(28px)',
-              WebkitBackdropFilter: 'blur(28px)',
               border: revealed
                 ? (isKamina ? '2px solid var(--gain)' : '2px solid var(--loss)')
                 : '1px solid rgba(255, 255, 255, 0.1)',

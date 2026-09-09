@@ -65,17 +65,17 @@
 
 /* Light mode token overrides */
 [data-theme="light"] {
-  --surface: #F5F0E8;
-  --surface-container-lowest: #FFFEF9;
-  --surface-container-low: #EDE8DF;
-  --surface-container: #E4DED4;
-  --surface-container-high: #D9D2C7;
-  --surface-container-highest: #CEC7BA;
+  --surface: #F2EBD9;
+  --surface-container-lowest: #FBF7EF;
+  --surface-container-low: #E8E1D4;
+  --surface-container: #DDD5C5;
+  --surface-container-high: #CEC5B2;
+  --surface-container-highest: #BEB49E;
 
-  --on-surface: #1A1611;
-  --on-surface-variant: #5C5649;
-  --outline: #8A8174;
-  --outline-variant: rgba(0, 0, 0, 0.1);
+  --on-surface: #120F09;
+  --on-surface-variant: #3D3627;
+  --outline: #6B6150;
+  --outline-variant: rgba(0, 0, 0, 0.14);
 
   --shadow-resting: 0px 4px 20px rgba(0, 0, 0, 0.10);
   --shadow-elevated: 0px 16px 40px -8px rgba(0, 0, 0, 0.18);
@@ -189,8 +189,7 @@ button:active {
   transform: scale(0.97) !important;
 }
 
-/* Glassmorphic Panel (Apple Materials) */
-/* Solid fallback first — backdrop-filter applied only when supported */
+/* Solid Panels — glassmorphism removed */
 .glass-panel {
   background: rgb(16, 19, 28);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -198,13 +197,6 @@ button:active {
     0 16px 36px -10px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   border-radius: var(--rounded-2xl);
-}
-@supports (backdrop-filter: blur(1px)) {
-  .glass-panel {
-    background: rgba(16, 19, 28, 0.72);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-  }
 }
 
 .glass-panel-elevated {
@@ -215,15 +207,8 @@ button:active {
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
   border-radius: var(--rounded-2xl);
 }
-@supports (backdrop-filter: blur(1px)) {
-  .glass-panel-elevated {
-    background: rgba(22, 26, 38, 0.82);
-    backdrop-filter: blur(32px) saturate(200%);
-    -webkit-backdrop-filter: blur(32px) saturate(200%);
-  }
-}
 
-/* Interactive Card — solid bg fallback, glass effect when supported */
+/* Interactive Card — solid backgrounds */
 .card-interactive {
   background: rgb(22, 27, 40);
   color: var(--on-surface);
@@ -234,23 +219,11 @@ button:active {
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
-@supports (backdrop-filter: blur(1px)) {
-  .card-interactive {
-    background: rgba(18, 22, 32, 0.82);
-    backdrop-filter: blur(20px) saturate(170%);
-    -webkit-backdrop-filter: blur(20px) saturate(170%);
-  }
-}
 
 [data-theme="light"] .card-interactive {
-  background: rgb(242, 237, 228);
-  border-color: rgba(0, 0, 0, 0.1);
-  box-shadow: var(--shadow-resting), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-}
-@supports (backdrop-filter: blur(1px)) {
-  [data-theme="light"] .card-interactive {
-    background: rgba(245, 240, 232, 0.82);
-  }
+  background: rgb(235, 228, 215);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-resting), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .card-interactive:hover {

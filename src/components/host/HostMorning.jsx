@@ -77,9 +77,7 @@ export default function HostMorning({ victim, onProceed }) {
             flexDirection: 'column',
             alignItems: 'center',
             gap: '14px',
-            background: 'rgba(32, 16, 22, 0.72)',
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
+            background: 'rgba(32, 16, 22, 0.9)',
             border: '1px solid rgba(239, 68, 68, 0.35)',
             boxShadow: '0 20px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
             boxSizing: 'border-box'
@@ -110,9 +108,7 @@ export default function HostMorning({ victim, onProceed }) {
             flexDirection: 'column',
             alignItems: 'center',
             gap: '12px',
-            background: 'rgba(12, 28, 22, 0.72)',
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
+            background: 'rgba(12, 28, 22, 0.9)',
             border: '1px solid rgba(16, 185, 129, 0.35)',
             boxShadow: '0 20px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
             boxSizing: 'border-box'
