@@ -246,7 +246,7 @@ export default function App() {
                 JOIN ON PHONE
               </h2>
               <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
-                Your personal secret controller & party dares
+                Your personal secret controller & confidential ballot
               </div>
             </div>
 
@@ -257,30 +257,24 @@ export default function App() {
           </button>
         </div>
 
-        {/* 3 Visual Game Pillars */}
+        {/* 2 Visual Game Pillars */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '10px',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '12px',
           width: '100%',
           boxSizing: 'border-box'
         }}>
-          <div className="card-interactive" style={{ padding: '14px 8px', textAlign: 'center' }}>
-            <div style={{ fontSize: '1.75rem', marginBottom: '4px' }}>🎭</div>
-            <div style={{ fontWeight: 800, fontSize: '0.875rem', color: 'var(--loss-text)' }}>KAMINEY</div>
-            <div style={{ fontSize: '0.6875rem', color: 'var(--on-surface-variant)', marginTop: '2px' }}>Secret Killers</div>
+          <div className="card-interactive" style={{ padding: '16px 12px', textAlign: 'center' }}>
+            <div style={{ fontSize: '2rem', marginBottom: '4px' }}>🎭</div>
+            <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--loss-text)' }}>KAMINEY</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)', marginTop: '2px' }}>Secret Conclave of Killers</div>
           </div>
 
-          <div className="card-interactive" style={{ padding: '14px 8px', textAlign: 'center' }}>
-            <div style={{ fontSize: '1.75rem', marginBottom: '4px' }}>🕊️</div>
-            <div style={{ fontWeight: 800, fontSize: '0.875rem', color: 'var(--primary)' }}>BHOLE</div>
-            <div style={{ fontSize: '0.6875rem', color: 'var(--on-surface-variant)', marginTop: '2px' }}>Innocent Majority</div>
-          </div>
-
-          <div className="card-interactive" style={{ padding: '14px 8px', textAlign: 'center' }}>
-            <div style={{ fontSize: '1.75rem', marginBottom: '4px' }}>🎯</div>
-            <div style={{ fontWeight: 800, fontSize: '0.875rem', color: 'var(--warning-text)' }}>DARES</div>
-            <div style={{ fontSize: '0.6875rem', color: 'var(--on-surface-variant)', marginTop: '2px' }}>Fun Distractions</div>
+          <div className="card-interactive" style={{ padding: '16px 12px', textAlign: 'center' }}>
+            <div style={{ fontSize: '2rem', marginBottom: '4px' }}>🕊️</div>
+            <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--primary)' }}>BHOLE</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)', marginTop: '2px' }}>Innocent Majority of the Haveli</div>
           </div>
         </div>
       </main>

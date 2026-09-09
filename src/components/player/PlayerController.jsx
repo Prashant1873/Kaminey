@@ -40,6 +40,12 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
       },
       (status) => {
         setNetworkStatus(status);
+      },
+      (reason) => {
+        sessionStorage.removeItem('kaminey_player_session');
+        setPlayerData(null);
+        setGameState(null);
+        setNetworkStatus(reason || 'Removed from room by host');
       }
     );
     networkRef.current = net;
@@ -363,10 +369,16 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
               </div>
             )}
 
-            {/* DARES & SOCIAL TASKS PHASE */}
+            {/* DARES & TEAM MISSIONS PHASE */}
             {phase === 'DARES' && (
               <PlayerDares
-                currentDare={mySecret.currentDare}
+                mission={gameState?.currentMission}
+                role={mySecret.role}
+                players={gameState?.players || []}
+                myPlayerId={playerData.id}
+                kamineyPartners={mySecret.kamineyPartners || []}
+                nightVotes={mySecret.nightVotes || {}}
+                onSelectTarget={handleNightTargetSelect}
                 onCompleteTask={handleTaskCompleted}
               />
             )}

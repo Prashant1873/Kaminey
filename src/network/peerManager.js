@@ -103,6 +103,21 @@ export class HostNetwork {
     }
   }
 
+  kickPlayer(playerId) {
+    const conn = this.connections.get(playerId);
+    if (conn) {
+      try {
+        if (conn.open) {
+          conn.send({ type: 'PLAYER_KICKED', payload: { reason: 'Host removed you from the game' } });
+        }
+        setTimeout(() => {
+          try { conn.close(); } catch (e) {}
+        }, 80);
+      } catch (e) {}
+      this.connections.delete(playerId);
+    }
+  }
+
   destroy() {
     this.connections.forEach(c => c.close());
     this.connections.clear();
@@ -113,13 +128,14 @@ export class HostNetwork {
 }
 
 export class PlayerNetwork {
-  constructor(roomCode, playerData, onStateSync, onDisconnect, onStatusChange) {
+  constructor(roomCode, playerData, onStateSync, onDisconnect, onStatusChange, onKicked) {
     this.roomCode = roomCode.toUpperCase().trim();
     this.hostPeerId = `${PEER_PREFIX}${this.roomCode}`;
     this.playerData = playerData; // { id, name, avatarId }
     this.onStateSync = onStateSync;
     this.onDisconnect = onDisconnect;
     this.onStatusChange = onStatusChange;
+    this.onKicked = onKicked;
     this.peer = null;
     this.conn = null;
   }
@@ -155,6 +171,8 @@ export class PlayerNetwork {
     this.conn.on('data', (msg) => {
       if (msg && msg.type === 'STATE_SYNC') {
         this.onStateSync?.(msg.payload);
+      } else if (msg && msg.type === 'PLAYER_KICKED') {
+        this.onKicked?.(msg.payload?.reason || 'Host removed you from the game');
       }
     });
 

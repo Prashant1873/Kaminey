@@ -12,7 +12,7 @@ import HostGameOver from './HostGameOver';
 
 import { HostNetwork, generateRoomCode } from '../../network/peerManager';
 import { ANIMAL_AVATARS } from '../../data/animalAvatars';
-import { getRandomDare } from '../../data/partyDares';
+import { getRandomTeamMission } from '../../data/partyDares';
 import { sounds } from '../../audio/soundEffects';
 
 const BOT_NAMES = ['Aarav', 'Meera', 'Rohan', 'Ananya', 'Kabir', 'Tara', 'Arjun', 'Diya', 'Vikram', 'Pooja'];
@@ -30,7 +30,7 @@ export default function HostBaseStation({ onExit }) {
   const [phase, setPhase] = useState('LOBBY');
   const [players, setPlayers] = useState([]);
   const [roles, setRoles] = useState({}); // Master secret: playerId -> 'kamina' | 'bhola'
-  const [dares, setDares] = useState({});
+  const [currentMission, setCurrentMission] = useState(() => getRandomTeamMission());
   const [nightVotes, setNightVotes] = useState({}); // kaminaId -> targetId
   const [votes, setVotes] = useState({}); // voterId -> targetId | 'skip'
   const [morningVictim, setMorningVictim] = useState(null);
@@ -61,6 +61,7 @@ export default function HostBaseStation({ onExit }) {
       roomCode,
       phase,
       roundSettings: settings,
+      currentMission,
       players: players.map(p => ({
         id: p.id,
         name: p.name,
@@ -84,11 +85,10 @@ export default function HostBaseStation({ onExit }) {
       mySecret: {
         role: roles[targetPlayerId] || null,
         kamineyPartners,
-        currentDare: dares[targetPlayerId] || null,
         nightVotes: isKamina ? nightVotes : null
       }
     };
-  }, [roomCode, phase, settings, players, roles, dares, nightVotes, votes, morningVictim, exiledPlayer, winner]);
+  }, [roomCode, phase, settings, players, roles, currentMission, nightVotes, votes, morningVictim, exiledPlayer, winner]);
 
   // Sync state across network whenever relevant state changes
   useEffect(() => {
@@ -183,6 +183,14 @@ export default function HostBaseStation({ onExit }) {
     };
   }, [roomCode, handlePlayerMessage]);
 
+  // Remove / kick player from lobby setup screen
+  const handleRemovePlayer = useCallback((playerId) => {
+    setPlayers(prev => prev.filter(p => p.id !== playerId));
+    if (networkRef.current) {
+      networkRef.current.kickPlayer(playerId);
+    }
+  }, []);
+
   // Add Bot Player for instant solo testing
   const addBotPlayer = () => {
     const availableNames = BOT_NAMES.filter(name => !players.some(p => p.name === name));
@@ -255,12 +263,12 @@ export default function HostBaseStation({ onExit }) {
     setPhase('ROLE_REVEAL');
   };
 
-  // Advance from Role Reveal to Night
+  // Advance from Role Reveal / Exile to Night
   const handleProceedToNight = () => {
-    setNightVotes({});
+    // Retain any pre-cast murder votes submitted during the task phase
     setPhase('NIGHT');
 
-    // If bots are Kaminey, make them vote a random alive Bhola
+    // If bots are Kaminey, make them vote a random alive Bhola if not already voted
     setTimeout(() => {
       const aliveBhole = players.filter(p => p.isAlive && !p.isExiled && roles[p.id] === 'bhola');
       if (aliveBhole.length > 0) {
@@ -269,12 +277,14 @@ export default function HostBaseStation({ onExit }) {
         if (botKaminey.length > 0) {
           setNightVotes(prev => {
             const next = { ...prev };
-            botKaminey.forEach(b => { next[b.id] = target.id; });
+            botKaminey.forEach(b => {
+              if (!next[b.id]) next[b.id] = target.id;
+            });
             return next;
           });
         }
       }
-    }, 2000);
+    }, 1500);
   };
 
   // Advance from Night to Morning
@@ -320,22 +330,23 @@ export default function HostBaseStation({ onExit }) {
       return;
     }
 
+    setNightVotes({});
     setPhase('MORNING');
   };
 
-  // Advance from Morning to Day Dares or Discussion
+  // Advance from Morning to Team Missions or Discussion
   const handleProceedFromMorning = () => {
     if (settings.enableDares) {
-      // Re-roll social dares for all alive players
-      const updatedDares = {};
-      players.filter(p => p.isAlive && !p.isExiled).forEach(p => {
-        updatedDares[p.id] = getRandomDare();
-      });
-      setDares(updatedDares);
+      setCurrentMission(getRandomTeamMission());
       setPhase('DARES');
     } else {
       setPhase('DISCUSSION');
     }
+  };
+
+  // Reshuffle current team mission
+  const handleReshuffleMission = () => {
+    setCurrentMission(prev => getRandomTeamMission(prev?.id));
   };
 
   // Call Round-Table Discussion
@@ -443,6 +454,7 @@ export default function HostBaseStation({ onExit }) {
             onUpdateSettings={setSettings}
             onStartGame={handleStartGame}
             onAddBot={addBotPlayer}
+            onRemovePlayer={handleRemovePlayer}
             networkStatus={networkStatus}
           />
         )}
@@ -470,7 +482,10 @@ export default function HostBaseStation({ onExit }) {
 
         {phase === 'DARES' && (
           <HostDares
+            mission={currentMission}
             players={players}
+            onReshuffle={handleReshuffleMission}
+            onDoOurOwnThing={handleCallDiscussion}
             onCallDiscussion={handleCallDiscussion}
           />
         )}

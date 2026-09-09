@@ -1,7 +1,7 @@
 import React from 'react';
 import QRCodeView from '../common/QRCodeView';
 import { getAvatarById } from '../../data/animalAvatars';
-import { Play, UserPlus, Users, Settings2, Sparkles, AlertCircle } from 'lucide-react';
+import { Play, UserPlus, Users, Settings2, Sparkles, AlertCircle, X } from 'lucide-react';
 
 export default function HostLobby({
   roomCode,
@@ -10,6 +10,7 @@ export default function HostLobby({
   onUpdateSettings,
   onStartGame,
   onAddBot,
+  onRemovePlayer,
   networkStatus
 }) {
   const minPlayers = 4;
@@ -184,6 +185,7 @@ export default function HostLobby({
                   <div
                     key={p.id}
                     style={{
+                      position: 'relative',
                       background: 'var(--surface-container-low)',
                       borderRadius: 'var(--rounded-xl)',
                       padding: '14px 10px',
@@ -195,6 +197,35 @@ export default function HostLobby({
                       boxShadow: 'var(--shadow-resting)'
                     }}
                   >
+                    {/* Remove Player Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onRemovePlayer?.(p.id);
+                      }}
+                      className="spring-btn"
+                      style={{
+                        position: 'absolute',
+                        top: '6px',
+                        right: '6px',
+                        width: '22px',
+                        height: '22px',
+                        borderRadius: 'var(--rounded-full)',
+                        border: '1px solid rgba(255, 86, 48, 0.3)',
+                        background: 'rgba(255, 86, 48, 0.1)',
+                        color: 'var(--loss-text)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        padding: 0
+                      }}
+                      title={`Remove ${p.name}`}
+                    >
+                      <X size={13} strokeWidth={2.5} />
+                    </button>
+
                     <div style={{
                       fontSize: '2.25rem',
                       lineHeight: 1,
