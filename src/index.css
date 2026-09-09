@@ -1,0 +1,411 @@
+/* Kaminey - Global Styles & Design System */
+/* Strictly adheres to DESIGN.md */
+
+:root {
+  /* Colors */
+  --primary: #003d9b;
+  --primary-container: #0052cc;
+  --secondary: #285ab9;
+  --secondary-container: #709bfe;
+  
+  --gain: #36B37E;
+  --gain-text: #00875A;
+  --loss: #FF5630;
+  --loss-text: #DE350B;
+  --warning: #FF9F0A;
+  --warning-text: #B76E00;
+  
+  --simsim-neon: #00F090;
+  --simsim-surface: #0B0F19;
+  --simsim-header: #070A12;
+  
+  --surface: #f8f9fb;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f3f4f6;
+  --surface-container: #edeef0;
+  --surface-container-high: #e7e8ea;
+  --surface-container-highest: #e1e2e4;
+  
+  --on-surface: #191c1e;
+  --on-surface-variant: #434654;
+  --outline: #737685;
+  --outline-variant: #c3c6d6;
+
+  /* Typography */
+  --font-family: 'Hanken Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Radii */
+  --rounded-sm: 4px;
+  --rounded-md: 8px;
+  --rounded-lg: 12px;
+  --rounded-xl: 16px;
+  --rounded-2xl: 20px;
+  --rounded-full: 9999px;
+
+  /* Shadows */
+  --shadow-resting: 0px 4px 12px rgba(9, 30, 66, 0.08);
+  --shadow-elevated: 0px 16px 36px -6px rgba(9, 30, 66, 0.12);
+  --shadow-floating: 0px 16px 40px rgba(9, 30, 66, 0.16);
+  --shadow-glow-primary: 0 8px 24px -3px rgba(0, 82, 204, 0.35);
+  --shadow-glow-loss: 0 8px 24px -3px rgba(255, 86, 48, 0.4);
+  --shadow-glow-neon: 0 8px 24px -3px rgba(0, 240, 144, 0.35);
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  
+  /* Spring transition timing */
+  --spring-timing: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --spring-duration: 0.18s;
+}
+
+/* Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-family);
+  background-color: var(--surface);
+  color: var(--on-surface);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tabular numbers for clocks, timers, counts */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Typography Classes */
+.text-display {
+  font-size: clamp(1.875rem, 4vw, 2.25rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.text-headline {
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.text-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.text-body {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.text-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* The Tactile Spring Rule (from DESIGN.md) */
+.spring-btn,
+.strategy-chip,
+.category-pill,
+.card-interactive,
+button {
+  transition: transform var(--spring-duration) var(--spring-timing),
+              box-shadow var(--spring-duration) var(--spring-timing),
+              background-color var(--spring-duration) var(--spring-timing),
+              border-color var(--spring-duration) var(--spring-timing);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-family: inherit;
+}
+
+.spring-btn:active,
+.strategy-chip:active,
+.category-pill:active,
+.card-interactive:active,
+button:active {
+  transform: scale(0.97) !important;
+}
+
+/* Components */
+
+/* Interactive Card */
+.card-interactive {
+  background-color: var(--surface-container-lowest);
+  color: var(--on-surface);
+  border-radius: var(--rounded-2xl);
+  padding: 20px;
+  box-shadow: var(--shadow-resting);
+  border: 1px solid rgba(9, 30, 66, 0.08);
+}
+
+.card-interactive:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-elevated);
+  border-color: rgba(0, 82, 204, 0.22);
+}
+
+/* Primary Button */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-container), var(--primary));
+  color: #ffffff;
+  border-radius: var(--rounded-xl);
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow-glow-primary);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px -2px rgba(0, 82, 204, 0.45);
+}
+
+.btn-secondary {
+  background-color: var(--surface-container-lowest);
+  color: var(--primary);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--rounded-xl);
+  padding: 12px 20px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow-resting);
+}
+
+.btn-secondary:hover {
+  background-color: var(--surface-container-low);
+  border-color: var(--secondary);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--loss), var(--loss-text));
+  color: #ffffff;
+  border-radius: var(--rounded-xl);
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow-glow-loss);
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px -2px rgba(255, 86, 48, 0.55);
+}
+
+/* Strategy Chip */
+.strategy-chip {
+  background-color: var(--surface-container-lowest);
+  color: var(--on-surface);
+  border-radius: var(--rounded-xl);
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(9, 30, 66, 0.08);
+  box-shadow: var(--shadow-resting);
+}
+
+.strategy-chip:hover {
+  transform: translateY(-2px);
+}
+
+.strategy-chip-active {
+  background: linear-gradient(135deg, var(--primary-container), var(--primary));
+  color: #ffffff;
+  border-radius: var(--rounded-xl);
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-glow-primary);
+  border: 1px solid transparent;
+}
+
+/* Category Pill */
+.category-pill {
+  background-color: transparent;
+  color: var(--on-surface-variant);
+  border-radius: var(--rounded-full);
+  padding: 8px 14px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border: 1px solid var(--outline-variant);
+}
+
+.category-pill-active {
+  background-color: var(--primary-container);
+  color: #ffffff;
+  border-radius: var(--rounded-full);
+  padding: 8px 14px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  border: 1px solid var(--primary-container);
+  box-shadow: var(--shadow-glow-primary);
+}
+
+/* Inputs */
+.input-base {
+  width: 100%;
+  background-color: var(--surface-container-lowest);
+  color: var(--on-surface);
+  border: 1px solid rgba(9, 30, 66, 0.15);
+  border-radius: var(--rounded-lg);
+  padding: 14px 16px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-base:focus {
+  border-color: var(--primary-container);
+  box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.15);
+}
+
+/* Badges */
+.badge-gain {
+  background-color: rgba(54, 179, 126, 0.15);
+  color: var(--gain-text);
+  border-radius: var(--rounded-md);
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-loss {
+  background-color: rgba(255, 86, 48, 0.15);
+  color: var(--loss-text);
+  border-radius: var(--rounded-md);
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-warning {
+  background-color: rgba(255, 159, 10, 0.15);
+  color: var(--warning-text);
+  border-radius: var(--rounded-md);
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* SimSim Dark Theme for Night / Murder Conclave */
+.theme-simsim-night {
+  background-color: var(--simsim-surface) !important;
+  color: #f0f3fa !important;
+}
+
+.theme-simsim-night .card-interactive {
+  background-color: #121827;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #f0f3fa;
+}
+
+.theme-simsim-night .card-interactive:hover {
+  border-color: var(--simsim-neon);
+  box-shadow: var(--shadow-glow-neon);
+}
+
+/* Animations */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.85; transform: scale(0.99); }
+}
+
+@keyframes pulse-heartbeat {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.08); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.08); }
+  70% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-heartbeat {
+  animation: pulse-heartbeat 1.4s infinite ease-in-out;
+}
+
+.animate-float {
+  animation: float-slow 4s infinite ease-in-out;
+}
+
+/* Secret Envelope / Scratch Reveal Component */
+.secret-reveal-box {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--outline-variant);
+  border-radius: var(--rounded-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--outline);
+}
