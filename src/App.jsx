@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import HostBaseStation from './components/host/HostBaseStation';
 import PlayerController from './components/player/PlayerController';
 import HowToPlayModal from './components/common/HowToPlayModal';
-import { Tv, Smartphone, ArrowRight, ShieldCheck, Sparkles, Crown, Skull, BookOpen, HelpCircle } from 'lucide-react';
+import { Tv, Smartphone, ArrowRight, ShieldCheck, Skull, BookOpen, Sun, Moon } from 'lucide-react';
+import { useTheme } from './context/ThemeContext';
 
 export default function App() {
   const [showRules, setShowRules] = useState(false);
+  const { dark, toggle: toggleTheme } = useTheme();
   const [route, setRoute] = useState(() => {
     // Parse current URL hash or query params
     if (typeof window !== 'undefined') {
@@ -168,6 +170,27 @@ export default function App() {
           <div className="badge-gain" style={{ fontSize: '0.6875rem', padding: '4px 10px' }}>
             Live Multiplayer
           </div>
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="spring-btn"
+            title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+            aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+            style={{
+              background: 'var(--surface-container-low)',
+              border: '1px solid var(--outline-variant)',
+              color: dark ? '#FBBF24' : '#64748B',
+              padding: '8px',
+              minWidth: '44px',
+              minHeight: '44px',
+              borderRadius: 'var(--rounded-lg)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {dark ? <Sun size={17} /> : <Moon size={17} />}
+          </button>
         </div>
       </header>
 

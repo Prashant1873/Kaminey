@@ -63,6 +63,26 @@
   --spring-duration: 0.2s;
 }
 
+/* Light mode token overrides */
+[data-theme="light"] {
+  --surface: #F5F0E8;
+  --surface-container-lowest: #FFFEF9;
+  --surface-container-low: #EDE8DF;
+  --surface-container: #E4DED4;
+  --surface-container-high: #D9D2C7;
+  --surface-container-highest: #CEC7BA;
+
+  --on-surface: #1A1611;
+  --on-surface-variant: #5C5649;
+  --outline: #8A8174;
+  --outline-variant: rgba(0, 0, 0, 0.1);
+
+  --shadow-resting: 0px 4px 20px rgba(0, 0, 0, 0.10);
+  --shadow-elevated: 0px 16px 40px -8px rgba(0, 0, 0, 0.18);
+  --shadow-floating: 0px 24px 48px rgba(0, 0, 0, 0.22);
+}
+
+
 /* Reset & Box Sizing */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -89,7 +109,9 @@ html, body {
   overflow-x: hidden;
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
+
 
 #root {
   width: 100%;
@@ -168,33 +190,42 @@ button:active {
 }
 
 /* Glassmorphic Panel (Apple Materials) */
+/* Solid fallback first — backdrop-filter applied only when supported */
 .glass-panel {
-  background: rgba(16, 19, 28, 0.72);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: rgb(16, 19, 28);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 
     0 16px 36px -10px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   border-radius: var(--rounded-2xl);
 }
+@supports (backdrop-filter: blur(1px)) {
+  .glass-panel {
+    background: rgba(16, 19, 28, 0.72);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+  }
+}
 
 .glass-panel-elevated {
-  background: rgba(22, 26, 38, 0.82);
-  backdrop-filter: blur(32px) saturate(200%);
-  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  background: rgb(22, 26, 38);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 
     0 24px 48px -12px rgba(0, 0, 0, 0.7),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
   border-radius: var(--rounded-2xl);
 }
+@supports (backdrop-filter: blur(1px)) {
+  .glass-panel-elevated {
+    background: rgba(22, 26, 38, 0.82);
+    backdrop-filter: blur(32px) saturate(200%);
+    -webkit-backdrop-filter: blur(32px) saturate(200%);
+  }
+}
 
-/* Interactive Card with Frosted Apple Glass */
+/* Interactive Card — solid bg fallback, glass effect when supported */
 .card-interactive {
-  background: rgba(18, 22, 32, 0.65);
-  backdrop-filter: blur(20px) saturate(170%);
-  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  background: rgb(22, 27, 40);
   color: var(--on-surface);
   border-radius: var(--rounded-2xl);
   padding: 24px;
@@ -203,10 +234,27 @@ button:active {
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
+@supports (backdrop-filter: blur(1px)) {
+  .card-interactive {
+    background: rgba(18, 22, 32, 0.82);
+    backdrop-filter: blur(20px) saturate(170%);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+  }
+}
+
+[data-theme="light"] .card-interactive {
+  background: rgb(242, 237, 228);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-resting), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+@supports (backdrop-filter: blur(1px)) {
+  [data-theme="light"] .card-interactive {
+    background: rgba(245, 240, 232, 0.82);
+  }
+}
 
 .card-interactive:hover {
   transform: translateY(-2px);
-  background: rgba(24, 28, 42, 0.78);
   box-shadow: 
     var(--shadow-elevated),
     0 0 24px -4px rgba(229, 184, 105, 0.15),

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Shield, Users, Tv, Smartphone, Crown, Moon } from 'lucide-react';
+import { Volume2, VolumeX, Users, Tv, Smartphone, Sun, Moon } from 'lucide-react';
 import { sounds } from '../../audio/soundEffects';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function Header({ isHost, roomCode, playerCount, onLeave, currentPhase }) {
   const [muted, setMuted] = useState(false);
+  const { dark, toggle: toggleTheme } = useTheme();
 
   const toggleMute = () => {
     const next = !muted;
@@ -41,6 +43,19 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
     }
   };
 
+  const btnStyle = {
+    background: 'var(--surface-container-low)',
+    color: 'var(--on-surface-variant)',
+    padding: '8px',
+    minWidth: '44px',
+    minHeight: '44px',
+    borderRadius: 'var(--rounded-lg)',
+    border: '1px solid var(--outline-variant)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
+
   return (
     <header className={`app-header ${isNight ? 'theme-simsim-night' : ''}`} style={{
       display: 'flex',
@@ -48,11 +63,11 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
       justifyContent: 'space-between',
       padding: '8px 16px',
       minHeight: '56px',
-      backgroundColor: isNight ? '#000000' : 'rgba(15, 17, 24, 0.85)',
+      backgroundColor: isNight ? '#000000' : 'rgba(var(--surface-rgb, 9, 10, 15), 0.85)',
       backdropFilter: 'blur(20px)',
       WebkitBackdropFilter: 'blur(20px)',
-      borderBottom: isNight ? '1px solid #141414' : '1px solid rgba(255, 255, 255, 0.08)',
-      boxShadow: isNight ? 'none' : 'var(--shadow-resting)',
+      borderBottom: '1px solid var(--outline-variant)',
+      boxShadow: 'var(--shadow-resting)',
       position: 'sticky',
       top: 0,
       zIndex: 50,
@@ -97,26 +112,26 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
             </span>
           </div>
           {currentPhase && (
-            <div style={{ fontSize: '0.6875rem', color: isNight ? '#888888' : 'var(--on-surface-variant)', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <div style={{ fontSize: '0.6875rem', color: 'var(--on-surface-variant)', fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {getPhaseLabel(currentPhase)}
             </div>
           )}
         </div>
       </div>
 
-      {/* Room Code & Stats */}
+      {/* Right controls */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
         {roomCode && (
           <div style={{
-            background: isNight ? '#0a0a0a' : 'var(--surface-container-low)',
+            background: 'var(--surface-container-low)',
             padding: '6px 12px',
             borderRadius: 'var(--rounded-md)',
-            border: isNight ? '1px solid #222222' : '1px solid rgba(255, 255, 255, 0.1)',
+            border: '1px solid var(--outline-variant)',
             display: 'flex',
             alignItems: 'center',
             gap: '4px'
           }}>
-            <span className="tabular-nums" style={{ fontWeight: 800, fontSize: '0.875rem', letterSpacing: '0.08em', color: isNight ? '#ffffff' : 'var(--primary)' }}>
+            <span className="tabular-nums" style={{ fontWeight: 800, fontSize: '0.875rem', letterSpacing: '0.08em', color: 'var(--primary)' }}>
               {roomCode}
             </span>
           </div>
@@ -129,12 +144,23 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
             gap: '4px',
             fontSize: '0.8125rem',
             fontWeight: 600,
-            color: isNight ? '#aaaaaa' : 'var(--on-surface-variant)'
+            color: 'var(--on-surface-variant)'
           }}>
             <Users size={14} />
             <span className="tabular-nums">{playerCount}</span>
           </div>
         )}
+
+        {/* Light / Dark toggle */}
+        <button
+          onClick={toggleTheme}
+          className="spring-btn"
+          title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+          aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+          style={{ ...btnStyle, color: dark ? '#FBBF24' : '#64748B' }}
+        >
+          {dark ? <Sun size={17} /> : <Moon size={17} />}
+        </button>
 
         {/* Audio Mute Toggle */}
         <button
@@ -142,18 +168,7 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
           className="spring-btn"
           title={muted ? 'Unmute audio' : 'Mute audio'}
           aria-label={muted ? 'Unmute audio' : 'Mute audio'}
-          style={{
-            background: isNight ? '#0a0a0a' : 'rgba(255, 255, 255, 0.05)',
-            color: muted ? 'var(--loss)' : (isNight ? '#cccccc' : 'var(--on-surface-variant)'),
-            padding: '8px',
-            minWidth: '44px',
-            minHeight: '44px',
-            borderRadius: 'var(--rounded-lg)',
-            border: isNight ? '1px solid #222222' : '1px solid rgba(255, 255, 255, 0.08)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
+          style={{ ...btnStyle, color: muted ? 'var(--loss)' : 'var(--on-surface-variant)' }}
         >
           {muted ? <VolumeX size={17} /> : <Volume2 size={17} />}
         </button>
@@ -164,17 +179,10 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
             className="spring-btn"
             aria-label="Exit game"
             style={{
-              background: isNight ? '#0a0a0a' : 'rgba(255, 255, 255, 0.05)',
-              color: isNight ? '#888888' : 'var(--on-surface-variant)',
+              ...btnStyle,
               fontSize: '0.75rem',
               fontWeight: 600,
               padding: '6px 12px',
-              minHeight: '44px',
-              borderRadius: 'var(--rounded-lg)',
-              border: isNight ? '1px solid #222222' : '1px solid rgba(255, 255, 255, 0.08)',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center'
             }}
           >
             Exit
@@ -184,3 +192,4 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
     </header>
   );
 }
+
