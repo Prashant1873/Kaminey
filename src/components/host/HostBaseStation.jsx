@@ -19,6 +19,8 @@ const BOT_NAMES = ['Aarav', 'Meera', 'Rohan', 'Ananya', 'Kabir', 'Tara', 'Arjun'
 
 export default function HostBaseStation({ onExit }) {
   const [roomCode, setRoomCode] = useState(() => {
+    const saved = sessionStorage.getItem('kaminey_host_room');
+    if (saved) return saved;
     const newCode = generateRoomCode();
     sessionStorage.setItem('kaminey_host_room', newCode);
     return newCode;
@@ -31,6 +33,11 @@ export default function HostBaseStation({ onExit }) {
     setPlayers([]);
     setNetworkStatus('Re-initializing base station with new code...');
   }, []);
+
+  const handleExit = useCallback(() => {
+    sessionStorage.removeItem('kaminey_host_room');
+    if (onExit) onExit();
+  }, [onExit]);
 
   const [networkStatus, setNetworkStatus] = useState('Initializing base station...');
   const [phase, setPhase] = useState('LOBBY');
@@ -474,7 +481,7 @@ export default function HostBaseStation({ onExit }) {
         roomCode={roomCode}
         playerCount={players.length}
         currentPhase={phase}
-        onLeave={onExit}
+        onLeave={handleExit}
       />
 
       <main style={{

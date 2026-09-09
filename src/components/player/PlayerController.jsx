@@ -147,26 +147,44 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
             {networkStatus || 'Connecting to base station...'}
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              if (networkRef.current) networkRef.current.destroy();
-              sessionStorage.removeItem('kaminey_player_session');
-              setPlayerData(null);
-            }}
-            className="spring-btn"
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: 'var(--outline)',
-              fontSize: '0.8125rem',
-              marginTop: '16px',
-              cursor: 'pointer',
-              textDecoration: 'underline'
-            }}
-          >
-            Wrong Room Code? Tap to Change
-          </button>
+          <div style={{ display: 'flex', gap: '10px', alignItems: 'center', marginTop: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <button
+              type="button"
+              onClick={() => connectWithData(playerData)}
+              className="spring-btn"
+              style={{
+                padding: '8px 16px',
+                fontSize: '0.8125rem',
+                fontWeight: 700,
+                background: 'var(--primary-container)',
+                color: '#ffffff',
+                borderRadius: 'var(--rounded-lg)',
+                border: 'none'
+              }}
+            >
+              🔄 Retry Connection
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                if (networkRef.current) networkRef.current.destroy();
+                sessionStorage.removeItem('kaminey_player_session');
+                setPlayerData(null);
+              }}
+              className="spring-btn"
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: 'var(--outline)',
+                fontSize: '0.8125rem',
+                cursor: 'pointer',
+                textDecoration: 'underline'
+              }}
+            >
+              Change Room / Name
+            </button>
+          </div>
         </div>
       </div>
     );

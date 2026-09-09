@@ -13,23 +13,8 @@ const PEER_CONFIG = {
       { urls: 'stun:stun.l.google.com:19302' },
       { urls: 'stun:stun1.l.google.com:19302' },
       { urls: 'stun:stun2.l.google.com:19302' },
-      { urls: 'stun:stun.cloudflare.com:3478' },
-      { urls: 'stun:global.stun.twilio.com:3478' },
-      {
-        urls: 'turn:openrelay.metered.ca:80',
-        username: 'openrelayproject',
-        credential: 'openrelayproject'
-      },
-      {
-        urls: 'turn:openrelay.metered.ca:443',
-        username: 'openrelayproject',
-        credential: 'openrelayproject'
-      },
-      {
-        urls: 'turn:openrelay.metered.ca:443?transport=tcp',
-        username: 'openrelayproject',
-        credential: 'openrelayproject'
-      }
+      { urls: 'stun:stun3.l.google.com:19302' },
+      { urls: 'stun:stun4.l.google.com:19302' }
     ]
   }
 };
@@ -59,15 +44,29 @@ export class HostNetwork {
     this.connections = new Map(); // playerId -> dataConnection
     this.peer = null;
     this.isReady = false;
+    this.reconnectAttempts = 0;
+    this.maxReconnectAttempts = 3;
+    this.isDestroyed = false;
+
+    // Clean up peer immediately on tab close or refresh to release ID on broker
+    this.handleUnload = () => {
+      this.destroy();
+    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeunload', this.handleUnload);
+      window.addEventListener('pagehide', this.handleUnload);
+    }
   }
 
   init() {
+    if (this.isDestroyed) return;
     this.onStatusChange?.('Connecting host base to network...');
 
     this.peer = new Peer(this.peerId, PEER_CONFIG);
 
     this.peer.on('open', () => {
       this.isReady = true;
+      this.reconnectAttempts = 0;
       this.onStatusChange?.('Online — Ready for guests');
     });
 
@@ -92,11 +91,6 @@ export class HostNetwork {
           }
         }
       };
-
-      // If connection arrives with metadata, register right away
-      if (conn.metadata?.id) {
-        registerAndSync(conn.metadata);
-      }
 
       conn.on('open', () => {
         const data = conn.metadata || { id: conn.peer };
@@ -126,9 +120,22 @@ export class HostNetwork {
     this.peer.on('error', (err) => {
       console.error('Host Peer error:', err);
       if (err.type === 'unavailable-id') {
-        this.onStatusChange?.('Room code busy on network, generating new code...');
-        if (this.onCodeUnavailable) {
-          this.onCodeUnavailable();
+        if (this.reconnectAttempts < this.maxReconnectAttempts) {
+          this.reconnectAttempts++;
+          this.onStatusChange?.(`Reconnecting room code (${this.reconnectAttempts}/${this.maxReconnectAttempts})...`);
+          setTimeout(() => {
+            if (!this.isDestroyed && !this.isReady) {
+              if (this.peer) {
+                try { this.peer.destroy(); } catch (e) {}
+              }
+              this.init();
+            }
+          }, 1200);
+        } else {
+          this.onStatusChange?.('Room code busy on network, generating new code...');
+          if (this.onCodeUnavailable) {
+            this.onCodeUnavailable();
+          }
         }
       } else {
         this.onStatusChange?.(`Status: ${err.type}`);
@@ -176,10 +183,18 @@ export class HostNetwork {
   }
 
   destroy() {
-    this.connections.forEach(c => c.close());
+    this.isDestroyed = true;
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('beforeunload', this.handleUnload);
+      window.removeEventListener('pagehide', this.handleUnload);
+    }
+    this.connections.forEach(c => {
+      try { c.close(); } catch (e) {}
+    });
     this.connections.clear();
     if (this.peer) {
-      this.peer.destroy();
+      try { this.peer.destroy(); } catch (e) {}
+      this.peer = null;
     }
   }
 }
@@ -197,6 +212,7 @@ export class PlayerNetwork {
     this.conn = null;
     this.receivedFirstSync = false;
     this.syncRetryTimer = null;
+    this.isDestroyed = false;
   }
 
   init() {
@@ -209,7 +225,11 @@ export class PlayerNetwork {
 
     this.peer.on('error', (err) => {
       console.error('Player Peer error:', err);
-      this.onStatusChange?.('Room offline or invalid code');
+      if (err.type === 'peer-unavailable') {
+        this.onStatusChange?.('Room offline or invalid code. Check host screen.');
+      } else {
+        this.onStatusChange?.(`Connection error: ${err.type}`);
+      }
     });
   }
 
@@ -267,8 +287,15 @@ export class PlayerNetwork {
   }
 
   destroy() {
+    this.isDestroyed = true;
     if (this.syncRetryTimer) clearInterval(this.syncRetryTimer);
-    if (this.conn) this.conn.close();
-    if (this.peer) this.peer.destroy();
+    if (this.conn) {
+      try { this.conn.close(); } catch (e) {}
+      this.conn = null;
+    }
+    if (this.peer) {
+      try { this.peer.destroy(); } catch (e) {}
+      this.peer = null;
+    }
   }
 }
