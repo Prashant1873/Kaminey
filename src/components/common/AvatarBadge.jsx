@@ -1,58 +1,18 @@
 import React from 'react';
-import {
-  Crown,
-  Moon,
-  Zap,
-  Flame,
-  Eye,
-  ShieldAlert,
-  Shield,
-  Feather,
-  Sparkles,
-  Footprints,
-  Award,
-  Ghost,
-  Smile,
-  Compass,
-  Target,
-  Gem,
-  User
-} from 'lucide-react';
 import { getAvatarById } from '../../data/animalAvatars';
-
-export const AVATAR_ICON_MAP = {
-  lion: Crown,
-  wolf: Moon,
-  fox: Zap,
-  tiger: Flame,
-  owl: Eye,
-  snake: ShieldAlert,
-  bear: Shield,
-  crow: Feather,
-  monkey: Sparkles,
-  rabbit: Footprints,
-  dog: Award,
-  cat: Ghost,
-  panda: Smile,
-  deer: Compass,
-  elephant: Target,
-  peacock: Gem
-};
 
 export default function AvatarBadge({
   avatar,
   avatarId,
   size = 40,
-  iconSize,
+  fontSize,
   shape = 'squircle', // 'squircle' | 'circle'
   showRing = true,
   className = '',
   style = {}
 }) {
   const av = avatar || (avatarId ? getAvatarById(avatarId) : null) || getAvatarById('lion');
-  const IconComponent = AVATAR_ICON_MAP[av.id] || User;
-  const calculatedIconSize = iconSize || Math.round(size * 0.52);
-
+  const calculatedFontSize = fontSize || Math.round(size * 0.56);
   const borderRadius = shape === 'circle' ? '50%' : '24%';
 
   return (
@@ -70,15 +30,19 @@ export default function AvatarBadge({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: av.color || 'var(--primary)',
+        fontSize: `${calculatedFontSize}px`,
+        lineHeight: 1,
         transition: 'transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.18s ease',
         boxSizing: 'border-box',
         position: 'relative',
+        userSelect: 'none',
         ...style
       }}
       title={`${av.name} (${av.title})`}
     >
-      <IconComponent size={calculatedIconSize} strokeWidth={2.2} />
+      <span role="img" aria-label={av.name} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {av.emoji}
+      </span>
     </div>
   );
 }

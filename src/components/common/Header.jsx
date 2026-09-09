@@ -82,21 +82,9 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
             minHeight: '48px'
           }}
         >
-          <div style={{
-            width: '36px',
-            height: '36px',
-            minWidth: '36px',
-            borderRadius: 'var(--rounded-lg)',
-            background: isNight ? '#111218' : 'linear-gradient(135deg, #E5B869, #C99738)',
-            border: isNight ? '1px solid #222222' : '1px solid rgba(255, 255, 255, 0.2)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: isNight ? '#E5B869' : '#0A0B0E',
-            boxShadow: isNight ? 'none' : '0 4px 14px rgba(229, 184, 105, 0.3)'
-          }}>
-            {isNight ? <Moon size={18} strokeWidth={2.4} /> : <Crown size={19} strokeWidth={2.4} />}
-          </div>
+          <span style={{ fontSize: '1.35rem', lineHeight: 1, display: 'inline-flex', alignItems: 'center' }}>
+            {isNight ? '🌙' : '🎭'}
+          </span>
           <span style={{ fontWeight: 800, fontSize: '1.05rem', letterSpacing: '-0.02em', color: isNight ? '#ffffff' : 'var(--primary)', whiteSpace: 'nowrap' }}>
             KAMINEY
           </span>

@@ -134,20 +134,9 @@ export default function App() {
             minHeight: '48px'
           }}
         >
-          <div style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: 'var(--rounded-lg)',
-            background: 'linear-gradient(135deg, #E5B869, #C99738)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#0A0B0E',
-            boxShadow: '0 4px 14px rgba(229, 184, 105, 0.3)',
-            border: '1px solid rgba(255, 255, 255, 0.2)'
-          }}>
-            <Crown size={19} strokeWidth={2.4} />
-          </div>
+          <span style={{ fontSize: '1.4rem', lineHeight: 1, display: 'inline-flex', alignItems: 'center' }}>
+            🎭
+          </span>
           <span style={{ fontWeight: 800, fontSize: '1.1rem', letterSpacing: '-0.02em', color: 'var(--primary)' }}>
             KAMINEY
           </span>
