@@ -25,7 +25,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
         }
         return parsed;
       }
-    } catch (e) {}
+    } catch (e) { }
     return null;
   });
 
@@ -75,7 +75,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
     const newPlayer = { id, name, avatarId, roomCode };
     try {
       sessionStorage.setItem('kaminey_player_session', JSON.stringify(newPlayer));
-    } catch (e) {}
+    } catch (e) { }
     setPlayerData(newPlayer);
   };
 
@@ -299,14 +299,15 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                     alignItems: 'center',
                     gap: '6px',
                     background: 'var(--primary-subtle)',
-                    padding: '6px 14px',
-                    borderRadius: 'var(--rounded-full)',
-                    fontSize: '0.75rem',
+                    padding: '4px 10px',
+                    borderRadius: 'var(--rounded-sm)',
+                    fontSize: '0.71875rem',
                     fontWeight: 700,
+                    letterSpacing: '0.04em',
                     color: 'var(--primary)',
                     border: '1px solid var(--primary-subtle-border)'
                   }}>
-                    <Wifi size={14} /> Room: {playerData.roomCode}
+                    <Wifi size={13} /> Room: {playerData.roomCode}
                   </div>
                 </div>
 
@@ -320,7 +321,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                     marginBottom: '12px',
                     textAlign: 'left'
                   }}>
-                    HAVELI KE MEHMAAN / BAKRE ({gameState?.players?.length || 1})
+                    NI**AS IN PARIS ({gameState?.players?.length || 1})
                   </div>
 
                   <div style={{
@@ -349,7 +350,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                           }}
                         >
                           <AvatarBadge avatar={av} size={16} showRing={false} />
-                          <span>{p.name} {isMe && '(Aap)'}</span>
+                          <span>{p.name} {isMe && '(You)'}</span>
                         </span>
                       );
                     })}
@@ -366,7 +367,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   fontWeight: 600
                 }}>
                   <Clock size={16} className="animate-spin" color="var(--primary)" />
-                  <span>Host ke khel shuru karne ka intezaar... ⏳</span>
+                  <span>Waiting for host to start the game ⏳</span>
                 </div>
 
                 {/* Change identity button */}
@@ -387,7 +388,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                     textDecoration: 'underline'
                   }}
                 >
-                  Naam ya Avatar Badlo 🔄
+                  Change Name or Avatar
                 </button>
               </div>
             )}
@@ -439,7 +440,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                 </div>
 
                 <h1 className="text-headline" style={{ color: 'var(--on-surface)' }}>
-                  SUBAH KA JATKA ☀️
+                  DAWN CASUALTY REPORT
                 </h1>
 
                 {gameState?.morningVictim ? (
@@ -457,10 +458,10 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   }}>
                     <AvatarBadge avatar={getAvatarById(gameState.morningVictim.avatarId)} size={54} />
                     <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--loss-text)' }}>
-                      {gameState.morningVictim.name} ka patta saaf! 🩸
+                      {gameState.morningVictim.name} KA KHEL KHATAM
                     </div>
                     <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
-                      TV screen par dekho kiska kaam tamaam hua!
+                      Check the main TV screen for dawn details.
                     </p>
                   </div>
                 ) : (
@@ -478,10 +479,10 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   }}>
                     <ShieldCheck size={48} color="var(--gain-text)" />
                     <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--gain-text)' }}>
-                      Sab Bakre Salamaat! ✨
+                      Everyone Survived! ✨
                     </div>
                     <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
-                      Raat ko sab bach gaye, Haveli mein chamatkar ho gaya!
+                      No casualties recorded overnight. Peace holds for now!
                     </p>
                   </div>
                 )}
@@ -534,7 +535,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
               }}>
                 <Scale size={56} color="var(--primary)" strokeWidth={2} />
                 <h1 className="text-headline" style={{ color: 'var(--on-surface)' }}>
-                  HAVELI KA FAISLA ⚖️
+                  COUNCIL VERDICT
                 </h1>
 
                 {gameState?.exiledPlayer ? (
@@ -552,15 +553,15 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   }}>
                     <AvatarBadge avatar={getAvatarById(gameState.exiledPlayer.avatarId)} size={54} />
                     <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--primary)' }}>
-                      {gameState.exiledPlayer.name} ko Haveli se bahar phenk diya!
+                      {gameState.exiledPlayer.name} has been exiled!
                     </div>
                     <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
-                      TV screen par dekho: Wo Asli Kamina tha ya Masoom Bhola... 🎭
+                      Check the TV screen: were they a Kamina or an innocent Bhola?
                     </p>
                   </div>
                 ) : (
                   <p className="text-body" style={{ color: 'var(--on-surface-variant)' }}>
-                    TV screen par dekho kiski kismat bachi!
+                    Vote tied. Nobody was exiled!
                   </p>
                 )}
               </div>
@@ -580,10 +581,10 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
               }}>
                 <Trophy size={60} color="var(--primary)" strokeWidth={2.2} />
                 <h1 className="text-headline" style={{ color: 'var(--primary)' }}>
-                  {gameState?.winner === 'kaminey' ? '😈 HAVELI PE KAMINEY KA KABZA!' : '😇 MASOOM BHOLE JEET GAYE!'}
+                  {gameState?.winner === 'kaminey' ? 'KAMINEY SEIZE CONTROL!' : 'INNOCENT BHOLE PREVAIL!'}
                 </h1>
                 <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
-                  TV screen par sabke asli mukhote utar chuke hain! 🎭
+                  The mystery has concluded. Check the TV for the final roster reveal!
                 </p>
 
                 <button
@@ -600,7 +601,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   style={{ width: '100%', padding: '14px', marginTop: '10px', minHeight: '48px', gap: '8px' }}
                 >
                   <RotateCcw size={16} />
-                  <span>Naya Match Shuru Karo 🔄</span>
+                  <span>Play Again</span>
                 </button>
               </div>
             )}

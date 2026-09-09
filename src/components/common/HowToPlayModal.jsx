@@ -19,53 +19,53 @@ export default function HowToPlayModal({ isOpen, onClose }) {
     {
       step: '01',
       icon: QrCode,
-      title: 'QR Scan & Haveli Entry',
-      desc: 'TV screen par QR code dekho, phone camera se scan karo, apna spicy spy naam aur mast avatar chuno.'
+      title: 'QR Scan & Join',
+      desc: 'Scan the room QR code on the TV screen with your phone camera, choose your codename, and pick your avatar.'
     },
     {
       step: '02',
       icon: Moon,
-      title: 'Kaali Raat & Kaminey Sazish',
-      desc: 'Sab log aankhein band karke sar jhukao! Chhupe hue Kaminey chupke se kisi masoom Bhole ka shikar karenge.'
+      title: 'Night Phase & Kaminey Strike',
+      desc: 'All players close their eyes and lower their heads. The secret Kaminey coordinate on their phones to eliminate a target.'
     },
     {
       step: '03',
       icon: MessageSquare,
-      title: 'Subah Ka Jatka & Panchayat',
-      desc: 'TV screen par parda uthega kiska kaam tamaam hua! Jhooth pakdo, haveli dares khelo aur shakki bhediye ko ghero.'
+      title: 'Dawn Report & Council Debate',
+      desc: 'The big screen reveals who was eliminated. Players complete party dares, question suspicious behavior, and present alibis.'
     },
     {
       step: '04',
       icon: Scale,
-      title: 'Gupt Vote & Haveli Se Dhakka',
-      desc: 'Apne phone par secret vote thoko. Jisko sabse zyada vote pade, wo seedha haveli se bahar!'
+      title: 'Secret Ballot & Exile',
+      desc: 'Cast an anonymous vote on your phone to exile a suspected Kamina, or vote to skip if evidence is inconclusive.'
     }
   ];
 
   const roles = [
     {
-      title: 'Masoom Log (Bhole)',
-      badge: '😇 DOODH KE DHULE',
+      title: 'The Innocents (Bhole)',
+      badge: 'INNOCENT',
       glowClass: 'bhola-card-glow',
       icon: ShieldCheck,
       color: 'var(--primary)',
-      desc: 'Haveli ke sacche log! Kaminey ke tevar aur jhooth pehchano, unhe vote out karo aur haveli bachao.'
+      desc: 'Work together to spot deception, challenge inconsistent alibis, and vote out every Kamina at the council.'
     },
     {
-      title: 'Asteen Ke Saanp (Kaminey)',
-      badge: '😈 SHIKARI SAANP',
+      title: 'The Traitors (Kaminey)',
+      badge: 'TRAITOR',
       glowClass: 'kamina-card-glow',
       icon: Skull,
       color: 'var(--loss-text)',
-      desc: 'Raat mein target chun ke maaro, din mein masoom bhole ban kar ghoomo aur bholon ko fasao.'
+      desc: 'Coordinate silent eliminations during the night, blend in during discussions, and avoid council exile.'
     },
     {
-      title: 'Bhoot Mandali (Spectators)',
-      badge: '👻 GUPT BHOOT',
+      title: 'Spectators (Ghosts)',
+      badge: 'SPECTATOR',
       glowClass: '',
       icon: Ghost,
       color: '#94A3B8',
-      desc: 'Jo bahar ho gaye wo bhoot ban kar poora tamasha dekhenge! Bolna mana hai, bas screen par reaction barsao.'
+      desc: 'Eliminated players who watch the game unfold. No speaking allowed, but you can send live reactions to the big screen.'
     }
   ];
 
@@ -130,10 +130,10 @@ export default function HowToPlayModal({ isOpen, onClose }) {
             </div>
             <div>
               <div className="text-label" style={{ color: 'var(--primary)', letterSpacing: '0.08em' }}>
-                ✦ HAVELI SURVIVAL PROTOCOL ✦
+                ✦ HOW TO PLAY ✦
               </div>
               <h2 className="text-title" style={{ fontSize: '1.25rem', color: 'var(--on-surface)', margin: 0 }}>
-                Khel Ke Asli Niyam 📜
+                Rules of Engagement
               </h2>
             </div>
           </div>
@@ -176,10 +176,10 @@ export default function HowToPlayModal({ isOpen, onClose }) {
             gap: '4px'
           }}>
             <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--on-surface)' }}>
-              Haveli Ka Ek Hi Usool: Kaminey Bachna Nahi Chahiye! 🏰
+              Two Factions, One Mystery: Spot the Traitors Before They Strike
             </div>
             <p style={{ fontSize: '0.84375rem', color: 'var(--on-surface-variant)', lineHeight: 1.5, margin: 0 }}>
-              TV screen par chalega poora adda. Phone par aayegi aapki gupt chitthi. Do factions, ek kamra, aur har taraf asteen ke saanp!
+              The TV host screen runs the live game board. Your phone acts as your private controller for secret roles, assignments, and anonymous votes.
             </p>
           </div>
 
@@ -192,10 +192,10 @@ export default function HowToPlayModal({ isOpen, onClose }) {
               marginBottom: '14px'
             }}>
               <span className="text-label" style={{ color: 'var(--on-surface-variant)', letterSpacing: '0.06em' }}>
-                ROUND KA CHAKRAVYUH (4 PHASES)
+                ROUND STRUCTURE (4 PHASES)
               </span>
               <span className="text-label" style={{ color: 'var(--primary)' }}>
-                HAR ROUND REPEAT
+                REPEATS EACH ROUND
               </span>
             </div>
 
@@ -274,7 +274,7 @@ export default function HowToPlayModal({ isOpen, onClose }) {
           <div>
             <div style={{ marginBottom: '14px' }}>
               <span className="text-label" style={{ color: 'var(--on-surface-variant)', letterSpacing: '0.06em' }}>
-                FACTIONS AUR ROLES (KAUN KISKA SATHI?)
+                FACTIONS & ROLES
               </span>
             </div>
 
@@ -356,7 +356,7 @@ export default function HowToPlayModal({ isOpen, onClose }) {
             style={{ minHeight: '44px', padding: '10px 24px', fontSize: '0.875rem' }}
           >
             <CheckCircle2 size={16} />
-            <span>SAMJH GAYE, KHEL SHURU KARO! 🚀</span>
+            <span>Got It, Let's Play!</span>
           </button>
         </div>
       </div>

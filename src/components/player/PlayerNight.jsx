@@ -64,15 +64,15 @@ export default function PlayerNight({
 
       <div>
         <div className={isKamina ? 'badge-loss' : 'badge-warning'} style={{ marginBottom: '8px', fontSize: '0.75rem', letterSpacing: '0.06em' }}>
-          {isKamina ? '😈 KAMINEY CONCLAVE' : '😴 BHOLE KI GAHRI NEEND'}
+          {isKamina ? 'KAMINEY STRIKE' : 'NIGHT FALLS'}
         </div>
         <h1 className="text-headline" style={{ color: '#F8FAFC', fontSize: '1.45rem', marginBottom: '6px' }}>
-          {isKamina ? 'KISKA KAAM TAMAAM KARNA HAI?' : 'AANKHEIN BAND, CHAADAR TAAN!'}
+          {isKamina ? 'CHOOSE A VICTIM TO ELIMINATE' : 'KEEP HEAD DOWN & EYES CLOSED'}
         </h1>
         <p style={{ fontSize: '0.8125rem', color: '#94A3B8', maxWidth: '340px', lineHeight: 1.45 }}>
           {isKamina
-            ? 'Fellow Kaminey se aakhein milao aur ek masoom Bhola chuno!'
-            : 'Kaminey shikaar par nikle hain... Bas dua karo subah nashte pe tumhari kursi khali na mile!'}
+            ? 'Coordinate silently with fellow Kaminey and lock in an innocent target.'
+            : 'Night is active. Stay quiet and wait for dawn to break on the big screen.'}
         </p>
       </div>
 
@@ -80,7 +80,7 @@ export default function PlayerNight({
       {isKamina ? (
         <div style={{ width: '100%', maxWidth: '380px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <div className="text-label" style={{ color: '#94A3B8', textAlign: 'left', marginBottom: '4px', fontSize: '0.75rem' }}>
-            BHOLE TARGETS ({potentialVictims.length}):
+            AVAILABLE TARGETS ({potentialVictims.length}):
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -119,10 +119,10 @@ export default function PlayerNight({
                   <div>
                     {isSelectedByMe ? (
                       <span className="badge-loss" style={{ fontSize: '0.75rem', fontWeight: 800 }}>
-                        <Crosshair size={14} /> 🎯 NISHANA
+                        <Crosshair size={14} /> MARKED
                       </span>
                     ) : (
-                      <span style={{ fontSize: '0.75rem', color: '#94A3B8' }}>Chuno</span>
+                      <span style={{ fontSize: '0.75rem', color: '#94A3B8' }}>Select</span>
                     )}
                   </div>
                 </button>
@@ -140,7 +140,7 @@ export default function PlayerNight({
               color: '#F8FAFC',
               marginTop: '8px'
             }}>
-              🎯 Nishana lag gaya! Host ke suraj ugane ka intezar karo.
+              Target marked! Waiting for dawn to break on the big screen.
             </div>
           )}
         </div>
@@ -172,11 +172,11 @@ export default function PlayerNight({
             <Moon size={40} strokeWidth={2.2} />
           </div>
           <div style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary)' }}>
-            Haveli Mein Gehri Khamoshi Hai
+            The Haveli is in Silence
           </div>
           <p style={{ fontSize: '0.8125rem', color: '#94A3B8', lineHeight: 1.5 }}>
-            Koi aawaz mat nikalna aur screen ko normal pakde raho.
-            Subah ka gong bajte hi TV screen pe khulasa hoga!
+            Keep your phone flat and maintain a neutral expression.
+            The dawn report will appear on the big screen.
           </p>
         </div>
       )}

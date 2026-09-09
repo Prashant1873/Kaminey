@@ -53,24 +53,24 @@ export default function PlayerGhost({ playerName, isExiled }) {
 
       <div>
         <span className="badge-loss" style={{ fontSize: '0.75rem', marginBottom: '8px', letterSpacing: '0.04em' }}>
-          👻 BHOOT MANDALI (SPECTATOR MODE)
+          SPECTATOR MODE (GHOST)
         </span>
         <h1 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
-          AAP AB BHOOT BAN CHUKE HAIN! 👻
+          YOU ARE NOW A GHOST
         </h1>
         <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
           {isExiled
-            ? 'Panchayat ne aapko Haveli se nikal phenka! Masoom the ya Kaminey, ab kismat ko koso.'
-            : 'Kaali raat ke sannate mein Kaminey ne aapka patta saaf kar diya!'}
+            ? 'The Council voted to exile you from the Haveli. Watch in silence as the mystery unfolds.'
+            : 'Eliminated in the shadows of the night. You are now a spectator.'}
           <br />
-          <strong>🤫 Bolna bilkul mana hai!</strong> Popcorn khao, zinda logon ka tamasha dekho aur TV screen par bhoot signals feko.
+          <strong>Absolute silence required:</strong> No speaking or giving clues. Send ghost signals to flicker the TV screen!
         </p>
       </div>
 
       {/* Ghost Vector Reactions */}
       <div className="card-interactive" style={{ width: '100%', padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: '14px', boxSizing: 'border-box' }}>
         <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--primary)', letterSpacing: '0.04em' }}>
-          👻 BHOOTIYA REACTION FEKO (TV PAR DIKHEGA)
+          SEND GHOST SIGNALS (DISPLAYS ON TV)
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
           {GHOST_REACTIONS.map(item => {

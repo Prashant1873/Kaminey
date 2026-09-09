@@ -65,25 +65,25 @@ export default function HostGameOver({ winner, players, roles, onRestart }) {
           gap: '6px'
         }}>
           {isBholeWin ? <ShieldCheck size={14} /> : <Skull size={14} />}
-          <span>{isBholeWin ? '🏆 BHOLE LOGON KI JEET' : '😈 KAMINEY OP'}</span>
+          <span>{isBholeWin ? 'VICTORY: THE BHOLE' : 'VICTORY: THE KAMINEY'}</span>
         </div>
         <h1 className="text-display" style={{
           color: isBholeWin ? 'var(--gain-text)' : 'var(--loss-text)',
           marginBottom: '6px'
         }}>
-          {isBholeWin ? 'SAARE KAMINEY BUSTED!' : 'HAVELI PE KAMINEY KA KABZA!'}
+          {isBholeWin ? 'ALL KAMINEY UNMASKED!' : 'THE KAMINEY OVERRUN THE HAVELI!'}
         </h1>
         <p style={{ color: 'var(--on-surface-variant)', fontSize: '1rem' }}>
           {isBholeWin
-            ? 'Doodh ka doodh, paani ka paani! Bhole logon ne saare asteen ke saanp dhoondh nikale!'
-            : 'Bhole dekhte reh gaye aur Kaminey poori Haveli hatha ke nikal liye!'}
+            ? 'Truth prevails. The innocent Bhole identified and banished every traitor.'
+            : 'Deception succeeds. The Kaminey outsmarted the council and took control of the Haveli.'}
         </p>
       </div>
 
       {/* Full Cast Secret Revelation */}
       <div style={{ width: '100%' }}>
         <h2 className="text-title" style={{ color: 'var(--primary)', marginBottom: '16px' }}>
-          SABKE ASLI CHEHRE AUR MUKHOTE 🎭
+          FINAL DOSSIER: TRUE IDENTITIES REVEALED
         </h2>
         <div style={{
           display: 'grid',
@@ -125,10 +125,10 @@ export default function HostGameOver({ winner, players, roles, onRestart }) {
                   }}
                 >
                   {isKamina ? <Skull size={12} /> : <ShieldCheck size={12} />}
-                  <span>{isKamina ? 'ASLI KAMINA' : 'MASOOM BHOLA'}</span>
+                  <span>{isKamina ? 'KAMINA (TRAITOR)' : 'BHOLA (INNOCENT)'}</span>
                 </div>
                 <div style={{ fontSize: '0.6875rem', color: 'var(--outline)', marginTop: '2px' }}>
-                  {p.isAlive && !p.isExiled ? 'Zinda Bach Gaya ✨' : p.isExiled ? 'Court Ne Nikala ⚖️' : 'Raat Ko Shikaar 🩸'}
+                  {p.isAlive && !p.isExiled ? 'Survived' : p.isExiled ? 'Exiled by Council' : 'Eliminated in Night'}
                 </div>
               </div>
             );
@@ -145,7 +145,7 @@ export default function HostGameOver({ winner, players, roles, onRestart }) {
           style={{ padding: '16px 36px', fontSize: '1.0625rem' }}
         >
           <RotateCcw size={18} />
-          <span>Naya Match Shuru Karo 🔄</span>
+          <span>Play Again (Rematch)</span>
         </button>
       </div>
     </div>

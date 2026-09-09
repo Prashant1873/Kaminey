@@ -236,26 +236,26 @@ export default function App() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            padding: '6px 16px',
-            borderRadius: 'var(--rounded-full)',
+            padding: '5px 12px',
+            borderRadius: 'var(--rounded-sm)',
             background: 'var(--primary-subtle)',
             border: '1px solid var(--primary-subtle-border)',
             color: 'var(--primary)',
-            fontSize: '0.75rem',
+            fontSize: '0.71875rem',
             fontWeight: 800,
-            letterSpacing: '0.06em',
+            letterSpacing: '0.07em',
             marginBottom: '16px'
           }}>
             <Sparkles size={14} />
-            <span>SHARAFAT KA MUKHOTA YA ASLI KAMINA?</span>
+            <span>SOCIAL DEDUCTION PARTY GAME</span>
             <span style={{ opacity: 0.4 }}>•</span>
-            <span>4 SE 12 LOG</span>
+            <span>4 TO 12 PLAYERS</span>
           </div>
           <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '10px' }}>
-            Kaminey Chhupenge, Bhole Phasenge!
+            Deceive. Accuse. Banish.
           </h1>
           <p className="text-headline" style={{ color: 'var(--on-surface-variant)', fontWeight: 500, fontSize: '1.08rem', maxWidth: '560px', margin: '0 auto' }}>
-            Living room TV pe Base Station. Apne phone pe secret control. Kaun doodh ka dhula hai aur kaun asteen ka saanp?
+            Host on your TV, join from your phone. Will the innocent Bhole uncover the secret Kaminey in time?
           </p>
         </div>
 
@@ -285,7 +285,7 @@ export default function App() {
               boxSizing: 'border-box'
             }}
           >
-            <span className="badge-warning">📺 TV BASE STATION</span>
+            <span className="badge-brand">TV Base Station</span>
 
             <div style={{
               width: '76px',
@@ -302,15 +302,15 @@ export default function App() {
 
             <div>
               <h2 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
-                TV Pe Haveli Kholo
+                Host on TV
               </h2>
               <div style={{ fontSize: '0.84rem', color: 'var(--on-surface-variant)', maxWidth: '270px', lineHeight: 1.5 }}>
-                Badi screen pe sabke samne QR scan hoga, timer chalega aur jhooth pakda jayega!
+                Display QR code, timers, night reveals, and council voting tallies on the big screen.
               </div>
             </div>
 
             <div className="btn-primary" style={{ width: '100%', padding: '14px', minHeight: '48px', marginTop: 'auto' }}>
-              <span>Base Station Chalu Karo</span>
+              <span>Launch Base Station</span>
               <ArrowRight size={17} />
             </div>
           </button>
@@ -332,7 +332,7 @@ export default function App() {
               boxSizing: 'border-box'
             }}
           >
-            <span className="badge-gain">📱 GUPT CONTROLLER</span>
+            <span className="badge-neutral">Handset Controller</span>
 
             <div style={{
               width: '76px',
@@ -350,15 +350,15 @@ export default function App() {
 
             <div>
               <h2 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
-                Phone Se Haveli Mein Ghuso
+                Join on Mobile
               </h2>
               <div style={{ fontSize: '0.84rem', color: 'var(--on-surface-variant)', maxWidth: '270px', lineHeight: 1.5 }}>
-                Apna parda faash hone se bacho. Raat ka katal aur gupt voting mobile se chupke karo!
+                Receive your secret role, inspect mission intel, and cast anonymous exile ballots.
               </div>
             </div>
 
             <div className="btn-secondary" style={{ width: '100%', padding: '14px', minHeight: '48px', marginTop: 'auto' }}>
-              <span>Room Code Daalo Aur Ghuso</span>
+              <span>Enter Room Code & Join</span>
               <ArrowRight size={17} />
             </div>
           </button>
@@ -395,14 +395,14 @@ export default function App() {
               }}>
                 <Skull size={24} color="var(--loss-text)" />
               </div>
-              <span className="badge-loss">😈 ASLI KAMINEY</span>
+              <span className="badge-loss">The Kaminey</span>
             </div>
             <div>
               <div style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--loss-text)', letterSpacing: '-0.01em' }}>
-                Asteen Ke Saanp (Kaminey)
+                The Traitors (Kaminey)
               </div>
               <p style={{ fontSize: '0.84rem', color: 'var(--on-surface-variant)', marginTop: '6px', lineHeight: 1.45 }}>
-                Raat ke sannate mein aapas mein whispering. Din ke ujaale mein sabse masoom banne ki acting!
+                Coordinate in secret during the night. Blend in during the day and mislead the council.
               </p>
             </div>
             <div style={{
@@ -414,7 +414,7 @@ export default function App() {
               borderTop: '1px solid rgba(255, 86, 48, 0.2)',
               paddingTop: '10px'
             }}>
-              TARGET: Bhole logon ko chun-chun ke bahar karo!
+              OBJECTIVE: Eliminate innocents before your identities are revealed.
             </div>
           </div>
 
@@ -441,14 +441,14 @@ export default function App() {
               }}>
                 <ShieldCheck size={24} color="var(--primary)" />
               </div>
-              <span className="badge-gain">😇 DUDH KE DHULE</span>
+              <span className="badge-gain">The Bhole</span>
             </div>
             <div>
               <div style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--primary)', letterSpacing: '-0.01em' }}>
-                Masoom Log (Bhole)
+                The Innocents (Bhole)
               </div>
               <p style={{ fontSize: '0.84rem', color: 'var(--on-surface-variant)', marginTop: '6px', lineHeight: 1.45 }}>
-                Aankhon ki chori pakdo, ajeeb harkatein note karo, aur Kaminey ko Haveli se dhakke maar ke nikalo!
+                Spot nervous body language, challenge alibis, and vote out traitors at the council.
               </p>
             </div>
             <div style={{
@@ -460,7 +460,7 @@ export default function App() {
               borderTop: '1px solid var(--outline-variant)',
               paddingTop: '10px'
             }}>
-              TARGET: Har ek Kamina pakad ke Haveli se exile karo!
+              OBJECTIVE: Identify and exile every Kamina from the Haveli.
             </div>
           </div>
         </div>

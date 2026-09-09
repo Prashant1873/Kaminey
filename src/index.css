@@ -450,50 +450,93 @@ input:focus-visible {
   box-shadow: 0 0 0 3px rgba(0, 82, 204, 0.15), inset 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
-/* Badges - Architectural Micro-Indicators */
-.badge-gain {
-  background-color: rgba(54, 179, 126, 0.12);
-  color: var(--gain-text);
-  border-radius: var(--rounded-md);
-  padding: 4px 10px;
-  font-size: 0.6875rem;
+/* Badges - Non-AI Architectural Micro-Indicators */
+.badge-gain,
+.badge-loss,
+.badge-warning,
+.badge-neutral,
+.badge-brand {
+  border-radius: var(--rounded-sm);
+  padding: 3px 8px;
+  font-size: 0.65625rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  line-height: 1.2;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  border: 1px solid rgba(54, 179, 126, 0.25);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  gap: 6px;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.02);
+  transition: all 0.15s ease;
+}
+
+.badge-gain::before,
+.badge-loss::before,
+.badge-warning::before,
+.badge-neutral::before,
+.badge-brand::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Hide auto-dot if badge already contains an SVG icon */
+.badge-gain:has(svg)::before,
+.badge-loss:has(svg)::before,
+.badge-warning:has(svg)::before,
+.badge-neutral:has(svg)::before,
+.badge-brand:has(svg)::before {
+  display: none;
+}
+
+/* Light Mode: Desaturated, Editorial Tint Palette */
+.badge-gain {
+  background-color: rgba(22, 101, 52, 0.07);
+  color: #166534;
+  border: 1px solid rgba(22, 101, 52, 0.18);
+}
+.badge-gain::before {
+  background-color: #16a34a;
 }
 
 .badge-loss {
-  background-color: rgba(255, 86, 48, 0.12);
-  color: var(--loss-text);
-  border-radius: var(--rounded-md);
-  padding: 4px 10px;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  border: 1px solid rgba(255, 86, 48, 0.25);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  background-color: rgba(153, 27, 27, 0.07);
+  color: #991b1b;
+  border: 1px solid rgba(153, 27, 27, 0.18);
+}
+.badge-loss::before {
+  background-color: #dc2626;
 }
 
 .badge-warning {
-  background-color: rgba(255, 159, 10, 0.12);
-  color: var(--warning-text);
-  border-radius: var(--rounded-md);
-  padding: 4px 10px;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  border: 1px solid rgba(255, 159, 10, 0.25);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  background-color: rgba(146, 64, 14, 0.07);
+  color: #854d0e;
+  border: 1px solid rgba(146, 64, 14, 0.18);
+}
+.badge-warning::before {
+  background-color: #d97706;
+}
+
+.badge-neutral {
+  background-color: rgba(15, 23, 42, 0.04);
+  color: #334155;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+}
+.badge-neutral::before {
+  background-color: #64748b;
+}
+
+.badge-brand {
+  background-color: rgba(0, 82, 204, 0.07);
+  color: #0052cc;
+  border: 1px solid rgba(0, 82, 204, 0.20);
+}
+.badge-brand::before {
+  background-color: #0052cc;
 }
 
 .app-header {
@@ -600,28 +643,57 @@ input:focus-visible {
 }
 
 [data-theme="dark"] .badge-gain {
-  background-color: rgba(16, 185, 129, 0.15);
-  color: var(--gain-text);
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background-color: rgba(74, 222, 128, 0.08);
+  color: #86efac;
+  border: 1px solid rgba(74, 222, 128, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+[data-theme="dark"] .badge-gain::before {
+  background-color: #4ade80;
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.5);
 }
 
 [data-theme="dark"] .badge-loss {
-  background-color: rgba(239, 68, 68, 0.15);
-  color: var(--loss-text);
-  border-radius: var(--rounded-md);
-  padding: 4px 10px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background-color: rgba(248, 113, 113, 0.08);
+  color: #fca5a5;
+  border: 1px solid rgba(248, 113, 113, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+[data-theme="dark"] .badge-loss::before {
+  background-color: #f87171;
+  box-shadow: 0 0 6px rgba(248, 113, 113, 0.5);
 }
 
 [data-theme="dark"] .badge-warning {
-  background-color: rgba(245, 158, 11, 0.15);
-  color: var(--warning-text);
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  background-color: rgba(251, 191, 36, 0.08);
+  color: #fde047;
+  border: 1px solid rgba(251, 191, 36, 0.22);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+[data-theme="dark"] .badge-warning::before {
+  background-color: #fbbf24;
+  box-shadow: 0 0 6px rgba(251, 191, 36, 0.5);
+}
+
+[data-theme="dark"] .badge-neutral {
+  background-color: rgba(241, 245, 249, 0.05);
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+[data-theme="dark"] .badge-neutral::before {
+  background-color: #94a3b8;
+}
+
+[data-theme="dark"] .badge-brand {
+  background-color: rgba(229, 184, 105, 0.10);
+  color: #e5b869;
+  border: 1px solid rgba(229, 184, 105, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+[data-theme="dark"] .badge-brand::before {
+  background-color: #e5b869;
+  box-shadow: 0 0 6px rgba(229, 184, 105, 0.4);
 }
 
 /* True OLED Pitch Black Theme for Night Conclave */

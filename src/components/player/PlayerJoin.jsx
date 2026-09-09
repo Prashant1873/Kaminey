@@ -79,7 +79,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
             color: 'var(--primary)',
             marginBottom: '2px'
           }}>
-            🎭 GUPT ENTRY IDENTITY
+            PLAYER PROFILE
           </div>
           <div style={{ fontWeight: 800, fontSize: '1.2rem', color: 'var(--on-surface)', letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {activeAvatar.name}
@@ -93,7 +93,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
       {/* Form Card */}
       <form onSubmit={handleSubmit} className="card-interactive" style={{ display: 'flex', flexDirection: 'column', gap: '16px', boxSizing: 'border-box' }}>
         {error && (
-          <div className="badge-loss" style={{ padding: '8px 12px', borderRadius: 'var(--rounded-md)', fontSize: '0.8125rem' }}>
+          <div className="badge-loss" style={{ padding: '8px 12px', borderRadius: 'var(--rounded-sm)', fontSize: '0.8125rem' }}>
             {error}
           </div>
         )}
@@ -101,7 +101,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
         {/* Room Code */}
         <div>
           <label className="text-label" style={{ display: 'block', marginBottom: '6px', color: 'var(--on-surface-variant)' }}>
-            TV KA ROOM CODE
+            ROOM CODE
           </label>
           <input
             type="text"
@@ -127,7 +127,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
             <label className="text-label" style={{ color: 'var(--on-surface-variant)' }}>
-              APNA NAAM (SPY BAN KE AAO)
+              CODENAME / PLAYER NAME
             </label>
             <button
               type="button"
@@ -150,7 +150,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
               title="Roll a random secret name"
             >
               <Dices size={14} />
-              <span>🎲 Random Naam</span>
+              <span>Random Name</span>
             </button>
           </div>
 
@@ -159,7 +159,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
             maxLength={18}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Apna naam dalo ya random chuno"
+            placeholder="Enter your name or roll random"
             className="input-base"
             style={{ boxSizing: 'border-box', minHeight: '48px' }}
           />
@@ -168,7 +168,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
         {/* Avatar Grid */}
         <div>
           <label className="text-label" style={{ display: 'block', marginBottom: '8px', color: 'var(--on-surface-variant)' }}>
-            AVATAR CHUNO (KOI SHAK NA KARE)
+            CHOOSE AVATAR
           </label>
           <div style={{
             display: 'grid',
@@ -223,7 +223,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
           aria-label="Enter the Haveli"
           style={{ width: '100%', padding: '14px', fontSize: '0.9375rem', boxSizing: 'border-box', minHeight: '48px', marginTop: '6px' }}
         >
-          <span>HAVELI MEIN GHUSO 🚪</span>
+          <span>ENTER LOBBY</span>
           <ArrowRight size={18} />
         </button>
       </form>

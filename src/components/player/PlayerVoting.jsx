@@ -72,10 +72,10 @@ export default function PlayerVoting({
 
         <div>
           <h1 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
-            VOTE THOK DIYA! 💥
+            BALLOT RECORDED!
           </h1>
           <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
-            Aapka faisla Haveli ke Gupt Sandook mein lock ho chuka hai.
+            Your secret vote has been securely recorded for the council.
           </p>
         </div>
 
@@ -91,21 +91,21 @@ export default function PlayerVoting({
             <>
               <MinusCircle size={28} color="var(--primary)" />
               <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--on-surface)' }}>
-                🕊️ Maaf Kiya (Skip Vote)
+                Skip Vote (No Exile)
               </div>
             </>
           ) : (
             <>
               {votedAvatar && <AvatarBadge avatar={votedAvatar} size={38} />}
               <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--on-surface)' }}>
-                Dhakka Diya: <span style={{ color: 'var(--loss-text)' }}>{votedPlayer?.name}</span>
+                Voted to Exile: <span style={{ color: 'var(--loss-text)' }}>{votedPlayer?.name}</span>
               </div>
             </>
           )}
         </div>
 
         <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
-          Haveli TV screen par parda uthne ka intezaar karo... 📺
+          Watch the main screen for the council verdict...
         </div>
       </div>
     );
@@ -131,17 +131,17 @@ export default function PlayerVoting({
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
           <span className="badge-loss" style={{ fontSize: '0.6875rem' }}>
-            ⚖️ GUPT TRIAL
+            COUNCIL BALLOT
           </span>
           <span className="text-label" style={{ color: 'var(--on-surface-variant)' }}>
-            1 VOTE / BAKRA
+            1 BALLOT PER PLAYER
           </span>
         </div>
         <h1 className="text-headline" style={{ color: 'var(--on-surface)', fontSize: '1.25rem', margin: '4px 0 2px 0' }}>
-          Kisko Haveli Se Dhakka Dena Hai? 🗳️
+          Vote to Exile a Suspect
         </h1>
         <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem', margin: 0, lineHeight: 1.4 }}>
-          Apna shak pakka karo aur vote thoko! Kaminey ko pakdo, ya kisi bhole ko bachao.
+          Choose who to exile from the Haveli, or vote to skip if evidence is inconclusive.
         </p>
       </div>
 
@@ -160,18 +160,18 @@ export default function PlayerVoting({
           animation: 'pulse-subtle 1.5s infinite'
         }}>
           <div style={{ fontSize: '0.875rem', fontWeight: 800, color: 'var(--loss-text)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-            Pakka Yahi Hai Wo Kamina? 🤨
+            Confirm Your Exile Ballot
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '1.15rem', fontWeight: 700, color: 'var(--on-surface)' }}>
             {selectedTargetId === 'skip' ? (
               <>
                 <MinusCircle size={22} color="var(--primary)" />
-                <span>🕊️ Skip Vote (Kisi ko mat nikalo)</span>
+                <span>Skip Vote (No exile this round)</span>
               </>
             ) : (
               <>
                 {selectedAvatar && <AvatarBadge avatar={selectedAvatar} size={30} />}
-                <span>{selectedPlayer?.name} ko bahar phenko!</span>
+                <span>Exile {selectedPlayer?.name}</span>
               </>
             )}
           </div>
@@ -183,7 +183,7 @@ export default function PlayerVoting({
               aria-label="Cancel vote"
               style={{ flex: 1, padding: '10px', minHeight: '44px' }}
             >
-              Ruko, Sochne Do 🤔
+              Change Selection
             </button>
             <button
               type="button"
@@ -192,7 +192,7 @@ export default function PlayerVoting({
               aria-label="Confirm vote"
               style={{ flex: 1, padding: '10px', minHeight: '44px' }}
             >
-              Thok Do Vote! 🔨
+              Confirm Vote
             </button>
           </div>
         </div>
@@ -229,7 +229,7 @@ export default function PlayerVoting({
                 <AvatarBadge avatar={avatar} size={40} />
                 <div style={{ textAlign: 'left' }}>
                   <div style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--on-surface)' }}>
-                    {p.name} {isMe && '(Aap Khud)'}
+                    {p.name} {isMe && '(You)'}
                   </div>
                   <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)' }}>
                     {avatar.name}
@@ -240,15 +240,15 @@ export default function PlayerVoting({
               <div>
                 {isMe ? (
                   <span className="text-label" style={{ fontSize: '0.6875rem', color: 'var(--on-surface-variant)' }}>
-                    Masoom Bhola?
+                    Self
                   </span>
                 ) : isSelected ? (
                   <span className="badge-loss" style={{ fontSize: '0.75rem', fontWeight: 800 }}>
-                    🎯 Nishana
+                    Selected
                   </span>
                 ) : (
                   <span className="text-label" style={{ fontSize: '0.6875rem', color: 'var(--on-surface-variant)' }}>
-                    Dhakka Do 🚪
+                    Vote Exile
                   </span>
                 )}
               </div>
@@ -286,14 +286,14 @@ export default function PlayerVoting({
               <MinusCircle size={22} strokeWidth={2.2} />
             </div>
             <div style={{ textAlign: 'left' }}>
-              <div style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--on-surface)' }}>🕊️ Kisi Ko Mat Nikalo (Skip)</div>
+              <div style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--on-surface)' }}>Skip Vote (No Exile)</div>
               <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)' }}>
-                Abhi shak clear nahi hai, sab bhole lag rahe hain
+                Evidence is inconclusive, spare everyone this round
               </div>
             </div>
           </div>
-          <span className="category-pill" style={{ fontSize: '0.75rem' }}>
-            Maafi
+          <span className="badge-neutral" style={{ fontSize: '0.6875rem' }}>
+            Skip
           </span>
         </button>
       </div>

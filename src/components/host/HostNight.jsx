@@ -74,13 +74,13 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
           gap: '6px'
         }}>
           <Moon size={14} />
-          <span>🌙 SANNATA AUR SAZISH</span>
+          <span>NIGHT CONCLAVE</span>
         </div>
         <h1 className="text-display" style={{ color: '#ffffff', marginBottom: '8px' }}>
-          HAVELI MEIN KAALI RAAT
+          NIGHT FALLS ON THE HAVELI
         </h1>
         <p style={{ fontSize: '1.1rem', color: '#9aa0a6' }}>
-          Bhole chaadar taan ke so rahe hain... aur <strong style={{ color: 'var(--loss)' }}>Kaminey</strong> chupke se shikaar chun rahe hain! 😈
+          The Bhole are asleep with heads down... while the <strong style={{ color: 'var(--loss)' }}>Kaminey</strong> silently select a victim.
         </p>
       </div>
 
@@ -109,11 +109,11 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
             animation: 'pulse-subtle 1.2s infinite'
           }} />
           <span style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#ffffff' }}>
-            {nightMurderSelected ? '🎯 Target Lock Ho Gaya! Shikaar Tay Hai!' : 'Kaminey aapas mein aakhein lada rahe hain...'}
+            {nightMurderSelected ? 'Target Selected: Victim Marked' : 'Awaiting Kaminey selection...'}
           </span>
         </div>
         <div style={{ fontSize: '0.8125rem', color: '#80868b' }}>
-          Apne apne phone pe nazrein tikaaye rakho!
+          All players stay silent with eyes closed.
         </div>
       </div>
 
@@ -128,7 +128,7 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
         }}
       >
         <Sun size={18} />
-        <span>Suraj Ugao: Subah Ka Tamasha Dekho ☀️</span>
+        <span>Wake Up Haveli: Reveal Dawn Report</span>
       </button>
     </div>
   );

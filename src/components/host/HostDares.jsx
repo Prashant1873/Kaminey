@@ -36,21 +36,22 @@ export default function HostDares({
           background: mission?.categoryColor ? `${mission.categoryColor}18` : 'rgba(255, 159, 10, 0.15)',
           color: mission?.categoryColor || 'var(--warning-text)',
           border: `1px solid ${mission?.categoryColor || 'var(--warning)'}40`,
-          borderRadius: 'var(--rounded-full)',
-          padding: '4px 14px',
-          fontSize: '0.8125rem',
+          borderRadius: 'var(--rounded-sm)',
+          padding: '4px 10px',
+          fontSize: '0.71875rem',
           fontWeight: 800,
-          letterSpacing: '0.04em',
+          letterSpacing: '0.07em',
+          textTransform: 'uppercase',
           marginBottom: '6px'
         }}>
-          {mission?.badge || '🎭 HAVELI CHILL & MAHA-MISSION'}
+          {mission?.badge || 'PARTY MYSTERY MISSION'}
         </div>
 
         <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
-          {mission?.title || 'HAVELI MAHA-ACTIVITY'}
+          {mission?.title || 'GROUP ICEBREAKER'}
         </h1>
         <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
-          Poore kamre ke bakre milke ye task karenge! Chehre ke expressions aur shakki harkaton par dhyan do.
+          All players participate together. Watch for nervous reactions, shifting glances, and slip-ups.
         </p>
       </div>
 
@@ -90,7 +91,7 @@ export default function HostDares({
             gap: '8px'
           }}>
             <Sparkles size={16} color="var(--primary)" style={{ flexShrink: 0 }} />
-            <span><strong>Haveli Darbar Hukm:</strong> {mission.prompt}</span>
+            <span><strong>Mission Directive:</strong> {mission.prompt}</span>
           </div>
         )}
 
@@ -119,7 +120,7 @@ export default function HostDares({
             title="Roll another random party mission"
           >
             <Shuffle size={18} />
-            <span>Naya Task Lao 🎲</span>
+            <span>Shuffle Mission</span>
           </button>
 
           {/* Do Our Own Thing Button */}
@@ -139,7 +140,7 @@ export default function HostDares({
             title="Skip app task and chill with drinks/discussion on your own"
           >
             <Wine size={18} />
-            <span>Apna Hi Adda Jamate Hain 🍷</span>
+            <span>Free Socialize / Drinks</span>
           </button>
 
           {/* Mission Accomplished -> Emergency Council */}
@@ -158,7 +159,7 @@ export default function HostDares({
             }}
           >
             <AlertTriangle size={18} />
-            <span>Task Ho Gaya! Panchayat Bulao 🚨</span>
+            <span>Mission Complete: Call Council</span>
           </button>
         </div>
       </div>

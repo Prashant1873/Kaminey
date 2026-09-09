@@ -20,13 +20,13 @@ export default function PlayerDiscussion({ players = [], myPlayerId }) {
     }}>
       <div style={{ textAlign: 'center' }}>
         <div className="badge-warning" style={{ marginBottom: '8px', fontSize: '0.75rem', letterSpacing: '0.04em' }}>
-          🗣️ HAVELI PANCHAYAT IN SESSION
+          COUNCIL DEBATE IN SESSION
         </div>
         <h1 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
-          KAUN HAI WO ASTEEN KA SAANP?
+          WHO IS THE TRAITOR?
         </h1>
         <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
-          Room mein sabke chehre dekho! Kisne nazrein churayi? TV screen timer pe dhyan rakho.
+          Observe who is hesitating, deflecting questions, or changing stories. Debate openly.
         </p>
       </div>
 
@@ -34,12 +34,12 @@ export default function PlayerDiscussion({ players = [], myPlayerId }) {
       <div className="card-interactive" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.875rem', fontWeight: 700, color: 'var(--primary)' }}>
           <Edit3 size={16} />
-          <span>🕵️ Gupt Jasoosi Diary (Kispe shak hai?):</span>
+          <span>Private Investigation Notes:</span>
         </div>
         <textarea
           value={scratchNotes}
           onChange={(e) => setScratchNotes(e.target.value)}
-          placeholder="Jaise: Dev achanak chup kyu ho gaya? Simran ki aankhein fati reh gayi..."
+          placeholder="Note suspicious alibis or unusual voting patterns here..."
           className="input-base"
           style={{
             minHeight: '100px',
@@ -53,7 +53,7 @@ export default function PlayerDiscussion({ players = [], myPlayerId }) {
       {/* Alive Suspects List */}
       <div>
         <div className="text-label" style={{ color: 'var(--on-surface-variant)', marginBottom: '8px', fontSize: '0.75rem' }}>
-          ZINDA LOG ({alivePlayers.length}):
+          ALIVE PLAYERS ({alivePlayers.length}):
         </div>
         <div style={{
           display: 'grid',

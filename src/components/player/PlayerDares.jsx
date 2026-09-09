@@ -49,13 +49,15 @@ export default function PlayerDares({
         background: mission?.categoryColor ? `${mission.categoryColor}18` : 'rgba(255, 159, 10, 0.15)',
         color: mission?.categoryColor || 'var(--warning-text)',
         border: `1px solid ${mission?.categoryColor || 'var(--warning)'}40`,
-        borderRadius: 'var(--rounded-full)',
-        padding: '4px 14px',
-        fontSize: '0.8125rem',
+        borderRadius: 'var(--rounded-sm)',
+        padding: '4px 10px',
+        fontSize: '0.71875rem',
         fontWeight: 800,
+        letterSpacing: '0.07em',
+        textTransform: 'uppercase',
         margin: '0 auto'
       }}>
-        {mission?.badge || '🎭 HAVELI GROUP MISSION'}
+        {mission?.badge || 'GROUP MISSION'}
       </div>
 
       <div>
@@ -63,7 +65,7 @@ export default function PlayerDares({
           {mission?.title || 'GROUP ACTIVITY'}
         </h1>
         <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem' }}>
-          TV screen par dhyan do! Sab log milke ye bakchodi kar rahe hain.
+          Watch the main screen. Everyone participates in this mission together.
         </p>
       </div>
 
@@ -117,7 +119,7 @@ export default function PlayerDares({
           }}
         >
           <CheckCircle2 size={18} />
-          <span>{markedReady ? "Main Taiyaar Hoon! 👍" : "Panchayat Ke Liye Taiyaar Hoon ⚡"}</span>
+          <span>{markedReady ? "Task Completed" : "Ready for Council Debate"}</span>
         </button>
       </div>
 
@@ -140,7 +142,7 @@ export default function PlayerDares({
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <Skull size={18} color="var(--loss)" />
               <span style={{ fontWeight: 800, fontSize: '0.875rem', color: 'var(--loss)', letterSpacing: '0.04em' }}>
-                💀 GUPT SHIKAR HITLIST (SIRF KAMINEY)
+                COVERT HITLIST (KAMINEY ONLY)
               </span>
             </div>
 
@@ -165,12 +167,12 @@ export default function PlayerDares({
               title="Quickly hide hit list if someone is looking"
             >
               {showHitList ? <EyeOff size={12} /> : <Eye size={12} />}
-              <span>{showHitList ? 'Chhupao 🙈' : 'Dikhao 👁️'}</span>
+              <span>{showHitList ? 'Hide' : 'Show'}</span>
             </button>
           </div>
 
           <p style={{ fontSize: '0.75rem', color: '#c4cbd4', margin: 0 }}>
-            Sab log task padhne mein busy hain! Mauka accha hai, chupke se kisi Masoom Bhole ko target kar do.
+            While everyone is occupied with the mission, coordinate silently with fellow Kaminey to mark a target.
           </p>
 
           {showHitList && (
@@ -225,7 +227,7 @@ export default function PlayerDares({
                         </span>
                       ) : (
                         <span style={{ fontSize: '0.75rem', color: 'var(--loss)', fontWeight: 700 }}>
-                          🎯 Kaam Tamaam
+                          Mark Victim
                         </span>
                       )}
                     </div>
@@ -244,7 +246,7 @@ export default function PlayerDares({
                   textAlign: 'center',
                   marginTop: '4px'
                 }}>
-                  🩸 Nishana pakka ho gaya. Raat aate hi faisla hoga.
+                  Target marked. Verdict executes when night concludes.
                 </div>
               )}
             </div>
@@ -253,7 +255,7 @@ export default function PlayerDares({
       )}
 
       <div style={{ fontSize: '0.75rem', color: 'var(--outline)' }}>
-        Host jab TV screen se bulayega tab Emergency Panchayat shuru hogi.
+        The host will open council debate once everyone is ready.
       </div>
     </div>
   );

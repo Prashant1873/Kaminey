@@ -53,17 +53,17 @@ export default function HostVoting({
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
           <div className="badge-gain" style={{ fontSize: '0.6875rem', letterSpacing: '0.06em' }}>
             <Scale size={13} />
-            ⚖️ GUPT VOTE MANDAL
+            SECRET COUNCIL BALLOT
           </div>
           <div className="tabular-nums" style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
             {votedCount} OF {totalAlive} SUBMITTED
           </div>
         </div>
         <h1 className="text-display" style={{ color: 'var(--on-surface)', margin: '4px 0 2px 0' }}>
-          UNGLI UTHAO, EXILE CHUNO!
+          CAST YOUR EXILE BALLOT
         </h1>
         <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.90625rem', margin: 0 }}>
-          Secret voting phone pe lock ho rahi hai... Jiske khilaaf ungli uthi, wo seedha Haveli se bahar!
+          Secret ballots are locking in... The player with the most votes will be exiled from the Haveli.
         </p>
       </div>
 
@@ -90,7 +90,7 @@ export default function HostVoting({
           {votedCount} / {totalAlive}
         </span>
         <span style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--on-surface-variant)' }}>
-          votes thoke ja chuke hain
+          ballots submitted
         </span>
       </div>
 
@@ -136,12 +136,12 @@ export default function HostVoting({
                   {hasVoted ? (
                     <>
                       <CheckCircle2 size={16} color="var(--gain-text)" />
-                      <span>Vote Thok Diya</span>
+                      <span>Ballot Cast</span>
                     </>
                   ) : (
                     <>
                       <Clock size={16} color="var(--outline)" />
-                      <span>Soch Raha Hai...</span>
+                      <span>Deciding...</span>
                     </>
                   )}
                 </div>
@@ -175,7 +175,7 @@ export default function HostVoting({
             }}
           >
             <MinusCircle size={36} color="var(--on-surface-variant)" />
-            <div style={{ fontWeight: 700, fontSize: '1rem' }}>Skip Vote (Maafi)</div>
+            <div style={{ fontWeight: 700, fontSize: '1rem' }}>Skip Vote</div>
             <div className="tabular-nums" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--on-surface-variant)' }}>
               {tallies['skip'] || 0} Votes
             </div>
@@ -192,7 +192,7 @@ export default function HostVoting({
             className="btn-danger spring-btn"
             style={{ padding: '16px 36px', fontSize: '1.125rem' }}
           >
-            <span>Vote Lock Karo & Parda Uthao! 🔨</span>
+            <span>Close Ballot & Reveal Tallies</span>
           </button>
         ) : (
           <button
@@ -201,7 +201,7 @@ export default function HostVoting({
             className="btn-primary spring-btn"
             style={{ padding: '16px 40px', fontSize: '1.125rem' }}
           >
-            <span>Exile Verdict Sunao ⚖️</span>
+            <span>Declare Exile Verdict</span>
             <ArrowRight size={20} />
           </button>
         )}

@@ -37,13 +37,13 @@ export default function HostRoleReveal({ players, onProceed }) {
           alignItems: 'center',
           gap: '6px'
         }}>
-          <span>🤫 GUPT LIFFAFA DELIVERED</span>
+          <span>SECRET DOSSIERS DISPATCHED</span>
         </div>
         <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '10px' }}>
-          PARDAFAASH KA WAQT!
+          ROLE REVEAL
         </h1>
         <p className="text-headline" style={{ color: 'var(--on-surface)', maxWidth: '650px', margin: '0 auto', fontWeight: 600 }}>
-          Apna apna phone dekho chupke se...
+          Check your secret assignment on your phone...
         </p>
         <p className="text-body" style={{
           color: 'var(--loss-text)',
@@ -54,7 +54,7 @@ export default function HostRoleReveal({ players, onProceed }) {
           gap: '6px'
         }}>
           <ShieldAlert size={18} color="var(--loss-text)" />
-          <span>Aas-paas mat jhaanko! Kuch log Bhole hain aur kuch asteen ke Kaminey!</span>
+          <span>Keep your screens hidden. Some among you are innocent Bhole, others are deceptive Kaminey!</span>
         </p>
       </div>
 
@@ -90,7 +90,7 @@ export default function HostRoleReveal({ players, onProceed }) {
                 gap: '4px'
               }}>
                 <Lock size={12} />
-                <span>Liffafa Delivered</span>
+                <span>Dossier Received</span>
               </div>
             </div>
           );
@@ -107,7 +107,7 @@ export default function HostRoleReveal({ players, onProceed }) {
           marginTop: '10px'
         }}
       >
-        <span>Sabne dekh liya? Haveli mein raat hone do! 🌙</span>
+        <span>All Roles Received? Begin Night Phase</span>
         <ArrowRight size={20} />
       </button>
     </div>

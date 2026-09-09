@@ -49,15 +49,15 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
       {/* Warning Notice */}
       <div className="badge-warning" style={{ padding: '6px 14px', fontSize: '0.75rem', letterSpacing: '0.04em' }}>
         <ShieldAlert size={14} />
-        <span>🚨 PHONE CHHUPA KE RAKHO! KOI JHAANK NA LE!</span>
+        <span>KEEP SCREEN CONCEALED FROM OTHERS</span>
       </div>
 
       <div>
         <h1 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
-          GUPT LIFFAFA
+          SECRET DOSSIER
         </h1>
         <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem' }}>
-          Neeche royal wax seal pe ungli dabaa ke rakho. Ungli hataate hi parda wapas gir jayega!
+          Press and hold the wax seal below. Releasing your finger instantly conceals your identity!
         </p>
       </div>
 
@@ -125,10 +125,10 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
                 color: 'var(--primary)',
                 letterSpacing: '0.06em'
               }}>
-                SEAL DABAA KE RAKHO 🔴
+                HOLD SEAL TO REVEAL
               </div>
               <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px', maxWidth: '260px' }}>
-                Ungli dabaaye rakho aur dekho: Bhola ho ya Kamina!
+                Hold down to inspect your secret faction.
               </p>
             </div>
           </div>
@@ -176,7 +176,7 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
 
             <div>
               <div className="text-label" style={{ color: isKamina ? 'var(--loss-text)' : 'var(--primary)', letterSpacing: '0.12em' }}>
-                APNA ASLI ROOP
+                YOUR SECRET IDENTITY
               </div>
               <div style={{
                 fontSize: '1.75rem',
@@ -184,14 +184,14 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
                 color: isKamina ? 'var(--loss-text)' : '#FFFFFF',
                 letterSpacing: '0.04em'
               }}>
-                {isKamina ? '😈 TUM HO ASLI KAMINA!' : '😇 TUM HO MASOOM BHOLA!'}
+                {isKamina ? 'YOU ARE A KAMINA (TRAITOR)' : 'YOU ARE A BHOLA (INNOCENT)'}
               </div>
             </div>
 
             <p style={{ fontSize: '0.8125rem', lineHeight: 1.45, color: '#CBD5E1', maxWidth: '300px' }}>
               {isKamina
-                ? 'Raat ko aapas mein shikaar chunna, din mein sabse masoom banne ka acting karna!'
-                : 'Haveli mein asteen ke saanp ghoom rahe hain. Sharafat ka mukhota pahan ke Kaminey ko dhoondho!'}
+                ? 'Strike in the shadows during the night, and blend in as an innocent during council debates.'
+                : 'Survive the night, investigate suspicious statements, and banish the traitors.'}
             </p>
 
             {/* If Kamina, reveal fellow traitors */}

@@ -48,22 +48,22 @@ export default function HostMorning({ victim, onProceed }) {
           {victim ? (
             <>
               <Skull size={14} />
-              <span>🩸 SUBAH KA JATKA</span>
+              <span>DAWN CASUALTY</span>
             </>
           ) : (
             <>
               <ShieldCheck size={14} />
-              <span>✨ CHAMATKAR!</span>
+              <span>PEACEFUL NIGHT</span>
             </>
           )}
         </div>
         <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
-          {victim ? `${victim.name.toUpperCase()} KA KAAM TAMAAM!` : 'SAB KHAIRIYAT! KOI NAHI MARA!'}
+          {victim ? `${victim.name.toUpperCase()} ELIMINATED!` : 'NO CASUALTIES THIS NIGHT!'}
         </h1>
         <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.9375rem' }}>
           {victim
-            ? 'Subah ke nashte ki table pe ek kursi khali mili... Kaminey ne apna shikaar kar liya!'
-            : 'Kaminey aapas mein lad mare ya target chhoot gaya! Saare Bhole zinda bach gaye!'}
+            ? 'One empty chair at the breakfast table... The Kaminey struck in the dark!'
+            : 'The night concluded without incident. All innocents survived!'}
         </p>
       </div>
 
@@ -96,7 +96,7 @@ export default function HostMorning({ victim, onProceed }) {
           </div>
           <div className="badge-loss" style={{ fontSize: '0.75rem', padding: '4px 14px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
             <Skull size={14} />
-            <span>KAMINEY NE MAAR GIRAAYA</span>
+            <span>ELIMINATED BY KAMINEY</span>
           </div>
         </div>
       ) : (
@@ -118,7 +118,7 @@ export default function HostMorning({ victim, onProceed }) {
         >
           <ShieldCheck size={48} color="var(--gain-text)" />
           <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--gain-text)' }}>
-            Saare Bhole Zinda Hain!
+            Everyone Survived the Night!
           </div>
         </div>
       )}
@@ -133,7 +133,7 @@ export default function HostMorning({ victim, onProceed }) {
           fontSize: '1.0625rem'
         }}
       >
-        <span>Panchayat Bithao: Kaun Hai Asli Kamina? 🗣️</span>
+        <span>Convene Council: Question the Suspects</span>
         <ArrowRight size={18} />
       </button>
     </div>

@@ -69,13 +69,13 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
               gap: '6px'
             }}>
               <Scale size={14} />
-              <span>⚖️ HAVELI KA FAISLA</span>
+              <span>COUNCIL VERDICT</span>
             </div>
             <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
-              {exiledPlayer.name} KO HAVELI SE DHAKKA MILA!
+              {exiledPlayer.name} HAS BEEN EXILED!
             </h1>
             <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.9375rem' }}>
-              Kundli khol rahe hain... Bhola nikla ya Kamina?
+              Unmasking identity... Bhola or Kamina?
             </p>
           </div>
 
@@ -118,7 +118,7 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
                 gap: '8px',
                 animation: 'pulse-subtle 1.2s infinite'
               }}>
-                <span>Jasoosi records check ho rahe hain...</span>
+                <span>Verifying council dossier records...</span>
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
@@ -133,12 +133,12 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
                   gap: '10px'
                 }}>
                   {isKamina ? <Skull size={32} /> : <ShieldCheck size={32} />}
-                  <span>{isKamina ? '🔥 ASLI KAMINA THA!' : '🤦‍♂️ MASOOM BHOLA THA!'}</span>
+                  <span>{isKamina ? 'GUILTY: A TRUE KAMINA!' : 'INNOCENT: A TRUE BHOLA!'}</span>
                 </div>
                 <p style={{ fontSize: '0.9375rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
                   {isKamina
-                    ? 'Bhole ki jeet! Ek asteen ka saanp Haveli se bahar fek diya gaya!'
-                    : 'Bhaari mistake! Kaminey ne sabko ullu banaya aur beqasoor Bhola mara gaya!'}
+                    ? 'A decisive victory for the Bhole! A dangerous traitor has been banished from the Haveli.'
+                    : 'A tragic error! The Kaminey deceived the room, and an innocent Bhola was exiled.'}
                 </p>
               </div>
             )}
@@ -160,10 +160,10 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
             <Scale size={50} color="var(--primary)" />
           </div>
           <h1 className="text-display" style={{ color: 'var(--primary)' }}>
-            🤝 TIE HO GAYA! KOI NAHI NIKLA
+            COUNCIL TIED: NO EXILE
           </h1>
           <p className="text-body" style={{ color: 'var(--on-surface-variant)' }}>
-            Vote barabar rahe ya sabne Skip chuna. Haveli ke darwaze khule hain, raat fir aayegi!
+            Ballots ended in a tie or majority skip. No one was banished from the Haveli this round.
           </p>
         </div>
       )}
@@ -175,7 +175,7 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
         className="btn-primary spring-btn"
         style={{ padding: '16px 36px', fontSize: '1.125rem' }}
       >
-        <span>Agla Round Chalu Karo ⏭️</span>
+        <span>Proceed to Next Round</span>
         <ArrowRight size={20} />
       </button>
     </div>

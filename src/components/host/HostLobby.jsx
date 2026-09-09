@@ -62,7 +62,7 @@ export default function HostLobby({
               boxShadow: '0 0 8px var(--gain)',
               display: 'inline-block'
             }} />
-            HAVELI RECEPTION • LIVE
+            HAVELI LOBBY • LIVE
           </div>
           {networkStatus && (
             <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
@@ -71,10 +71,10 @@ export default function HostLobby({
           )}
         </div>
         <h1 className="text-display" style={{ color: 'var(--on-surface)', margin: '4px 0 2px 0' }}>
-          BAKRE IKATTHA HO RAHE HAIN 🎭
+          GATHERING IN THE HAVELI
         </h1>
         <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.90625rem', maxWidth: '640px', margin: 0, lineHeight: 1.45 }}>
-          Phone se QR scan maro! Kaminey asteen mein chhupe hain aur Bhole bekhabar hain.
+          Scan the QR code to join from your phone. Kaminey lurk in secret while the Bhole suspect nothing.
         </p>
       </div>
 
@@ -96,13 +96,13 @@ export default function HostLobby({
           <div className="card-interactive" style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid var(--outline-variant)', paddingBottom: '12px' }}>
               <Settings2 size={20} color="var(--primary)" />
-              <h2 className="text-title" style={{ color: 'var(--on-surface)' }}>Haveli Niyam (Settings)</h2>
+              <h2 className="text-title" style={{ color: 'var(--on-surface)' }}>Game Settings</h2>
             </div>
 
             {/* Discussion Timer */}
             <div>
               <label className="text-label" style={{ display: 'block', marginBottom: '8px', color: 'var(--on-surface-variant)' }}>
-                Kaminey-Pan Ki Behass (Discussion Timer)
+                Council Debate Timer
               </label>
               <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                 {discussionOptions.map(sec => (
@@ -122,7 +122,7 @@ export default function HostLobby({
             {/* Voting Timer */}
             <div>
               <label className="text-label" style={{ display: 'block', marginBottom: '8px', color: 'var(--on-surface-variant)' }}>
-                Secret Ballot (Vote Ka Faisla Timer)
+                Exile Ballot Timer
               </label>
               <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                 {votingOptions.map(sec => (
@@ -142,7 +142,7 @@ export default function HostLobby({
             {/* Kaminey Ratio */}
             <div>
               <label className="text-label" style={{ display: 'block', marginBottom: '8px', color: 'var(--on-surface-variant)' }}>
-                Kitne Kaminey Chahiye?
+                Kaminey Count
               </label>
               <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                 {kamineyOptions.map(opt => (
@@ -162,9 +162,9 @@ export default function HostLobby({
             {/* Dares Toggle */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '6px' }}>
               <div>
-                <div style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--on-surface)' }}>Masaledaar Haveli Dares</div>
+                <div style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--on-surface)' }}>Party Mystery Dares</div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)' }}>
-                  Reel shoot, peg toast aur hasi-mazak tasks
+                  Icebreakers, dares, and group challenges
                 </div>
               </div>
               <button
@@ -192,7 +192,7 @@ export default function HostLobby({
           }}>
             <Sparkles size={18} color="var(--primary)" style={{ flexShrink: 0 }} />
             <span>
-              <strong>Haveli Pro-Tip:</strong> Jo sabse zyada masoom Bhola bane, aksar wahi sabse bada Kamina nikalta hai!
+              <strong>Pro-Tip:</strong> The one claiming to be the most innocent is often the true Kamina.
             </span>
           </div>
         </div>
@@ -211,10 +211,10 @@ export default function HostLobby({
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <Users size={22} color="var(--primary)" />
-                <h2 className="text-title" style={{ color: 'var(--on-surface)' }}>Haveli Ke Mehman ({players.length})</h2>
+                <h2 className="text-title" style={{ color: 'var(--on-surface)' }}>Players in Lobby ({players.length})</h2>
               </div>
               <span className={canStart ? 'badge-gain' : 'badge-warning'}>
-                {canStart ? 'Khel Ke Liye Ready!' : `Aur ${minPlayers - players.length} Bakre Chahiye`}
+                {canStart ? 'Ready to Start!' : `Need ${minPlayers - players.length} More Players`}
               </span>
             </div>
 
@@ -332,9 +332,9 @@ export default function HostLobby({
                   }}>
                     <Smartphone size={28} strokeWidth={2.2} />
                   </div>
-                  <div style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--on-surface)' }}>Haveli Mein Sannata Hai!</div>
+                  <div style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--on-surface)' }}>Waiting for Players...</div>
                   <div style={{ fontSize: '0.875rem', marginTop: '6px', maxWidth: '340px' }}>
-                    Phone camera se QR code scan karo ya room code dalo: <strong style={{ color: 'var(--primary)' }}>{roomCode}</strong>
+                    Scan the QR code with your phone camera or enter room code: <strong style={{ color: 'var(--primary)' }}>{roomCode}</strong>
                   </div>
                 </div>
               )}
@@ -359,7 +359,7 @@ export default function HostLobby({
                   title="Add single simulated player"
                 >
                   <UserPlus size={16} />
-                  +1 Bakra Jodo (Bot)
+                  +1 Add Bot
                 </button>
 
                 {!canStart && onQuickStartWithBots && (
@@ -378,7 +378,7 @@ export default function HostLobby({
                     title="Fill remaining slots with bots and launch immediately for testing"
                   >
                     <Sparkles size={16} />
-                    <span>Auto-Fill & Khel Shuru ⚡</span>
+                    <span>Auto-Fill Bots & Start</span>
                   </button>
                 )}
               </div>
@@ -398,7 +398,7 @@ export default function HostLobby({
                 }}
               >
                 <Play size={18} fill="currentColor" color="currentColor" />
-                <span>{canStart ? 'KAMINEY VS BHOLE: KHEL SHURU! ⚡' : `Aur ${minPlayers - players.length} Bakre Chahiye (Min ${minPlayers})`}</span>
+                <span>{canStart ? 'START GAME: KAMINEY VS BHOLE' : `Need ${minPlayers - players.length} More Players (Min ${minPlayers})`}</span>
               </button>
             </div>
           </div>

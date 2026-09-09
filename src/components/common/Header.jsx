@@ -15,15 +15,15 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
 
   const getPhaseLabel = (phase) => {
     switch (phase) {
-      case 'LOBBY': return 'Haveli Adda';
-      case 'ROLE_REVEAL': return 'Gupt Pehchan';
-      case 'NIGHT': return 'Kaali Raat (Kaminey)';
-      case 'MORNING': return 'Subah Ka Jatka';
-      case 'DARES': return 'Haveli Maha-Mission';
-      case 'DISCUSSION': return 'Emergency Panchayat';
-      case 'VOTING': return 'Gupt Faisla (Bhole vs Kaminey)';
-      case 'EXILE': return 'Haveli Ka Faisla';
-      case 'GAME_OVER': return 'Khel Khatam!';
+      case 'LOBBY': return 'Lobby Gathering';
+      case 'ROLE_REVEAL': return 'Role Reveal';
+      case 'NIGHT': return 'Night Conclave (Kaminey)';
+      case 'MORNING': return 'Dawn Report';
+      case 'DARES': return 'Maha-Mission';
+      case 'DISCUSSION': return 'Council Debate';
+      case 'VOTING': return 'Exile Ballot (Bhole vs Kaminey)';
+      case 'EXILE': return 'Council Verdict';
+      case 'GAME_OVER': return 'Game Over';
       default: return phase || 'Kaminey';
     }
   };
@@ -119,7 +119,7 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
 
         <div style={{ minWidth: 0, overflow: 'hidden' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span className={isNight ? 'badge-loss' : (isHost ? 'badge-gain' : 'badge-warning')} style={{ fontSize: '0.65625rem', padding: '2px 8px', whiteSpace: 'nowrap' }}>
+            <span className={isNight ? 'badge-loss' : (isHost ? 'badge-brand' : 'badge-neutral')} style={{ fontSize: '0.65625rem', padding: '2px 8px', whiteSpace: 'nowrap' }}>
               {isHost ? <><Tv size={11} /> Base Station</> : <><Smartphone size={11} /> Handset</>}
             </span>
           </div>
