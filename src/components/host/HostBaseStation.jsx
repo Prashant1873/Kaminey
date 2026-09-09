@@ -45,6 +45,7 @@ export default function HostBaseStation({ onExit }) {
   const [players, setPlayers] = useState([]);
   const [roles, setRoles] = useState({}); // Master secret: playerId -> 'kamina' | 'bhola'
   const [currentMission, setCurrentMission] = useState(() => getRandomTeamMission());
+  const [readyPlayers, setReadyPlayers] = useState({}); // playerId -> true
   const [nightVotes, setNightVotes] = useState({}); // kaminaId -> targetId
   const [votes, setVotes] = useState({}); // voterId -> targetId | 'skip'
   const [morningVictim, setMorningVictim] = useState(null);
@@ -76,6 +77,8 @@ export default function HostBaseStation({ onExit }) {
       phase,
       roundSettings: settings,
       currentMission,
+      readyCount: Object.keys(readyPlayers).length,
+      isReady: Boolean(readyPlayers[targetPlayerId]),
       players: players.map(p => ({
         id: p.id,
         name: p.name,
@@ -134,7 +137,12 @@ export default function HostBaseStation({ onExit }) {
         break;
       }
 
-      case 'TASK_COMPLETED': {
+      case 'TASK_COMPLETED':
+      case 'READY_FOR_DAWN': {
+        setReadyPlayers(prev => ({
+          ...prev,
+          [senderId]: true
+        }));
         break;
       }
 
@@ -142,6 +150,22 @@ export default function HostBaseStation({ onExit }) {
         break;
     }
   }, []);
+
+  // Bot auto-ready behavior during DARES phase so host counter shows progression
+  useEffect(() => {
+    if (phase !== 'DARES') return;
+    const aliveBots = players.filter(p => p.isAlive && !p.isExiled && p.isBot);
+    if (aliveBots.length === 0) return;
+
+    const timers = aliveBots.map((bot, idx) => {
+      const delay = 3500 + (idx * 1500) + Math.random() * 1000;
+      return setTimeout(() => {
+        setReadyPlayers(prev => ({ ...prev, [bot.id]: true }));
+      }, delay);
+    });
+
+    return () => timers.forEach(t => clearTimeout(t));
+  }, [phase, players]);
 
   // Mutable ref holding latest handlers and state getters so network never re-initializes on state changes
   const callbacksRef = useRef({});
@@ -337,17 +361,26 @@ export default function HostBaseStation({ onExit }) {
     });
   };
 
-  // Advance from Role Reveal / Exile to Night
+  // Advance from Role Reveal / Exile to Night / Cover Mission
   const handleProceedToNight = () => {
-    // Retain any pre-cast murder votes submitted during the task phase
-    setPhase('NIGHT');
+    setReadyPlayers({});
+    const alive = players.filter(p => p.isAlive && !p.isExiled);
 
-    // If bots are Kaminey, make them vote a random alive Bhola if not already voted
+    if (settings.enableDares) {
+      setCurrentMission(getRandomTeamMission(null, alive));
+      setPhase('DARES');
+      sounds.playDramaticStinger();
+    } else {
+      setPhase('NIGHT');
+      sounds.playDramaticStinger();
+    }
+
+    // If bots are Kaminey, pick their vote during the task/night phase
     setTimeout(() => {
-      const aliveBhole = players.filter(p => p.isAlive && !p.isExiled && roles[p.id] === 'bhola');
+      const aliveBhole = alive.filter(p => roles[p.id] === 'bhola');
       if (aliveBhole.length > 0) {
         const target = aliveBhole[Math.floor(Math.random() * aliveBhole.length)];
-        const botKaminey = players.filter(p => p.isAlive && !p.isExiled && p.isBot && roles[p.id] === 'kamina');
+        const botKaminey = alive.filter(p => p.isBot && roles[p.id] === 'kamina');
         if (botKaminey.length > 0) {
           setNightVotes(prev => {
             const next = { ...prev };
@@ -358,7 +391,7 @@ export default function HostBaseStation({ onExit }) {
           });
         }
       }
-    }, 1500);
+    }, 3000);
   };
 
   // Conclude Night: resolve murder, check victory, and break dawn
@@ -405,13 +438,16 @@ export default function HostBaseStation({ onExit }) {
     }
 
     setNightVotes({});
+    setReadyPlayers({});
     setPhase('MORNING');
   };
 
   // Advance from Night to either Dares (cover for the kill) or straight to Morning
   const handleAdvanceFromNight = () => {
     if (settings.enableDares) {
-      setCurrentMission(getRandomTeamMission());
+      const alive = players.filter(p => p.isAlive && !p.isExiled);
+      setCurrentMission(getRandomTeamMission(null, alive));
+      setReadyPlayers({});
       setPhase('DARES');
     } else {
       handleConcludeNightAndBreakDawn();
@@ -425,7 +461,9 @@ export default function HostBaseStation({ onExit }) {
 
   // Reshuffle current team mission
   const handleReshuffleMission = () => {
-    setCurrentMission(prev => getRandomTeamMission(prev?.id));
+    setReadyPlayers({});
+    const alive = players.filter(p => p.isAlive && !p.isExiled);
+    setCurrentMission(prev => getRandomTeamMission(prev?.id, alive));
   };
 
   // Call Round-Table Discussion
@@ -570,6 +608,7 @@ export default function HostBaseStation({ onExit }) {
           <HostDares
             mission={currentMission}
             players={players}
+            readyPlayers={readyPlayers}
             onReshuffle={handleReshuffleMission}
             onOpenDrinksBreather={() => setPhase('DRINKS_BREATHER')}
             onBreakDawn={handleConcludeNightAndBreakDawn}

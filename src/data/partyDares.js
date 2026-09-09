@@ -181,13 +181,124 @@ export const TEAM_MISSIONS = [
     mission: 'The room must agree on one iconic Bollywood song and sing the chorus together at full volume before the emergency discussion begins.',
     prompt: 'Classic options: "Om Shanti Om", "Channa Mereya", or "Kaho Naa Pyaar Hai".',
     categoryColor: '#00875A'
+  },
+
+  // 2-PERSON BEHAVIOR RECOGNITION INNOCENCE TRIALS
+  {
+    id: 'blinking_standoff',
+    category: 'BEHAVIOR',
+    badge: 'DUO INNOCENCE TRIAL',
+    isDuo: true,
+    title: 'The 30-Second Eye-Lock Standoff',
+    mission: 'Suspect 1 and Suspect 2 must stand facing each other and maintain unbroken eye contact while repeatedly declaring "I am 100% innocent". No blinking, no smiling for 30 seconds.',
+    prompt: 'The rest of the Haveli must watch their eyes closely: who blinked rapidly or broke eye contact first?',
+    observerTip: 'Look for rapid throat swallowing, nervous twitches, or involuntary smirks.',
+    categoryColor: '#D97706'
+  },
+  {
+    id: 'rapid_alibi_duel',
+    category: 'BEHAVIOR',
+    badge: 'DUO INNOCENCE TRIAL',
+    isDuo: true,
+    title: 'Rapid Alibi Cross-Fire',
+    mission: 'Suspect 1 has 20 seconds to grill Suspect 2 with rapid questions ("Where were you? Why are you sweating?"). Suspect 2 must answer instantaneously with zero pauses or "umms". Then roles reverse!',
+    prompt: 'Any hesitation longer than 1 second is taken by the Haveli as an admission of guilt.',
+    observerTip: 'Judge who sounded natural vs who had to calculate their lie before speaking.',
+    categoryColor: '#D97706'
+  },
+  {
+    id: 'synchronized_plea',
+    category: 'BEHAVIOR',
+    badge: 'DUO INNOCENCE TRIAL',
+    isDuo: true,
+    title: 'The Synchronized Haveli Oath',
+    mission: 'Both suspects must raise their right hands and recite in exact unison: "I swear on this Haveli that my soul is pure and blood is not on my hands." No rehearsing, no giggling!',
+    prompt: 'Whoever breaks into a smirk or stumbles over the words loses the room\'s trust.',
+    observerTip: 'Watch their eye movements right before finishing the oath.',
+    categoryColor: '#D97706'
+  },
+  {
+    id: 'pulse_tell_test',
+    category: 'BEHAVIOR',
+    badge: 'DUO INNOCENCE TRIAL',
+    isDuo: true,
+    title: 'The Human Lie-Detector Staredown',
+    mission: 'Suspect 1 and Suspect 2 hold each other\'s wrists to monitor pulse. Looking into each other\'s eyes, both must state why the OTHER person is the traitor.',
+    prompt: 'After 25 seconds, both announce to the room if they felt a sudden heart spike or nervous trembling.',
+    observerTip: 'Observe who pulls away first or refuses to maintain steady eye contact.',
+    categoryColor: '#D97706'
+  },
+
+  // 2-PERSON IMPROV CHALLENGES
+  {
+    id: 'pantry_excuse_improv',
+    category: 'IMPROV',
+    badge: 'DUO IMPROV TRIAL',
+    isDuo: true,
+    title: 'The 2 AM Haveli Pantry Excuse',
+    mission: 'Scenario: Both suspects were spotted whispering behind the haveli kitchen at 2 AM. They have 45 seconds to improvise an innocent, unhinged explanation for what they were doing together.',
+    prompt: 'Example: "We were looking for secret late-night parathas!" First person to break character or contradict their partner is branded a traitor.',
+    observerTip: 'Did their stories align naturally, or did one partner throw the other under the bus?',
+    categoryColor: '#8B5CF6'
+  },
+  {
+    id: 'one_word_defense',
+    category: 'IMPROV',
+    badge: 'DUO IMPROV TRIAL',
+    isDuo: true,
+    title: 'One-Word-at-a-Time Innocence Plea',
+    mission: 'Suspect 1 and Suspect 2 stand shoulder to shoulder. They must deliver a joint defense to the Haveli alternating EXACTLY ONE WORD each without pausing.',
+    prompt: 'e.g. Suspect 1: "We" -> Suspect 2: "never" -> Suspect 1: "touched" -> Suspect 2: "the" -> Suspect 1: "victim". Reach 15 words together!',
+    observerTip: 'Who hesitated or choked on finding a word? Hesitation = guilt!',
+    categoryColor: '#8B5CF6'
+  },
+  {
+    id: 'bollywood_melodrama_improv',
+    category: 'IMPROV',
+    badge: 'DUO IMPROV TRIAL',
+    isDuo: true,
+    title: 'Ekta Kapoor Accusation Duel',
+    mission: 'Suspect 1 must dramatically accuse Suspect 2 with full Bollywood soap opera flair ("Nahi! Tum hi ho woh kaatil!"). Suspect 2 must respond with extreme dramatic shock and counter-accuse.',
+    prompt: 'Both must maintain dead serious drama for 30 seconds. First person to crack a smile gets targeted by the room.',
+    observerTip: 'Judge who is using laughter to hide genuine nervous tells.',
+    categoryColor: '#8B5CF6'
+  },
+  {
+    id: 'butler_and_intruder',
+    category: 'IMPROV',
+    badge: 'DUO IMPROV TRIAL',
+    isDuo: true,
+    title: 'Haveli Butler vs Secret Intruder',
+    mission: 'Suspect 1 plays the ultra-formal loyal Haveli butler. Suspect 2 plays an intruder caught in the haveli corridor. 45 seconds of improvised confrontation.',
+    prompt: 'The intruder must invent an alibi; the butler must try to trap them with sneaky questions.',
+    observerTip: 'The audience decides: who sounded convincing and who sounded caught red-handed?',
+    categoryColor: '#8B5CF6'
   }
 ];
 
-// Get random team mission
-export function getRandomTeamMission(excludeId = null) {
+// Get random team mission, optionally picking a duo from alive players if duo task
+export function getRandomTeamMission(excludeId = null, alivePlayers = []) {
   const available = excludeId ? TEAM_MISSIONS.filter(m => m.id !== excludeId) : TEAM_MISSIONS;
   const pool = available.length > 0 ? available : TEAM_MISSIONS;
   const index = Math.floor(Math.random() * pool.length);
-  return pool[index];
+  const selected = { ...pool[index] };
+
+  // If duo mission and at least 2 alive players provided, pick 2 distinct suspects
+  if (selected.isDuo && Array.isArray(alivePlayers) && alivePlayers.length >= 2) {
+    const shuffled = [...alivePlayers].sort(() => 0.5 - Math.random());
+    const suspect1 = shuffled[0];
+    const suspect2 = shuffled[1];
+
+    selected.assignedPair = [
+      { id: suspect1.id, name: suspect1.name, avatarId: suspect1.avatarId },
+      { id: suspect2.id, name: suspect2.name, avatarId: suspect2.avatarId }
+    ];
+
+    // Format mission text with actual names if applicable
+    selected.mission = selected.mission
+      .replace(/Suspect 1/g, suspect1.name)
+      .replace(/Suspect 2/g, suspect2.name);
+  }
+
+  return selected;
 }

@@ -64,12 +64,72 @@ export default function PlayerDares({
 
       <div>
         <h1 className="text-headline" style={{ color: '#ffffff', marginBottom: '4px' }}>
-          {mission?.title || 'GROUP DISTRACTION TASK'}
+          {mission?.title || 'NIGHT COVER MISSION'}
         </h1>
-        <p className="text-body" style={{ color: '#94a3b8', fontSize: '0.8125rem' }}>
-          Watch the main TV screen. Everyone participates together to generate cover noise in the dark before dawn breaks.
+        <p className="text-body" style={{ color: '#94a3b8', fontSize: '0.8125rem', lineHeight: 1.45 }}>
+          Eyes on your phone! Read your task below and participate with the room. Tap <strong>Ready for Dawn</strong> once you are set.
         </p>
       </div>
+
+      {/* Duo Trial Role-Specific Spotlight (Suspect vs Jury) */}
+      {mission?.isDuo && mission?.assignedPair?.length >= 2 && (() => {
+        const isSuspect = mission.assignedPair.some(p => p.id === myPlayerId);
+        const partner = mission.assignedPair.find(p => p.id !== myPlayerId);
+
+        return isSuspect ? (
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(217, 119, 6, 0.25), rgba(180, 83, 9, 0.15))',
+            border: '2px solid #F59E0B',
+            borderRadius: 'var(--rounded-xl)',
+            padding: '14px 16px',
+            textAlign: 'left',
+            color: '#FFFFFF',
+            boxShadow: '0 0 20px rgba(245, 158, 11, 0.25)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <span className="badge-warning" style={{ fontSize: '0.75rem', fontWeight: 800 }}>
+                🔥 YOU ARE ON TRIAL
+              </span>
+              {partner && (
+                <span style={{ fontSize: '0.75rem', color: '#FDE68A' }}>
+                  Facing off with: <strong>{partner.name}</strong>
+                </span>
+              )}
+            </div>
+            <div style={{ fontSize: '0.84rem', color: '#F1F5F9', lineHeight: 1.45 }}>
+              The living room is watching your every breath. Stay composed, keep a straight face, and convince the Haveli you are innocent!
+            </div>
+          </div>
+        ) : (
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(109, 40, 217, 0.12))',
+            border: '1.5px solid #8B5CF6',
+            borderRadius: 'var(--rounded-xl)',
+            padding: '14px 16px',
+            textAlign: 'left',
+            color: '#FFFFFF'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <span style={{
+                background: 'rgba(139, 92, 246, 0.25)',
+                color: '#C4B5FD',
+                borderRadius: 'var(--rounded-sm)',
+                padding: '3px 8px',
+                fontSize: '0.71875rem',
+                fontWeight: 800
+              }}>
+                ⚖️ YOU ARE THE JURY
+              </span>
+              <span style={{ fontSize: '0.75rem', color: '#DDD6FE' }}>
+                Suspects: <strong>{mission.assignedPair[0].name}</strong> & <strong>{mission.assignedPair[1].name}</strong>
+              </span>
+            </div>
+            <div style={{ fontSize: '0.84rem', color: '#E2E8F0', lineHeight: 1.45 }}>
+              <strong>What to watch for:</strong> {mission.observerTip || 'Look for nervous eye darts, fidgeting, delayed answers, or involuntary smirks.'}
+            </div>
+          </div>
+        );
+      })()}
 
       {/* COVERT ASSASSINATION PANEL (KAMINA ONLY) - PROMINENT AT TOP */}
       {isKamina && (
@@ -132,9 +192,9 @@ export default function PlayerDares({
             <ShieldAlert size={20} color="var(--loss)" style={{ flexShrink: 0, marginTop: '2px' }} />
             <div style={{ fontSize: '0.8rem', color: '#ffffff', lineHeight: 1.45 }}>
               <strong style={{ color: '#fca5a5', display: 'block', marginBottom: '2px', letterSpacing: '0.04em' }}>
-                VOTE BEFORE THIS TASK ENDS
+                VOTE WHILE READING THIS TASK
               </strong>
-              Eliminate your victim right now while everyone is naturally looking at their phones to read this mission. Once the task finishes, tapping your phone will look suspicious to innocents!
+              Eliminate your victim right now while everyone is naturally looking at their phones. Once dawn breaks, your mark will be eliminated!
             </div>
           </div>
 
@@ -236,7 +296,7 @@ export default function PlayerDares({
         </div>
       )}
 
-      {/* Shared Mission Card (Identical for everyone in the room) */}
+      {/* Shared Mission Card (Instructions on phone) */}
       <div className="card-interactive" style={{
         padding: '22px 16px',
         display: 'flex',
@@ -287,12 +347,12 @@ export default function PlayerDares({
           }}
         >
           <CheckCircle2 size={18} />
-          <span>{markedReady ? "Task Completed" : "Ready for Dawn"}</span>
+          <span>{markedReady ? "Ready for Dawn (Sent to TV ✓)" : "Ready for Dawn"}</span>
         </button>
       </div>
 
       <div style={{ fontSize: '0.75rem', color: 'var(--outline)' }}>
-        The host will break dawn on the TV screen once this task concludes.
+        Your status updates on the TV screen. Host will break dawn once everyone is ready!
       </div>
     </div>
   );
