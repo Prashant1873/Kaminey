@@ -83,15 +83,15 @@ export default function HostNight({
         <h1 className="text-display" style={{ color: '#ffffff', marginBottom: '8px' }}>
           NIGHT FALLS ON THE HAVELI
         </h1>
-        <p style={{ fontSize: '1.1rem', color: '#9aa0a6' }}>
-          The Bhole are asleep with heads down... while the <strong style={{ color: 'var(--loss)' }}>Kaminey</strong> silently select a victim.
+        <p style={{ fontSize: '1.05rem', color: '#9aa0a6' }}>
+          Silence descends across the Haveli. All players keep eyes closed and heads down.
         </p>
       </div>
 
       {/* Atmospheric Night Indicator */}
       <div style={{
         background: 'rgba(18, 21, 31, 0.95)',
-        border: '1px solid rgba(239, 68, 68, 0.25)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
         borderRadius: 'var(--rounded-xl)',
         padding: '18px 24px',
         maxWidth: '480px',
@@ -99,25 +99,25 @@ export default function HostNight({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '10px',
+        gap: '8px',
         boxShadow: '0 16px 40px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06)',
         boxSizing: 'border-box'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{
-            width: '10px',
-            height: '10px',
+            width: '8px',
+            height: '8px',
             borderRadius: 'var(--rounded-full)',
-            backgroundColor: nightMurderSelected ? 'var(--simsim-neon)' : 'var(--loss)',
-            boxShadow: nightMurderSelected ? 'var(--shadow-glow-neon)' : 'var(--shadow-glow-loss)',
-            animation: 'pulse-subtle 1.2s infinite'
+            backgroundColor: 'var(--loss)',
+            boxShadow: '0 0 10px rgba(239, 68, 68, 0.6)',
+            animation: 'pulse-subtle 2s infinite'
           }} />
           <span style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#ffffff' }}>
-            {nightMurderSelected ? 'Target Selected: Victim Marked' : 'Awaiting Kaminey selection...'}
+            Haveli Shrouded in Darkness
           </span>
         </div>
-        <div style={{ fontSize: '0.8125rem', color: '#80868b' }}>
-          All players stay silent with eyes closed.
+        <div style={{ fontSize: '0.8125rem', color: '#94a3b8' }}>
+          Keep phones down and remain silent until the Host advances.
         </div>
       </div>
 

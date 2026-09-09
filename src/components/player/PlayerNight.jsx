@@ -71,7 +71,7 @@ export default function PlayerNight({
         </h1>
         <p style={{ fontSize: '0.8125rem', color: '#94A3B8', maxWidth: '340px', lineHeight: 1.45 }}>
           {isKamina
-            ? 'Coordinate silently with fellow Kaminey and lock in an innocent target.'
+            ? 'Coordinate silently with fellow Kaminey. You can vote now, or wait for the cover task when everyone naturally looks at their phones.'
             : 'Night is active. Stay quiet and wait for dawn to break on the big screen.'}
         </p>
       </div>
