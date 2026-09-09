@@ -4,6 +4,7 @@ import PlayerJoin from './PlayerJoin';
 import PlayerRoleReveal from './PlayerRoleReveal';
 import PlayerNight from './PlayerNight';
 import PlayerDares from './PlayerDares';
+import PlayerDrinksBreather from './PlayerDrinksBreather';
 import PlayerDiscussion from './PlayerDiscussion';
 import PlayerVoting from './PlayerVoting';
 import PlayerGhost from './PlayerGhost';
@@ -204,7 +205,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
   const phase = gameState?.phase || 'LOBBY';
   const mySecret = gameState?.mySecret || {};
 
-  const isNight = phase === 'NIGHT';
+  const isNight = phase === 'NIGHT' || phase === 'DARES' || phase === 'DRINKS_BREATHER';
 
   return (
     <div className={isNight ? 'theme-simsim-night' : ''} style={{
@@ -479,7 +480,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   }}>
                     <ShieldCheck size={48} color="var(--gain-text)" />
                     <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--gain-text)' }}>
-                      Everyone Survived! ✨
+                      Everyone Survived!
                     </div>
                     <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
                       No casualties recorded overnight. Peace holds for now!
@@ -500,6 +501,18 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                 nightVotes={mySecret.nightVotes || {}}
                 onSelectTarget={handleNightTargetSelect}
                 onCompleteTask={handleTaskCompleted}
+              />
+            )}
+
+            {/* DRINKS BREATHER & LOUNGE PHASE */}
+            {phase === 'DRINKS_BREATHER' && (
+              <PlayerDrinksBreather
+                role={mySecret.role}
+                players={gameState?.players || []}
+                myPlayerId={playerData.id}
+                kamineyPartners={mySecret.kamineyPartners || []}
+                nightVotes={mySecret.nightVotes || {}}
+                onSelectTarget={handleNightTargetSelect}
               />
             )}
 

@@ -872,3 +872,15 @@ html:has(.theme-simsim-night) {
     padding: 10px 14px !important;
   }
 }
+
+/* Trippy Visualizer & Breather Lounge */
+.trippy-visualizer-container {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.trippy-visualizer-container:fullscreen {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}

@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react';
-import { Moon, Skull, EyeOff, ShieldAlert, ArrowRight, Sun, Crosshair } from 'lucide-react';
+import { Moon, Skull, EyeOff, ShieldAlert, ArrowRight, Sun, Crosshair, Target } from 'lucide-react';
 import { sounds } from '../../audio/soundEffects';
 
-export default function HostNight({ onProceed, nightMurderSelected }) {
+export default function HostNight({
+  onProceed,
+  nightMurderSelected,
+  hasDares = false
+}) {
   useEffect(() => {
     // Play dramatic heartbeat and stinger at nightfall
     sounds.playDramaticStinger();
@@ -117,18 +121,30 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
         </div>
       </div>
 
-      {/* Host Control to Wake Haveli */}
+      {/* Host Control to Advance */}
       <button
         type="button"
         onClick={onProceed}
         className="btn-danger spring-btn"
         style={{
           padding: '16px 32px',
-          fontSize: '1.0625rem'
+          fontSize: '1.0625rem',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '8px'
         }}
       >
-        <Sun size={18} />
-        <span>Wake Up Haveli: Reveal Dawn Report</span>
+        {hasDares ? (
+          <>
+            <Moon size={18} />
+            <span>Launch Night Cover Mission & Dares</span>
+          </>
+        ) : (
+          <>
+            <Sun size={18} />
+            <span>Wake Up Haveli: Reveal Dawn Report</span>
+          </>
+        )}
       </button>
     </div>
   );

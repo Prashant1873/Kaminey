@@ -1,14 +1,14 @@
 import React from 'react';
-import { Shuffle, Wine, AlertTriangle, CheckCircle2, Users, Sparkles } from 'lucide-react';
+import { Shuffle, Wine, Sun, Sparkles, Moon } from 'lucide-react';
 import { getAvatarById } from '../../data/animalAvatars';
 import AvatarBadge from '../common/AvatarBadge';
 
 export default function HostDares({
   mission,
-  players,
+  players = [],
   onReshuffle,
-  onDoOurOwnThing,
-  onCallDiscussion
+  onOpenDrinksBreather,
+  onBreakDawn
 }) {
   const alivePlayers = players.filter(p => p.isAlive && !p.isExiled);
 
@@ -20,22 +20,24 @@ export default function HostDares({
       display: 'flex',
       flexDirection: 'column',
       gap: '20px',
-      textAlign: 'center'
+      textAlign: 'center',
+      color: '#ffffff'
     }}>
-      {/* Top Banner */}
+      {/* Top Night Conclave Banner */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(0, 61, 155, 0.05), rgba(255, 159, 10, 0.08))',
+        background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(15, 18, 30, 0.95))',
         borderRadius: 'var(--rounded-xl)',
-        padding: '16px 20px',
-        border: '1px solid rgba(255, 159, 10, 0.2)'
+        padding: '18px 22px',
+        border: '1.5px solid rgba(239, 68, 68, 0.25)',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.6)'
       }}>
         <div style={{
           display: 'inline-flex',
           alignItems: 'center',
           gap: '6px',
-          background: mission?.categoryColor ? `${mission.categoryColor}18` : 'rgba(255, 159, 10, 0.15)',
-          color: mission?.categoryColor || 'var(--warning-text)',
-          border: `1px solid ${mission?.categoryColor || 'var(--warning)'}40`,
+          background: 'rgba(239, 68, 68, 0.12)',
+          color: 'var(--loss-text)',
+          border: '1px solid rgba(239, 68, 68, 0.25)',
           borderRadius: 'var(--rounded-sm)',
           padding: '4px 10px',
           fontSize: '0.71875rem',
@@ -44,14 +46,15 @@ export default function HostDares({
           textTransform: 'uppercase',
           marginBottom: '6px'
         }}>
-          {mission?.badge || 'PARTY MYSTERY MISSION'}
+          <Moon size={13} color="var(--loss-text)" />
+          <span>{mission?.badge ? `NIGHT COVER: ${mission.badge}` : 'NIGHT CONCLAVE: COVER MISSION'}</span>
         </div>
 
-        <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
-          {mission?.title || 'GROUP ICEBREAKER'}
+        <h1 className="text-display" style={{ color: '#ffffff', marginBottom: '4px' }}>
+          {mission?.title || 'GROUP DISTRACTION TASK'}
         </h1>
-        <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
-          All players participate together. Watch for nervous reactions, shifting glances, and slip-ups.
+        <p style={{ color: '#94a3b8', fontSize: '0.875rem', maxWidth: '720px', margin: '0 auto', lineHeight: 1.5 }}>
+          Darkness envelopes the Haveli. Complete this mission together to generate chaos and noise, creating the perfect cover for the Kaminey to strike before dawn breaks.
         </p>
       </div>
 
@@ -65,7 +68,8 @@ export default function HostDares({
         display: 'flex',
         flexDirection: 'column',
         gap: '18px',
-        border: '1px solid rgba(255, 255, 255, 0.1)'
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        background: 'rgba(18, 22, 34, 0.85)'
       }}>
         <div style={{
           fontSize: '1.35rem',
@@ -95,14 +99,14 @@ export default function HostDares({
           </div>
         )}
 
-        {/* Action Controls: Reshuffle, Own Thing, Proceed to Council */}
+        {/* Action Controls: Reshuffle, Own Thing (Drinks Breather), Break Dawn */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
           gap: '12px',
           marginTop: '8px',
           paddingTop: '16px',
-          borderTop: '1px solid var(--outline-variant)'
+          borderTop: '1px solid rgba(255, 255, 255, 0.1)'
         }}>
           {/* Reshuffle Button */}
           <button
@@ -115,7 +119,9 @@ export default function HostDares({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '8px'
+              gap: '8px',
+              background: 'rgba(255, 255, 255, 0.06)',
+              color: '#CBD5E1'
             }}
             title="Roll another random party mission"
           >
@@ -123,10 +129,10 @@ export default function HostDares({
             <span>Shuffle Mission</span>
           </button>
 
-          {/* Do Our Own Thing Button */}
+          {/* Free Socialize / Drinks Breather Page */}
           <button
             type="button"
-            onClick={onDoOurOwnThing}
+            onClick={onOpenDrinksBreather}
             className="btn-secondary spring-btn"
             style={{
               padding: '14px',
@@ -135,22 +141,24 @@ export default function HostDares({
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              background: 'var(--surface-container-high)'
+              background: 'rgba(229, 184, 105, 0.12)',
+              color: '#e5b869',
+              border: '1px solid rgba(229, 184, 105, 0.3)'
             }}
-            title="Skip app task and chill with drinks/discussion on your own"
+            title="Open dedicated party drinks & chill lounge breather"
           >
             <Wine size={18} />
-            <span>Free Socialize / Drinks</span>
+            <span>Free Party / Drinks Breather</span>
           </button>
 
-          {/* Mission Accomplished -> Emergency Council */}
+          {/* Mission Accomplished -> Break Dawn */}
           <button
             type="button"
-            onClick={onCallDiscussion}
-            className="btn-primary spring-btn"
+            onClick={onBreakDawn}
+            className="btn-danger spring-btn"
             style={{
-              padding: '14px',
-              fontSize: '0.9375rem',
+              padding: '16px',
+              fontSize: '1rem',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -158,15 +166,15 @@ export default function HostDares({
               gridColumn: '1 / -1'
             }}
           >
-            <AlertTriangle size={18} />
-            <span>Mission Complete: Call Council</span>
+            <Sun size={19} />
+            <span>Mission Complete: Break Dawn & Reveal Casualty</span>
           </button>
         </div>
       </div>
 
       {/* Living Room Guests Roster */}
       <div style={{ maxWidth: '850px', margin: '0 auto', width: '100%' }}>
-        <div className="text-label" style={{ color: 'var(--on-surface-variant)', marginBottom: '10px', textAlign: 'left' }}>
+        <div className="text-label" style={{ color: '#94a3b8', marginBottom: '10px', textAlign: 'left' }}>
           SUSPECTS PARTICIPATING IN THE HAVELI ({alivePlayers.length})
         </div>
         <div style={{
@@ -180,19 +188,17 @@ export default function HostDares({
               <div
                 key={p.id}
                 style={{
-                  background: 'var(--surface-container-high)',
-                  border: '1px solid var(--outline-variant)',
-                  borderRadius: 'var(--rounded-full)',
-                  padding: '6px 14px',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px',
-                  fontSize: '0.8125rem',
-                  fontWeight: 600
+                  background: 'rgba(18, 22, 34, 0.8)',
+                  padding: '6px 12px',
+                  borderRadius: 'var(--rounded-lg)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)'
                 }}
               >
-                <AvatarBadge avatarId={p.avatarId} size={22} />
-                <span>{p.name}</span>
+                <AvatarBadge avatarId={p.avatarId} size={28} />
+                <span style={{ fontSize: '0.84rem', fontWeight: 600, color: '#F1F5F9' }}>{p.name}</span>
               </div>
             );
           })}

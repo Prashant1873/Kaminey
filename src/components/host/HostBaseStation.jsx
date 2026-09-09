@@ -5,6 +5,7 @@ import HostRoleReveal from './HostRoleReveal';
 import HostNight from './HostNight';
 import HostMorning from './HostMorning';
 import HostDares from './HostDares';
+import HostDrinksBreather from './HostDrinksBreather';
 import HostDiscussion from './HostDiscussion';
 import HostVoting from './HostVoting';
 import HostExile from './HostExile';
@@ -360,8 +361,8 @@ export default function HostBaseStation({ onExit }) {
     }, 1500);
   };
 
-  // Advance from Night to Morning
-  const handleProceedToMorning = () => {
+  // Conclude Night: resolve murder, check victory, and break dawn
+  const handleConcludeNightAndBreakDawn = () => {
     // Resolve Night Murder
     const targetTallies = {};
     Object.values(nightVotes).forEach(targetId => {
@@ -407,14 +408,19 @@ export default function HostBaseStation({ onExit }) {
     setPhase('MORNING');
   };
 
-  // Advance from Morning to Team Missions or Discussion
-  const handleProceedFromMorning = () => {
+  // Advance from Night to either Dares (cover for the kill) or straight to Morning
+  const handleAdvanceFromNight = () => {
     if (settings.enableDares) {
       setCurrentMission(getRandomTeamMission());
       setPhase('DARES');
     } else {
-      setPhase('DISCUSSION');
+      handleConcludeNightAndBreakDawn();
     }
+  };
+
+  // Advance from Morning to Discussion (Council Debate)
+  const handleProceedFromMorning = () => {
+    setPhase('DISCUSSION');
   };
 
   // Reshuffle current team mission
@@ -507,7 +513,7 @@ export default function HostBaseStation({ onExit }) {
 
   const nightMurderSelected = Object.keys(nightVotes).length > 0;
 
-  const isNight = phase === 'NIGHT';
+  const isNight = phase === 'NIGHT' || phase === 'DARES' || phase === 'DRINKS_BREATHER';
 
   return (
     <div className={isNight ? 'theme-simsim-night' : ''} style={{
@@ -547,6 +553,7 @@ export default function HostBaseStation({ onExit }) {
         {phase === 'ROLE_REVEAL' && (
           <HostRoleReveal
             players={players}
+            roles={roles}
             onProceed={handleProceedToNight}
           />
         )}
@@ -554,14 +561,8 @@ export default function HostBaseStation({ onExit }) {
         {phase === 'NIGHT' && (
           <HostNight
             nightMurderSelected={nightMurderSelected}
-            onProceed={handleProceedToMorning}
-          />
-        )}
-
-        {phase === 'MORNING' && (
-          <HostMorning
-            victim={morningVictim}
-            onProceed={handleProceedFromMorning}
+            hasDares={settings.enableDares}
+            onProceed={handleAdvanceFromNight}
           />
         )}
 
@@ -570,8 +571,23 @@ export default function HostBaseStation({ onExit }) {
             mission={currentMission}
             players={players}
             onReshuffle={handleReshuffleMission}
-            onDoOurOwnThing={handleCallDiscussion}
-            onCallDiscussion={handleCallDiscussion}
+            onOpenDrinksBreather={() => setPhase('DRINKS_BREATHER')}
+            onBreakDawn={handleConcludeNightAndBreakDawn}
+          />
+        )}
+
+        {phase === 'DRINKS_BREATHER' && (
+          <HostDrinksBreather
+            players={players}
+            onBreakDawn={handleConcludeNightAndBreakDawn}
+            onBackToMissions={() => setPhase('DARES')}
+          />
+        )}
+
+        {phase === 'MORNING' && (
+          <HostMorning
+            victim={morningVictim}
+            onProceed={handleProceedFromMorning}
           />
         )}
 

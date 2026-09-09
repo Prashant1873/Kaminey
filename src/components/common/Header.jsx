@@ -19,7 +19,8 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
       case 'ROLE_REVEAL': return 'Role Reveal';
       case 'NIGHT': return 'Night Conclave (Kaminey)';
       case 'MORNING': return 'Dawn Report';
-      case 'DARES': return 'Maha-Mission';
+      case 'DARES': return 'Night Conclave: Cover Mission';
+      case 'DRINKS_BREATHER': return 'Haveli Lounge: Drinks Breather';
       case 'DISCUSSION': return 'Council Debate';
       case 'VOTING': return 'Exile Ballot (Bhole vs Kaminey)';
       case 'EXILE': return 'Council Verdict';
@@ -28,7 +29,7 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
     }
   };
 
-  const isNight = currentPhase === 'NIGHT';
+  const isNight = currentPhase === 'NIGHT' || currentPhase === 'DARES' || currentPhase === 'DRINKS_BREATHER';
 
   const handleHomeClick = () => {
     if (onLeave) {

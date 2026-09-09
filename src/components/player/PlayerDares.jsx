@@ -46,9 +46,9 @@ export default function PlayerDares({
         display: 'inline-flex',
         alignItems: 'center',
         gap: '6px',
-        background: mission?.categoryColor ? `${mission.categoryColor}18` : 'rgba(255, 159, 10, 0.15)',
-        color: mission?.categoryColor || 'var(--warning-text)',
-        border: `1px solid ${mission?.categoryColor || 'var(--warning)'}40`,
+        background: 'rgba(239, 68, 68, 0.12)',
+        color: 'var(--loss-text)',
+        border: '1px solid rgba(239, 68, 68, 0.25)',
         borderRadius: 'var(--rounded-sm)',
         padding: '4px 10px',
         fontSize: '0.71875rem',
@@ -57,15 +57,15 @@ export default function PlayerDares({
         textTransform: 'uppercase',
         margin: '0 auto'
       }}>
-        {mission?.badge || 'GROUP MISSION'}
+        {mission?.badge ? `NIGHT COVER: ${mission.badge}` : 'NIGHT CONCLAVE: COVER MISSION'}
       </div>
 
       <div>
-        <h1 className="text-headline" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
-          {mission?.title || 'GROUP ACTIVITY'}
+        <h1 className="text-headline" style={{ color: '#ffffff', marginBottom: '4px' }}>
+          {mission?.title || 'GROUP DISTRACTION TASK'}
         </h1>
-        <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem' }}>
-          Watch the main screen. Everyone participates in this mission together.
+        <p className="text-body" style={{ color: '#94a3b8', fontSize: '0.8125rem' }}>
+          Watch the main TV screen. Everyone participates together to generate cover noise in the dark before dawn breaks.
         </p>
       </div>
 
@@ -76,12 +76,13 @@ export default function PlayerDares({
         flexDirection: 'column',
         gap: '14px',
         border: '1px solid rgba(255, 255, 255, 0.1)',
-        textAlign: 'left'
+        textAlign: 'left',
+        background: 'rgba(18, 22, 34, 0.85)'
       }}>
         <div style={{
           fontSize: '1.15rem',
           fontWeight: 800,
-          color: 'var(--on-surface)',
+          color: '#ffffff',
           lineHeight: 1.45,
           textAlign: 'center'
         }}>
@@ -119,7 +120,7 @@ export default function PlayerDares({
           }}
         >
           <CheckCircle2 size={18} />
-          <span>{markedReady ? "Task Completed" : "Ready for Council Debate"}</span>
+          <span>{markedReady ? "Task Completed" : "Ready for Dawn"}</span>
         </button>
       </div>
 
