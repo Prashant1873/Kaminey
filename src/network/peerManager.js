@@ -32,21 +32,33 @@ export function generateRoomCode() {
 }
 
 export class HostNetwork {
-  constructor(roomCode, onPlayerJoin, onPlayerMessage, onPlayerLeave, onStatusChange, onCodeUnavailable, getCustomStateForPlayer) {
+  constructor(roomCode, ...args) {
     this.roomCode = roomCode.toUpperCase().trim();
     this.peerId = `${PEER_PREFIX}${this.roomCode}`;
-    this.onPlayerJoin = onPlayerJoin;
-    this.onPlayerMessage = onPlayerMessage;
-    this.onPlayerLeave = onPlayerLeave;
-    this.onStatusChange = onStatusChange;
-    this.onCodeUnavailable = onCodeUnavailable;
-    this.getCustomStateForPlayer = getCustomStateForPlayer;
+
+    if (args.length === 1 && typeof args[0] === 'function') {
+      this.getHandlers = args[0];
+    } else if (args.length === 1 && typeof args[0] === 'object') {
+      this.getHandlers = () => args[0];
+    } else {
+      const [onPlayerJoin, onPlayerMessage, onPlayerLeave, onStatusChange, onCodeUnavailable, getCustomStateForPlayer] = args;
+      this.getHandlers = () => ({
+        onPlayerJoin,
+        onPlayerMessage,
+        onPlayerLeave,
+        onStatusChange,
+        onCodeUnavailable,
+        getCustomStateForPlayer
+      });
+    }
+
     this.connections = new Map(); // playerId -> dataConnection
     this.peer = null;
     this.isReady = false;
     this.reconnectAttempts = 0;
     this.maxReconnectAttempts = 3;
     this.isDestroyed = false;
+    this.heartbeatTimer = null;
 
     // Clean up peer immediately on tab close or refresh to release ID on broker
     this.handleUnload = () => {
@@ -58,16 +70,34 @@ export class HostNetwork {
     }
   }
 
+  startHeartbeat() {
+    if (this.heartbeatTimer) clearInterval(this.heartbeatTimer);
+    this.heartbeatTimer = setInterval(() => {
+      if (this.isDestroyed) return;
+      this.connections.forEach((conn, playerId) => {
+        if (conn && conn.open) {
+          try {
+            conn.send({ type: 'HEARTBEAT_PING', timestamp: Date.now() });
+          } catch (e) {
+            console.warn('Heartbeat send error to', playerId, e);
+          }
+        }
+      });
+    }, 2500);
+  }
+
   init() {
     if (this.isDestroyed) return;
-    this.onStatusChange?.('Connecting host base to network...');
+    const handlers = this.getHandlers();
+    handlers.onStatusChange?.('Connecting host base to network...');
 
     this.peer = new Peer(this.peerId, PEER_CONFIG);
 
     this.peer.on('open', () => {
       this.isReady = true;
       this.reconnectAttempts = 0;
-      this.onStatusChange?.('Online — Ready for guests');
+      this.startHeartbeat();
+      this.getHandlers().onStatusChange?.('Online — Ready for guests');
     });
 
     this.peer.on('connection', (conn) => {
@@ -78,13 +108,14 @@ export class HostNetwork {
         conn.playerId = playerId;
         this.connections.set(playerId, conn);
 
+        const currentHandlers = this.getHandlers();
         // Notify host base station to register player in game state
-        this.onPlayerJoin?.({ id: playerId, name, avatarId }, conn);
+        currentHandlers.onPlayerJoin?.({ id: playerId, name, avatarId }, conn);
 
         // Instantly reply with personalized state sync so mobile device enters lobby immediately
-        if (conn.open && this.getCustomStateForPlayer) {
+        if (conn.open && currentHandlers.getCustomStateForPlayer) {
           try {
-            const state = this.getCustomStateForPlayer(playerId);
+            const state = currentHandlers.getCustomStateForPlayer(playerId);
             conn.send({ type: 'STATE_SYNC', payload: state });
           } catch (e) {
             console.warn('Direct state sync send error:', e);
@@ -98,18 +129,23 @@ export class HostNetwork {
       });
 
       conn.on('data', (data) => {
-        if (data && data.type === 'PLAYER_JOIN') {
+        if (!data) return;
+        if (data.type === 'HEARTBEAT_PONG') {
+          // Keep-alive received, connection healthy
+          return;
+        }
+        if (data.type === 'PLAYER_JOIN') {
           registerAndSync(data.payload);
         } else {
           const playerId = conn.playerId || conn.metadata?.id || conn.peer;
-          this.onPlayerMessage?.(data, playerId);
+          this.getHandlers().onPlayerMessage?.(data, playerId);
         }
       });
 
       conn.on('close', () => {
         const playerId = conn.playerId || conn.metadata?.id || conn.peer;
         this.connections.delete(playerId);
-        this.onPlayerLeave?.(playerId);
+        this.getHandlers().onPlayerLeave?.(playerId);
       });
 
       conn.on('error', (err) => {
@@ -119,10 +155,11 @@ export class HostNetwork {
 
     this.peer.on('error', (err) => {
       console.error('Host Peer error:', err);
+      const handlers = this.getHandlers();
       if (err.type === 'unavailable-id') {
         if (this.reconnectAttempts < this.maxReconnectAttempts) {
           this.reconnectAttempts++;
-          this.onStatusChange?.(`Reconnecting room code (${this.reconnectAttempts}/${this.maxReconnectAttempts})...`);
+          handlers.onStatusChange?.(`Reconnecting room code (${this.reconnectAttempts}/${this.maxReconnectAttempts})...`);
           setTimeout(() => {
             if (!this.isDestroyed && !this.isReady) {
               if (this.peer) {
@@ -132,23 +169,24 @@ export class HostNetwork {
             }
           }, 1200);
         } else {
-          this.onStatusChange?.('Room code busy on network, generating new code...');
-          if (this.onCodeUnavailable) {
-            this.onCodeUnavailable();
-          }
+          handlers.onStatusChange?.('Room code busy on network, generating new code...');
+          handlers.onCodeUnavailable?.();
         }
       } else {
-        this.onStatusChange?.(`Status: ${err.type}`);
+        handlers.onStatusChange?.(`Status: ${err.type}`);
       }
     });
   }
 
   // Send tailored state to every connected player
   broadcastState(getCustomStateForPlayer) {
+    const resolver = getCustomStateForPlayer || this.getHandlers().getCustomStateForPlayer;
+    if (!resolver) return;
+
     this.connections.forEach((conn, playerId) => {
       if (conn && conn.open) {
         try {
-          const personalizedPayload = getCustomStateForPlayer(playerId);
+          const personalizedPayload = resolver(playerId);
           conn.send({
             type: 'STATE_SYNC',
             payload: personalizedPayload
@@ -184,6 +222,10 @@ export class HostNetwork {
 
   destroy() {
     this.isDestroyed = true;
+    if (this.heartbeatTimer) {
+      clearInterval(this.heartbeatTimer);
+      this.heartbeatTimer = null;
+    }
     if (typeof window !== 'undefined') {
       window.removeEventListener('beforeunload', this.handleUnload);
       window.removeEventListener('pagehide', this.handleUnload);
@@ -212,10 +254,12 @@ export class PlayerNetwork {
     this.conn = null;
     this.receivedFirstSync = false;
     this.syncRetryTimer = null;
+    this.reconnectTimer = null;
     this.isDestroyed = false;
   }
 
   init() {
+    if (this.isDestroyed) return;
     this.onStatusChange?.('Connecting to network...');
     this.peer = new Peer(undefined, PEER_CONFIG);
 
@@ -234,6 +278,7 @@ export class PlayerNetwork {
   }
 
   connectToHost() {
+    if (this.isDestroyed) return;
     this.onStatusChange?.(`Joining room ${this.roomCode}...`);
     this.conn = this.peer.connect(this.hostPeerId, {
       metadata: this.playerData,
@@ -259,19 +304,39 @@ export class PlayerNetwork {
     });
 
     this.conn.on('data', (msg) => {
-      if (msg && msg.type === 'STATE_SYNC') {
+      if (!msg) return;
+      if (msg.type === 'HEARTBEAT_PING') {
+        // Auto-reply to host heartbeat to prevent mobile data channel throttling
+        if (this.conn && this.conn.open) {
+          try {
+            this.conn.send({ type: 'HEARTBEAT_PONG', timestamp: msg.timestamp });
+          } catch (e) {}
+        }
+        return;
+      }
+      if (msg.type === 'STATE_SYNC') {
         this.receivedFirstSync = true;
         if (this.syncRetryTimer) clearInterval(this.syncRetryTimer);
         this.onStateSync?.(msg.payload);
-      } else if (msg && msg.type === 'PLAYER_KICKED') {
+      } else if (msg.type === 'PLAYER_KICKED') {
         this.onKicked?.(msg.payload?.reason || 'Host removed you from the game');
       }
     });
 
     this.conn.on('close', () => {
       if (this.syncRetryTimer) clearInterval(this.syncRetryTimer);
-      this.onStatusChange?.('Disconnected from host');
-      this.onDisconnect?.();
+      if (!this.isDestroyed) {
+        this.onStatusChange?.('Reconnecting to host...');
+        if (this.reconnectTimer) clearTimeout(this.reconnectTimer);
+        this.reconnectTimer = setTimeout(() => {
+          if (!this.isDestroyed && this.peer && !this.peer.destroyed) {
+            this.connectToHost();
+          }
+        }, 1500);
+      } else {
+        this.onStatusChange?.('Disconnected from host');
+        this.onDisconnect?.();
+      }
     });
 
     this.conn.on('error', (err) => {
@@ -289,6 +354,7 @@ export class PlayerNetwork {
   destroy() {
     this.isDestroyed = true;
     if (this.syncRetryTimer) clearInterval(this.syncRetryTimer);
+    if (this.reconnectTimer) clearTimeout(this.reconnectTimer);
     if (this.conn) {
       try { this.conn.close(); } catch (e) {}
       this.conn = null;

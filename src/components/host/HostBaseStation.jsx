@@ -142,68 +142,76 @@ export default function HostBaseStation({ onExit }) {
     }
   }, []);
 
-  // Initialize Host PeerJS Network
-  useEffect(() => {
-    const net = new HostNetwork(
-      roomCode,
-      (playerData, conn) => {
-        setPlayers(prev => {
-          // If player with this exact ID already exists, update info (reconnect)
-          const index = prev.findIndex(p => p.id === playerData.id);
-          if (index >= 0) {
-            const updated = [...prev];
-            updated[index] = {
-              ...updated[index],
-              name: playerData.name || updated[index].name,
-              avatarId: playerData.avatarId || updated[index].avatarId
-            };
-            return updated;
-          }
-          // Disambiguate duplicate names so every player is clearly identifiable
-          let finalName = (playerData.name || '').trim();
-          if (!finalName) {
-            finalName = `Guest ${prev.length + 1}`;
-          }
-          const duplicateCount = prev.filter(p => p.name.toLowerCase() === finalName.toLowerCase()).length;
-          if (duplicateCount > 0) {
-            finalName = `${finalName} (${duplicateCount + 1})`;
-          }
+  // Mutable ref holding latest handlers and state getters so network never re-initializes on state changes
+  const callbacksRef = useRef({});
+  callbacksRef.current = {
+    onPlayerJoin: (playerData, conn) => {
+      setPlayers(prev => {
+        // If player with this exact ID already exists, update info (reconnect)
+        const index = prev.findIndex(p => p.id === playerData.id);
+        if (index >= 0) {
+          const updated = [...prev];
+          updated[index] = {
+            ...updated[index],
+            name: playerData.name || updated[index].name,
+            avatarId: playerData.avatarId || updated[index].avatarId
+          };
+          return updated;
+        }
+        // Disambiguate duplicate names so every player is clearly identifiable
+        let finalName = (playerData.name || '').trim();
+        if (!finalName) {
+          finalName = `Guest ${prev.length + 1}`;
+        }
+        const duplicateCount = prev.filter(p => p.name.toLowerCase() === finalName.toLowerCase()).length;
+        if (duplicateCount > 0) {
+          finalName = `${finalName} (${duplicateCount + 1})`;
+        }
 
-          return [...prev, {
-            id: playerData.id,
-            name: finalName,
-            avatarId: playerData.avatarId || 'lion',
-            isAlive: true,
-            isExiled: false,
-            isBot: false
-          }];
-        });
+        return [...prev, {
+          id: playerData.id,
+          name: finalName,
+          avatarId: playerData.avatarId || 'lion',
+          isAlive: true,
+          isExiled: false,
+          isBot: false
+        }];
+      });
 
-        // Instant direct state sync back to newly connected player
-        if (conn && conn.open) {
-          try {
-            const directState = getPlayerPersonalizedState(playerData.id);
+      // Instant direct state sync back to newly connected player
+      if (conn && conn.open) {
+        try {
+          const directState = callbacksRef.current.getCustomStateForPlayer?.(playerData.id);
+          if (directState) {
             conn.send({
               type: 'STATE_SYNC',
               payload: directState
             });
-          } catch (e) {
-            console.warn('Initial state sync direct send error:', e);
           }
+        } catch (e) {
+          console.warn('Initial state sync direct send error:', e);
         }
-      },
-      handlePlayerMessage,
-      (playerId) => {
-        // Player disconnected
-      },
-      (status) => {
-        setNetworkStatus(status);
-      },
-      () => {
-        // onCodeUnavailable: auto-generate new code to avoid network conflicts
-        handleRegenerateCode();
-      },
-      (targetId) => getPlayerPersonalizedState(targetId)
+      }
+    },
+    onPlayerMessage: handlePlayerMessage,
+    onPlayerLeave: (playerId) => {
+      console.log('Player disconnected:', playerId);
+    },
+    onStatusChange: (status) => {
+      setNetworkStatus(status);
+    },
+    onCodeUnavailable: () => {
+      handleRegenerateCode();
+    },
+    getCustomStateForPlayer: (targetId) => getPlayerPersonalizedState(targetId)
+  };
+
+  // Initialize Host PeerJS Network — ONLY depends on roomCode!
+  // NEVER tears down when players join, bots are added, votes cast, or phase changes!
+  useEffect(() => {
+    const net = new HostNetwork(
+      roomCode,
+      () => callbacksRef.current
     );
 
     networkRef.current = net;
@@ -212,7 +220,7 @@ export default function HostBaseStation({ onExit }) {
     return () => {
       net.destroy();
     };
-  }, [roomCode, handlePlayerMessage, getPlayerPersonalizedState, handleRegenerateCode]);
+  }, [roomCode]);
 
   // Remove / kick player from lobby setup screen
   const handleRemovePlayer = useCallback((playerId) => {
@@ -260,30 +268,27 @@ export default function HostBaseStation({ onExit }) {
     return null;
   };
 
-  // Start the Game
-  const handleStartGame = () => {
-    if (players.length < 4) return;
+  // Launch game with an explicit player roster
+  const launchGameWithPlayers = (playerList) => {
+    if (playerList.length < 4) return;
 
     // Determine number of Kaminey
     let numKaminey = 1;
     if (settings.kamineyCount === 'auto') {
-      numKaminey = players.length >= 8 ? 2 : 1;
+      numKaminey = playerList.length >= 8 ? 2 : 1;
     } else {
-      numKaminey = Math.min(parseInt(settings.kamineyCount, 10), Math.floor(players.length / 2));
+      numKaminey = Math.min(parseInt(settings.kamineyCount, 10), Math.floor(playerList.length / 2));
     }
 
     // Shuffle & Assign Roles
-    const shuffled = [...players].sort(() => 0.5 - Math.random());
+    const shuffled = [...playerList].sort(() => 0.5 - Math.random());
     const newRoles = {};
-    const newDares = {};
 
     shuffled.forEach((p, idx) => {
       newRoles[p.id] = idx < numKaminey ? 'kamina' : 'bhola';
-      newDares[p.id] = getRandomDare();
     });
 
     setRoles(newRoles);
-    setDares(newDares);
     setNightVotes({});
     setVotes({});
     setMorningVictim(null);
@@ -292,6 +297,43 @@ export default function HostBaseStation({ onExit }) {
 
     sounds.playGong();
     setPhase('ROLE_REVEAL');
+  };
+
+  // Start the Game with current players
+  const handleStartGame = () => {
+    launchGameWithPlayers(players);
+  };
+
+  // 1-Tap Quick Start for Solo/Duo Testing: Auto-fills bots up to 4 players and launches
+  const handleQuickStartWithBots = () => {
+    setPlayers(prev => {
+      const needed = Math.max(0, 4 - prev.length);
+      const newPlayers = [...prev];
+      for (let i = 0; i < needed; i++) {
+        const availableNames = BOT_NAMES.filter(name => !newPlayers.some(p => p.name === name));
+        const name = availableNames.length > 0 ? availableNames[0] : `Guest ${newPlayers.length + 1}`;
+        const unusedAvatars = ANIMAL_AVATARS.filter(a => !newPlayers.some(p => p.avatarId === a.id));
+        const avatar = unusedAvatars.length > 0
+          ? unusedAvatars[Math.floor(Math.random() * unusedAvatars.length)]
+          : ANIMAL_AVATARS[Math.floor(Math.random() * ANIMAL_AVATARS.length)];
+
+        const botId = `bot-${Date.now()}-${i}-${Math.random().toString(36).substr(2, 4)}`;
+        newPlayers.push({
+          id: botId,
+          name,
+          avatarId: avatar.id,
+          isAlive: true,
+          isExiled: false,
+          isBot: true
+        });
+      }
+
+      setTimeout(() => {
+        launchGameWithPlayers(newPlayers);
+      }, 50);
+
+      return newPlayers;
+    });
   };
 
   // Advance from Role Reveal / Exile to Night
@@ -455,7 +497,6 @@ export default function HostBaseStation({ onExit }) {
   const handleRestart = () => {
     setPlayers(prev => prev.map(p => ({ ...p, isAlive: true, isExiled: false })));
     setRoles({});
-    setDares({});
     setNightVotes({});
     setVotes({});
     setMorningVictim(null);
@@ -498,6 +539,7 @@ export default function HostBaseStation({ onExit }) {
             onAddBot={addBotPlayer}
             onRemovePlayer={handleRemovePlayer}
             onRegenerateCode={handleRegenerateCode}
+            onQuickStartWithBots={handleQuickStartWithBots}
             networkStatus={networkStatus}
           />
         )}

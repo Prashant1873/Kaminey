@@ -12,6 +12,7 @@ export default function HostLobby({
   onAddBot,
   onRemovePlayer,
   onRegenerateCode,
+  onQuickStartWithBots,
   networkStatus
 }) {
   const minPlayers = 4;
@@ -279,17 +280,46 @@ export default function HostLobby({
               paddingTop: '16px',
               marginTop: '16px'
             }}>
-              <div style={{ display: 'flex', gap: '10px' }}>
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                 <button
                   type="button"
                   onClick={onAddBot}
                   className="btn-secondary spring-btn"
-                  style={{ flex: 1 }}
-                  title="Add simulated player for solo testing"
+                  style={{ flex: 1, minWidth: '130px' }}
+                  title="Add single simulated player"
                 >
                   <UserPlus size={16} />
-                  Add Test Guest (Bot)
+                  Add Bot (+1)
                 </button>
+
+                {!canStart && onQuickStartWithBots && (
+                  <button
+                    type="button"
+                    onClick={onQuickStartWithBots}
+                    className="spring-btn"
+                    style={{
+                      flex: 1.2,
+                      minWidth: '180px',
+                      padding: '10px 14px',
+                      borderRadius: 'var(--rounded-lg)',
+                      background: 'linear-gradient(135deg, var(--primary), #1a56db)',
+                      color: '#ffffff',
+                      fontWeight: 700,
+                      fontSize: '0.875rem',
+                      border: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      cursor: 'pointer',
+                      boxShadow: '0 2px 8px rgba(0, 61, 155, 0.25)'
+                    }}
+                    title="Fill remaining slots with bots and launch immediately for testing"
+                  >
+                    <Sparkles size={16} />
+                    Auto-Fill Bots & Launch 🚀
+                  </button>
+                )}
               </div>
 
               <button

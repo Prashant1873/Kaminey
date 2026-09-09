@@ -76,20 +76,20 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
       sessionStorage.setItem('kaminey_player_session', JSON.stringify(newPlayer));
     } catch (e) {}
     setPlayerData(newPlayer);
-    connectWithData(newPlayer);
   };
 
-  // Reconnect automatically on mount if session was saved (e.g. after refresh)
+  // Connect or reconnect on mount or when playerData.id changes
   useEffect(() => {
-    if (playerData && !networkRef.current) {
+    if (playerData) {
       connectWithData(playerData);
     }
     return () => {
       if (networkRef.current) {
         networkRef.current.destroy();
+        networkRef.current = null;
       }
     };
-  }, [playerData, connectWithData]);
+  }, [playerData?.id, connectWithData]);
 
   const handleNightTargetSelect = (targetId) => {
     if (networkRef.current) {
