@@ -297,13 +297,13 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '6px',
-                    background: 'rgba(229, 184, 105, 0.1)',
+                    background: 'var(--primary-subtle)',
                     padding: '6px 14px',
                     borderRadius: 'var(--rounded-full)',
                     fontSize: '0.75rem',
                     fontWeight: 700,
                     color: 'var(--primary)',
-                    border: '1px solid rgba(229, 184, 105, 0.25)'
+                    border: '1px solid var(--primary-subtle-border)'
                   }}>
                     <Wifi size={14} /> Room: {playerData.roomCode}
                   </div>
@@ -338,13 +338,13 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: '6px',
-                            background: isMe ? 'rgba(229, 184, 105, 0.15)' : 'var(--surface-container-low)',
+                            background: isMe ? 'var(--primary-subtle)' : 'var(--surface-container-low)',
                             color: isMe ? 'var(--primary)' : 'var(--on-surface)',
                             padding: '4px 10px',
                             borderRadius: 'var(--rounded-full)',
                             fontSize: '0.75rem',
                             fontWeight: isMe ? 700 : 500,
-                            border: isMe ? '1px solid var(--primary)' : '1px solid rgba(255, 255, 255, 0.08)'
+                            border: isMe ? '1px solid var(--primary)' : '1px solid var(--outline-variant)'
                           }}
                         >
                           <AvatarBadge avatar={av} size={16} showRing={false} />

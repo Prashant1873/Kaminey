@@ -77,7 +77,7 @@ export default function HostDares({
 
         {mission?.prompt && (
           <div style={{
-            background: 'rgba(229, 184, 105, 0.08)',
+            background: 'var(--primary-subtle)',
             borderLeft: '4px solid var(--primary)',
             padding: '12px 16px',
             borderRadius: '0 var(--rounded-md) var(--rounded-md) 0',

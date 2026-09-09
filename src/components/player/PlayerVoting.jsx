@@ -122,15 +122,26 @@ export default function PlayerVoting({
       gap: '16px',
       boxSizing: 'border-box'
     }}>
-      <div style={{ textAlign: 'center' }}>
-        <div className="badge-loss" style={{ padding: '4px 12px', fontSize: '0.75rem', marginBottom: '8px' }}>
-          SECRET TRIAL
+      {/* Header */}
+      <div style={{
+        background: 'var(--surface-container-low)',
+        borderRadius: 'var(--rounded-xl)',
+        padding: '16px 18px',
+        border: '1px solid var(--outline-variant)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+          <span className="badge-loss" style={{ fontSize: '0.6875rem' }}>
+            SECRET TRIAL
+          </span>
+          <span className="text-label" style={{ color: 'var(--on-surface-variant)' }}>
+            1 VOTE / HANDSET
+          </span>
         </div>
-        <h1 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
-          VOTE TO EXILE
+        <h1 className="text-headline" style={{ color: 'var(--on-surface)', fontSize: '1.25rem', margin: '4px 0 2px 0' }}>
+          Cast Exile Ballot
         </h1>
-        <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
-          Cast your vote against the suspected traitor or choose to abstain.
+        <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem', margin: 0, lineHeight: 1.4 }}>
+          Select a suspect to banish from the haveli, or choose to skip.
         </p>
       </div>
 
@@ -208,7 +219,8 @@ export default function PlayerVoting({
                 justifyContent: 'space-between',
                 padding: '12px 16px',
                 minHeight: '60px',
-                border: isSelected ? '2px solid var(--loss)' : '1px solid rgba(255, 255, 255, 0.08)',
+                border: isSelected ? '2px solid var(--loss)' : '1px solid var(--outline-variant)',
+                backgroundColor: isSelected ? 'rgba(239, 68, 68, 0.08)' : undefined,
                 opacity: isMe ? 0.45 : 1,
                 cursor: isMe ? 'not-allowed' : 'pointer'
               }}
@@ -226,9 +238,19 @@ export default function PlayerVoting({
               </div>
 
               <div>
-                <span className="badge-loss" style={{ fontSize: '0.75rem' }}>
-                  Vote Exile
-                </span>
+                {isMe ? (
+                  <span className="text-label" style={{ fontSize: '0.6875rem', color: 'var(--on-surface-variant)' }}>
+                    Self
+                  </span>
+                ) : isSelected ? (
+                  <span className="badge-loss" style={{ fontSize: '0.75rem', fontWeight: 800 }}>
+                    Marked
+                  </span>
+                ) : (
+                  <span className="text-label" style={{ fontSize: '0.6875rem', color: 'var(--on-surface-variant)' }}>
+                    Exile
+                  </span>
+                )}
               </div>
             </button>
           );
@@ -246,7 +268,7 @@ export default function PlayerVoting({
             justifyContent: 'space-between',
             padding: '12px 16px',
             minHeight: '60px',
-            border: selectedTargetId === 'skip' ? '2px solid var(--primary)' : '1px dashed rgba(255, 255, 255, 0.15)'
+            border: selectedTargetId === 'skip' ? '2px solid var(--primary)' : '1px dashed var(--outline-variant)'
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -254,8 +276,8 @@ export default function PlayerVoting({
               width: '40px',
               height: '40px',
               borderRadius: '24%',
-              background: 'rgba(229, 184, 105, 0.1)',
-              border: '1px solid rgba(229, 184, 105, 0.25)',
+              background: 'var(--primary-subtle)',
+              border: '1px solid var(--primary-subtle-border)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

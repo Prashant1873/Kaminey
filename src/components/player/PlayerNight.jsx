@@ -38,7 +38,7 @@ export default function PlayerNight({
       width: '100%',
       minHeight: 'auto',
       flex: 1,
-      backgroundColor: '#000000',
+      backgroundColor: '#07090E',
       padding: '24px 14px',
       display: 'flex',
       flexDirection: 'column',
@@ -52,7 +52,7 @@ export default function PlayerNight({
         width: '72px',
         height: '72px',
         borderRadius: '50%',
-        background: isKamina ? 'rgba(239, 68, 68, 0.15)' : 'rgba(229, 184, 105, 0.12)',
+        background: isKamina ? 'rgba(239, 68, 68, 0.15)' : 'var(--primary-subtle)',
         border: isKamina ? '1.5px solid var(--loss)' : '1.5px solid var(--primary)',
         display: 'flex',
         alignItems: 'center',
@@ -66,7 +66,7 @@ export default function PlayerNight({
         <div className={isKamina ? 'badge-loss' : 'badge-warning'} style={{ marginBottom: '8px', fontSize: '0.75rem', letterSpacing: '0.06em' }}>
           {isKamina ? 'THE KAMINA CONCLAVE' : 'PEACEFUL SLEEP'}
         </div>
-        <h1 className="text-headline" style={{ color: '#ffffff', fontSize: '1.45rem', marginBottom: '6px' }}>
+        <h1 className="text-headline" style={{ color: '#F8FAFC', fontSize: '1.45rem', marginBottom: '6px' }}>
           {isKamina ? 'CHOOSE YOUR TARGET' : 'THE HAVELI RESTS'}
         </h1>
         <p style={{ fontSize: '0.8125rem', color: '#94A3B8', maxWidth: '340px', lineHeight: 1.45 }}>
@@ -102,16 +102,16 @@ export default function PlayerNight({
                     padding: '12px 16px',
                     minHeight: '60px',
                     borderRadius: 'var(--rounded-xl)',
-                    background: isSelectedByMe ? 'rgba(239, 68, 68, 0.22)' : '#080808',
-                    border: isSelectedByMe ? '2px solid var(--loss)' : '1px solid #1a1a1a',
-                    color: '#ffffff',
+                    background: isSelectedByMe ? 'rgba(239, 68, 68, 0.22)' : '#0F131D',
+                    border: isSelectedByMe ? '2px solid var(--loss)' : '1px solid #1E2536',
+                    color: '#F8FAFC',
                     boxShadow: isSelectedByMe ? 'var(--shadow-glow-loss)' : 'none'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <AvatarBadge avatar={avatar} size={38} />
                     <div style={{ textAlign: 'left' }}>
-                      <div style={{ fontWeight: 800, fontSize: '0.9375rem', color: '#ffffff' }}>{victim.name}</div>
+                      <div style={{ fontWeight: 800, fontSize: '0.9375rem', color: '#F8FAFC' }}>{victim.name}</div>
                       <div style={{ fontSize: '0.75rem', color: '#94A3B8' }}>{avatar.name}</div>
                     </div>
                   </div>
@@ -132,12 +132,12 @@ export default function PlayerNight({
 
           {mySelectedTarget && (
             <div style={{
-              background: '#0d0d0d',
+              background: '#0F131D',
               border: '1px solid rgba(239, 68, 68, 0.3)',
               borderRadius: 'var(--rounded-lg)',
               padding: '12px',
               fontSize: '0.8125rem',
-              color: '#ffffff',
+              color: '#F8FAFC',
               marginTop: '8px'
             }}>
               Target marked! Waiting for the living room host to break the dawn.
@@ -149,10 +149,10 @@ export default function PlayerNight({
         <div style={{
           width: '100%',
           maxWidth: '360px',
-          background: '#080808',
+          background: '#0F131D',
           borderRadius: 'var(--rounded-2xl)',
           padding: '36px 20px',
-          border: '1px solid rgba(229, 184, 105, 0.2)',
+          border: '1px solid #1E2536',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -162,8 +162,8 @@ export default function PlayerNight({
             width: '80px',
             height: '80px',
             borderRadius: '50%',
-            background: 'rgba(229, 184, 105, 0.1)',
-            border: '1px solid rgba(229, 184, 105, 0.25)',
+            background: 'var(--primary-subtle)',
+            border: '1px solid var(--primary-subtle-border)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

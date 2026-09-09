@@ -83,11 +83,11 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
               alignItems: 'center',
               gap: '16px',
               backgroundColor: revealed
-                ? (isKamina ? 'rgba(16, 185, 129, 0.12)' : 'rgba(239, 68, 68, 0.12)')
-                : 'rgba(18, 22, 32, 0.72)',
+                ? (isKamina ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)')
+                : 'var(--surface-container)',
               border: revealed
                 ? (isKamina ? '2px solid var(--gain)' : '2px solid var(--loss)')
-                : '1px solid rgba(255, 255, 255, 0.1)',
+                : '1px solid var(--outline-variant)',
               boxShadow: revealed
                 ? (isKamina ? '0 0 32px rgba(16, 185, 129, 0.25)' : '0 0 32px rgba(239, 68, 68, 0.25)')
                 : 'var(--shadow-resting)',
@@ -125,12 +125,12 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
                   gap: '10px'
                 }}>
                   {isKamina ? <Skull size={32} /> : <ShieldCheck size={32} />}
-                  <span>{isKamina ? 'WAS A KAMINA!' : 'WAS A BHOLA!'}</span>
+                  <span>{isKamina ? 'WAS A KAMINA' : 'WAS A BHOLA'}</span>
                 </div>
                 <p style={{ fontSize: '0.9375rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
                   {isKamina
-                    ? 'Huge victory for the innocents! One traitor has been rooted out.'
-                    : 'A tragic mistake! An innocent Bhola was falsely accused and cast out.'}
+                    ? 'Court victory. One conspirator has been identified and banished.'
+                    : 'Judicial failure. An innocent guest was falsely accused and exiled.'}
                 </p>
               </div>
             )}
@@ -143,8 +143,8 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
             width: '90px',
             height: '90px',
             borderRadius: 'var(--rounded-full)',
-            background: 'rgba(229, 184, 105, 0.12)',
-            border: '1px solid rgba(229, 184, 105, 0.3)',
+            background: 'var(--primary-subtle)',
+            border: '1px solid var(--primary-subtle-border)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'

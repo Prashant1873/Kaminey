@@ -32,39 +32,32 @@ export default function HostDiscussion({
     }}>
       {/* Emergency Header */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(229, 184, 105, 0.08), rgba(239, 68, 68, 0.08))',
-        borderRadius: 'var(--rounded-xl)',
-        padding: '18px 20px',
-        border: '1px solid rgba(229, 184, 105, 0.2)'
+        background: 'var(--surface-container-low)',
+        borderRadius: 'var(--rounded-2xl)',
+        padding: '20px 24px',
+        border: '1px solid var(--outline-variant)',
+        textAlign: 'left'
       }}>
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-          background: 'var(--loss)',
-          color: '#ffffff',
-          padding: '4px 14px',
-          borderRadius: 'var(--rounded-full)',
-          fontSize: '0.75rem',
-          fontWeight: 800,
-          marginBottom: '8px'
-        }}>
-          <AlertCircle size={14} />
-          <span>EMERGENCY COUNCIL</span>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
+          <div className="badge-loss" style={{ fontSize: '0.6875rem', letterSpacing: '0.06em' }}>
+            <AlertCircle size={13} />
+            EMERGENCY COUNCIL IN SESSION
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
+            <Mic size={15} color="var(--primary)" />
+            <span>Open Floor</span>
+          </div>
         </div>
-        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
+        <h1 className="text-display" style={{ color: 'var(--on-surface)', margin: '4px 0 2px 0' }}>
           WHO IS THE KAMINA?
         </h1>
         <p style={{
           color: 'var(--on-surface-variant)',
-          fontSize: '0.9375rem',
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '6px'
+          fontSize: '0.90625rem',
+          margin: 0,
+          lineHeight: 1.45
         }}>
-          <span>Debate openly. Click any player below to give them the floor</span>
-          <Mic size={16} color="var(--primary)" />
+          Debate openly around the room. Tap any guest below to yield the floor for their defense.
         </p>
       </div>
 
@@ -81,28 +74,34 @@ export default function HostDiscussion({
       {/* Spotlighted Player Bar (if Host clicked someone) */}
       {spotlightPlayer && spotlightAvatar && (
         <div style={{
-          background: 'var(--surface-container-high)',
+          background: 'var(--surface-container-low)',
           borderRadius: 'var(--rounded-xl)',
-          padding: '16px 24px',
-          border: '2px solid var(--primary)',
+          padding: '16px 20px',
+          border: '1.5px solid var(--primary)',
           boxShadow: 'var(--shadow-glow-primary)',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
           gap: '16px',
-          animation: 'pulse-subtle 1.5s infinite'
+          animation: 'pulse-subtle 2s infinite'
         }}>
-          <AvatarBadge avatarId={spotlightPlayer.avatarId} size={54} />
-          <div style={{ textAlign: 'left' }}>
-            <div className="text-label" style={{ color: 'var(--primary)' }}>HOT SEAT SPOTLIGHT</div>
-            <div style={{ fontSize: '1.25rem', fontWeight: 800 }}>{spotlightPlayer.name} has the floor to defend themselves!</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px', textAlign: 'left' }}>
+            <AvatarBadge avatarId={spotlightPlayer.avatarId} size={48} />
+            <div>
+              <div className="text-label" style={{ color: 'var(--primary)', letterSpacing: '0.06em' }}>
+                HOT SEAT SPOTLIGHT
+              </div>
+              <div style={{ fontSize: '1.125rem', fontWeight: 800, color: 'var(--on-surface)' }}>
+                {spotlightPlayer.name} has the floor
+              </div>
+            </div>
           </div>
           <button
             onClick={() => setSpotlightId(null)}
-            className="category-pill spring-btn"
-            style={{ marginLeft: 'auto' }}
+            className="btn-secondary spring-btn"
+            style={{ fontSize: '0.8125rem', minHeight: '38px', padding: '6px 14px' }}
           >
-            Clear Spotlight
+            Yield Floor
           </button>
         </div>
       )}
@@ -128,20 +127,24 @@ export default function HostDiscussion({
                 onClick={() => setSpotlightId(isSelected ? null : p.id)}
                 className="card-interactive spring-btn"
                 style={{
-                  padding: '18px 10px',
+                  padding: '16px 10px',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: '8px',
-                  border: isSelected ? '2px solid var(--primary)' : '1px solid rgba(255, 255, 255, 0.08)',
-                  backgroundColor: isSelected ? 'rgba(229, 184, 105, 0.12)' : 'rgba(18, 22, 32, 0.65)'
+                  border: isSelected ? '2px solid var(--primary)' : '1px solid var(--outline-variant)',
+                  backgroundColor: isSelected ? 'var(--primary-subtle)' : 'var(--surface-container-low)'
                 }}
               >
-                <AvatarBadge avatarId={p.avatarId} size={54} />
-                <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--on-surface)' }}>{p.name}</div>
-                {isSelected && (
+                <AvatarBadge avatarId={p.avatarId} size={50} />
+                <div style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--on-surface)', width: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</div>
+                {isSelected ? (
                   <span className="badge-loss" style={{ fontSize: '0.625rem', marginTop: '2px' }}>
-                    Accused / Speaking
+                    Speaking
+                  </span>
+                ) : (
+                  <span className="text-label" style={{ fontSize: '0.625rem', color: 'var(--on-surface-variant)' }}>
+                    Accuse
                   </span>
                 )}
               </button>

@@ -44,31 +44,26 @@ export default function HostVoting({
     }}>
       {/* Header */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(229, 184, 105, 0.08), rgba(239, 68, 68, 0.05))',
-        borderRadius: 'var(--rounded-xl)',
-        padding: '18px 20px',
-        border: '1px solid rgba(229, 184, 105, 0.2)'
+        background: 'var(--surface-container-low)',
+        borderRadius: 'var(--rounded-2xl)',
+        padding: '20px 24px',
+        border: '1px solid var(--outline-variant)',
+        textAlign: 'left'
       }}>
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-          background: 'var(--primary)',
-          color: '#0A0B0E',
-          padding: '4px 14px',
-          borderRadius: 'var(--rounded-full)',
-          fontSize: '0.75rem',
-          fontWeight: 800,
-          marginBottom: '8px'
-        }}>
-          <Scale size={14} />
-          <span>THE SECRET BALLOT</span>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
+          <div className="badge-gain" style={{ fontSize: '0.6875rem', letterSpacing: '0.06em' }}>
+            <Scale size={13} />
+            SECRET BALLOT CHAMBER
+          </div>
+          <div className="tabular-nums" style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
+            {votedCount} OF {totalAlive} SUBMITTED
+          </div>
         </div>
-        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
-          CAST YOUR VOTES
+        <h1 className="text-display" style={{ color: 'var(--on-surface)', margin: '4px 0 2px 0' }}>
+          CAST YOUR CONFIDENTIAL VOTE
         </h1>
-        <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.9375rem' }}>
-          Submit your secret ballot on your phone.
+        <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.90625rem', margin: 0 }}>
+          Secret ballots are encrypted on personal handset screens. The court majority decides exile.
         </p>
       </div>
 
@@ -122,8 +117,8 @@ export default function HostVoting({
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '8px',
-                border: revealed && receivedVotes > 0 ? '2px solid var(--loss)' : '1px solid rgba(255, 255, 255, 0.08)',
-                backgroundColor: revealed && receivedVotes > 0 ? 'rgba(239, 68, 68, 0.12)' : 'rgba(18, 22, 32, 0.65)'
+                border: revealed && receivedVotes > 0 ? '2px solid var(--loss)' : '1px solid var(--outline-variant)',
+                backgroundColor: revealed && receivedVotes > 0 ? 'rgba(239, 68, 68, 0.15)' : 'var(--surface-container-low)'
               }}
             >
               <AvatarBadge avatarId={p.avatarId} size={50} />

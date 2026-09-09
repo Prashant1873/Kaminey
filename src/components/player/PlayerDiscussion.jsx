@@ -67,8 +67,8 @@ export default function PlayerDiscussion({ players = [], myPlayerId }) {
               <div
                 key={p.id}
                 style={{
-                  background: isMe ? 'rgba(229, 184, 105, 0.12)' : 'var(--surface-container-low)',
-                  border: isMe ? '1px solid var(--primary)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  background: isMe ? 'var(--primary-subtle)' : 'var(--surface-container-low)',
+                  border: isMe ? '1px solid var(--primary)' : '1px solid var(--outline-variant)',
                   borderRadius: 'var(--rounded-lg)',
                   padding: '8px 12px',
                   display: 'flex',

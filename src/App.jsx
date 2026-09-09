@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import HostBaseStation from './components/host/HostBaseStation';
 import PlayerController from './components/player/PlayerController';
 import HowToPlayModal from './components/common/HowToPlayModal';
-import { Tv, Smartphone, ArrowRight, ShieldCheck, Skull, BookOpen, Sun, Moon } from 'lucide-react';
+import { Tv, Smartphone, ArrowRight, ShieldCheck, Skull, BookOpen, Sun, Moon, Crown } from 'lucide-react';
 import { useTheme } from './context/ThemeContext';
 
 export default function App() {
@@ -134,9 +134,20 @@ export default function App() {
             minHeight: '48px'
           }}
         >
-          <span style={{ fontSize: '1.4rem', lineHeight: 1, display: 'inline-flex', alignItems: 'center' }}>
-            🎭
-          </span>
+          <div style={{
+            width: '32px',
+            height: '32px',
+            borderRadius: 'var(--rounded-md)',
+            background: 'var(--primary-subtle)',
+            border: '1px solid var(--primary-subtle-border)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: 'var(--shadow-resting)',
+            flexShrink: 0
+          }}>
+            <Crown size={18} color="var(--primary)" strokeWidth={2.4} />
+          </div>
           <span style={{ fontWeight: 800, fontSize: '1.1rem', letterSpacing: '-0.02em', color: 'var(--primary)' }}>
             KAMINEY
           </span>
@@ -146,27 +157,39 @@ export default function App() {
           <button
             type="button"
             onClick={() => setShowRules(true)}
-            className="spring-btn"
+            className="btn-secondary spring-btn"
             aria-label="Open how to play guide"
             style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              background: 'rgba(229, 184, 105, 0.1)',
-              color: 'var(--primary)',
-              padding: '8px 16px',
-              borderRadius: 'var(--rounded-full)',
-              border: '1px solid rgba(229, 184, 105, 0.25)',
+              padding: '7px 14px',
+              minHeight: '38px',
               fontSize: '0.8125rem',
-              fontWeight: 700,
-              minHeight: '44px'
+              gap: '6px'
             }}
           >
-            <BookOpen size={14} />
+            <BookOpen size={15} />
             <span>How to Play</span>
           </button>
-          <div className="badge-gain" style={{ fontSize: '0.6875rem', padding: '4px 10px' }}>
-            Live Multiplayer
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '6px 12px',
+            borderRadius: 'var(--rounded-md)',
+            background: 'var(--surface-container-low)',
+            border: '1px solid var(--outline-variant)',
+            fontSize: '0.6875rem',
+            fontWeight: 700,
+            letterSpacing: '0.04em',
+            color: 'var(--on-surface-variant)'
+          }}>
+            <span style={{
+              width: '7px',
+              height: '7px',
+              borderRadius: '50%',
+              backgroundColor: 'var(--gain)',
+              boxShadow: '0 0 8px var(--gain)'
+            }} />
+            <span>COURTYARD LIVE</span>
           </div>
           <button
             type="button"
@@ -177,10 +200,10 @@ export default function App() {
             style={{
               background: 'var(--surface-container-low)',
               border: '1px solid var(--outline-variant)',
-              color: dark ? '#FBBF24' : '#64748B',
+              color: dark ? '#FBBF24' : 'var(--primary)',
               padding: '8px',
-              minWidth: '44px',
-              minHeight: '44px',
+              minWidth: '40px',
+              minHeight: '40px',
               borderRadius: 'var(--rounded-lg)',
               display: 'inline-flex',
               alignItems: 'center',
@@ -192,29 +215,44 @@ export default function App() {
         </div>
       </header>
 
-      {/* Hero Section — Minimal Apple Design & Haveli Mystery Atmosphere */}
+      {/* Hero Section — Crafted Mystery Atmosphere */}
       <main style={{
         flex: 1,
         maxWidth: '960px',
         width: '100%',
         margin: '0 auto',
-        padding: '32px 16px',
+        padding: '36px 18px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         textAlign: 'center',
-        gap: '28px',
+        gap: '32px',
         boxSizing: 'border-box'
       }}>
         {/* Title */}
         <div>
-          <div className="badge-warning" style={{ fontSize: '0.75rem', padding: '4px 14px', marginBottom: '12px', letterSpacing: '0.06em' }}>
-            THE HAVELI MURDER MYSTERY
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '5px 14px',
+            borderRadius: 'var(--rounded-md)',
+            background: 'var(--primary-subtle)',
+            border: '1px solid var(--primary-subtle-border)',
+            color: 'var(--primary)',
+            fontSize: '0.6875rem',
+            fontWeight: 800,
+            letterSpacing: '0.08em',
+            marginBottom: '14px'
+          }}>
+            <span>THE HAVELI MURDER MYSTERY</span>
+            <span style={{ opacity: 0.4 }}>•</span>
+            <span>4 TO 12 GUESTS</span>
           </div>
           <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '8px' }}>
-            TRUST NO ONE IN THE HAVELI
+            Trust No One in the Haveli
           </h1>
-          <p className="text-headline" style={{ color: 'var(--on-surface-variant)', fontWeight: 500, fontSize: '1.0625rem', maxWidth: '520px', margin: '0 auto' }}>
+          <p className="text-headline" style={{ color: 'var(--on-surface-variant)', fontWeight: 500, fontSize: '1.0625rem', maxWidth: '540px', margin: '0 auto' }}>
             One big screen for the living room courtyard. Personal phones for secret roles & betrayal.
           </p>
         </div>
@@ -222,8 +260,8 @@ export default function App() {
         {/* Dual Mode Cards */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '20px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '24px',
           width: '100%',
           boxSizing: 'border-box'
         }}>
@@ -234,41 +272,44 @@ export default function App() {
             className="card-interactive spring-btn"
             aria-label="Launch host base station on TV"
             style={{
-              padding: '32px 24px',
+              padding: '32px 26px',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '16px',
+              gap: '18px',
               textAlign: 'center',
-              border: '1.5px solid rgba(229, 184, 105, 0.25)',
+              border: '1.5px solid var(--primary-subtle-border)',
+              boxShadow: 'var(--shadow-elevated)',
               boxSizing: 'border-box'
             }}
           >
+            <span className="badge-warning">BASE STATION</span>
+
             <div style={{
-              width: '68px',
-              height: '68px',
+              width: '76px',
+              height: '76px',
               borderRadius: 'var(--rounded-xl)',
-              background: 'linear-gradient(135deg, #E5B869, #C99738)',
+              background: 'linear-gradient(135deg, var(--primary-container) 0%, var(--primary) 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 8px 24px rgba(229, 184, 105, 0.3)'
+              boxShadow: 'var(--shadow-glow-primary), inset 0 1px 0 rgba(255, 255, 255, 0.35)'
             }}>
-              <Tv size={32} color="#0A0B0E" strokeWidth={2.2} />
+              <Tv size={36} color="var(--primary-contrast)" strokeWidth={2.2} />
             </div>
 
             <div>
-              <h2 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
-                HOST ON TV
+              <h2 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
+                Host on Living Room TV
               </h2>
-              <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', maxWidth: '240px' }}>
-                Big living room screen with high-visibility QR code & room countdown
+              <div style={{ fontSize: '0.84rem', color: 'var(--on-surface-variant)', maxWidth: '270px', lineHeight: 1.5 }}>
+                Public courtyard scoreboard with instant QR access, round timers & synchronized drama
               </div>
             </div>
 
-            <div className="btn-primary" style={{ width: '100%', padding: '12px', minHeight: '48px' }}>
+            <div className="btn-primary" style={{ width: '100%', padding: '14px', minHeight: '48px', marginTop: 'auto' }}>
               <span>Launch Base Station</span>
-              <ArrowRight size={16} />
+              <ArrowRight size={17} />
             </div>
           </button>
 
@@ -279,68 +320,146 @@ export default function App() {
             className="card-interactive spring-btn"
             aria-label="Join game on phone"
             style={{
-              padding: '32px 24px',
+              padding: '32px 26px',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              gap: '16px',
+              gap: '18px',
               textAlign: 'center',
-              border: '1.5px solid rgba(255, 255, 255, 0.1)',
+              border: '1.5px solid var(--outline-variant)',
               boxSizing: 'border-box'
             }}
           >
+            <span className="badge-gain">PERSONAL CONTROLLER</span>
+
             <div style={{
-              width: '68px',
-              height: '68px',
+              width: '76px',
+              height: '76px',
               borderRadius: 'var(--rounded-xl)',
-              background: 'var(--surface-container)',
+              background: 'var(--surface-container-high)',
               border: '1px solid var(--outline-variant)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: 'var(--shadow-resting)'
+              boxShadow: 'var(--shadow-resting), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
             }}>
-              <Smartphone size={32} color="var(--primary)" strokeWidth={2.2} />
+              <Smartphone size={36} color="var(--primary)" strokeWidth={2.2} />
             </div>
 
             <div>
-              <h2 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
-                JOIN ON PHONE
+              <h2 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
+                Join on Personal Phone
               </h2>
-              <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', maxWidth: '240px' }}>
-                Personal confidential controller for secret peeking & exile ballots
+              <div style={{ fontSize: '0.84rem', color: 'var(--on-surface-variant)', maxWidth: '270px', lineHeight: 1.5 }}>
+                Confidential mobile screen for unsealing secret identity, midnight murder & exile voting
               </div>
             </div>
 
-            <div className="btn-secondary" style={{ width: '100%', padding: '12px', minHeight: '48px', background: 'var(--surface-container-low)' }}>
+            <div className="btn-secondary" style={{ width: '100%', padding: '14px', minHeight: '48px', marginTop: 'auto' }}>
               <span>Enter Room Code</span>
-              <ArrowRight size={16} />
+              <ArrowRight size={17} />
             </div>
           </button>
         </div>
 
-        {/* 2 Visual Game Pillars - Flat Lucide Vectors */}
+        {/* 2 Faction Dossiers — Real Game Atmosphere */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '14px',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '16px',
           width: '100%',
           boxSizing: 'border-box'
         }}>
-          <div className="card-interactive" style={{ padding: '20px 14px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ marginBottom: '8px' }}>
-              <Skull size={30} color="var(--loss)" />
+          {/* Kaminey Dossier */}
+          <div className="card-interactive" style={{
+            padding: '20px',
+            textAlign: 'left',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            border: '1px solid rgba(255, 86, 48, 0.22)',
+            background: 'linear-gradient(180deg, rgba(255, 86, 48, 0.04) 0%, var(--surface-container-lowest) 100%)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: 'var(--rounded-lg)',
+                background: 'rgba(255, 86, 48, 0.12)',
+                border: '1px solid rgba(255, 86, 48, 0.25)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <Skull size={22} color="var(--loss-text)" />
+              </div>
+              <span className="badge-loss">TRAITOR FACTION</span>
             </div>
-            <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--loss-text)' }}>KAMINEY</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)', marginTop: '2px' }}>Secret Conclave of Killers</div>
+            <div>
+              <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--loss-text)', letterSpacing: '-0.01em' }}>
+                Kaminey Conclave
+              </div>
+              <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px', lineHeight: 1.45 }}>
+                Chosen in secret at game start. Silently conspire on your handset each night to eliminate an innocent guest.
+              </p>
+            </div>
+            <div style={{
+              fontSize: '0.6875rem',
+              fontWeight: 700,
+              color: 'var(--loss-text)',
+              letterSpacing: '0.04em',
+              marginTop: 'auto',
+              borderTop: '1px solid var(--outline-variant)',
+              paddingTop: '10px'
+            }}>
+              OBJECTIVE: OUTNUMBER THE COURTYARD
+            </div>
           </div>
 
-          <div className="card-interactive" style={{ padding: '20px 14px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <div style={{ marginBottom: '8px' }}>
-              <ShieldCheck size={30} color="var(--primary)" />
+          {/* Bhole Dossier */}
+          <div className="card-interactive" style={{
+            padding: '20px',
+            textAlign: 'left',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            border: '1px solid var(--primary-subtle-border)',
+            background: 'linear-gradient(180deg, var(--primary-subtle) 0%, var(--surface-container-lowest) 100%)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: 'var(--rounded-lg)',
+                background: 'var(--primary-subtle)',
+                border: '1px solid var(--primary-subtle-border)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <ShieldCheck size={22} color="var(--primary)" />
+              </div>
+              <span className="badge-gain">INNOCENT MAJORITY</span>
             </div>
-            <div style={{ fontWeight: 800, fontSize: '1rem', color: 'var(--primary)' }}>BHOLE</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)', marginTop: '2px' }}>Innocent Majority of the Haveli</div>
+            <div>
+              <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--primary)', letterSpacing: '-0.01em' }}>
+                Bhole Courtyard
+              </div>
+              <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px', lineHeight: 1.45 }}>
+                Observe real-world nervous tells, challenge party dares, and vote to banish suspects in the secret ballot.
+              </p>
+            </div>
+            <div style={{
+              fontSize: '0.6875rem',
+              fontWeight: 700,
+              color: 'var(--primary)',
+              letterSpacing: '0.04em',
+              marginTop: 'auto',
+              borderTop: '1px solid var(--outline-variant)',
+              paddingTop: '10px'
+            }}>
+              OBJECTIVE: EXILE ALL CONSPIRATORS
+            </div>
           </div>
         </div>
       </main>

@@ -58,10 +58,10 @@ export default function HostMorning({ victim, onProceed }) {
           )}
         </div>
         <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
-          {victim ? `${victim.name.toUpperCase()} WAS KILLED!` : 'NO ONE WAS MURDERED!'}
+          {victim ? `${victim.name.toUpperCase()} WAS ELIMINATED` : 'ALL GUESTS SURVIVED'}
         </h1>
         <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.9375rem' }}>
-          {victim ? 'One chair was found empty at breakfast...' : 'Everyone survived the night unharmed.'}
+          {victim ? 'One chair stands empty at breakfast.' : 'No conspirators struck during the night conclave.'}
         </p>
       </div>
 
@@ -77,9 +77,9 @@ export default function HostMorning({ victim, onProceed }) {
             flexDirection: 'column',
             alignItems: 'center',
             gap: '14px',
-            background: 'rgba(32, 16, 22, 0.9)',
-            border: '1px solid rgba(239, 68, 68, 0.35)',
-            boxShadow: '0 20px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+            background: 'rgba(239, 68, 68, 0.08)',
+            border: '1.5px solid rgba(239, 68, 68, 0.35)',
+            boxShadow: 'var(--shadow-elevated), 0 0 32px rgba(239, 68, 68, 0.15)',
             boxSizing: 'border-box'
           }}
         >
@@ -108,9 +108,9 @@ export default function HostMorning({ victim, onProceed }) {
             flexDirection: 'column',
             alignItems: 'center',
             gap: '12px',
-            background: 'rgba(12, 28, 22, 0.9)',
-            border: '1px solid rgba(16, 185, 129, 0.35)',
-            boxShadow: '0 20px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+            background: 'rgba(16, 185, 129, 0.08)',
+            border: '1.5px solid rgba(16, 185, 129, 0.35)',
+            boxShadow: 'var(--shadow-elevated), 0 0 32px rgba(16, 185, 129, 0.15)',
             boxSizing: 'border-box'
           }}
         >

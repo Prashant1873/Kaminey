@@ -46,10 +46,10 @@ export default function QRCodeView({ roomCode, size = 220, onRegenerateCode }) {
       alignItems: 'center',
       gap: '16px',
       padding: '24px 20px',
-      background: 'var(--surface-container-lowest)',
+      background: 'var(--surface-container-low)',
       borderRadius: 'var(--rounded-2xl)',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
-      boxShadow: 'var(--shadow-elevated)',
+      border: '1px solid var(--outline-variant)',
+      boxShadow: 'var(--shadow-resting)',
       width: '100%',
       boxSizing: 'border-box'
     }}>
@@ -58,76 +58,63 @@ export default function QRCodeView({ roomCode, size = 220, onRegenerateCode }) {
         borderRadius: 'var(--rounded-xl)',
         background: '#FFFFFF',
         display: 'inline-block',
-        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.4)'
+        boxShadow: '0 4px 14px rgba(0,0,0,0.08)'
       }}>
         <canvas ref={canvasRef} style={{ display: 'block', borderRadius: 'var(--rounded-md)' }} />
       </div>
 
       <div style={{ textAlign: 'center', width: '100%' }}>
-        <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-          Room Access Code
+        <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+          Haveli Room Code
         </div>
         <div className="tabular-nums" style={{
-          fontSize: 'clamp(2.5rem, 6vw, 3.75rem)',
+          fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
           fontWeight: 800,
           letterSpacing: '0.12em',
           color: 'var(--primary)',
           lineHeight: 1.1,
-          marginTop: '6px',
-          textShadow: '0 2px 20px rgba(229, 184, 105, 0.25)'
+          marginTop: '4px'
         }}>
           {roomCode}
         </div>
         <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px' }}>
-          Point phone camera at QR or enter code at home
+          Point camera to join handset controller
         </div>
       </div>
 
       <div style={{ display: 'flex', gap: '10px', width: '100%', justifyContent: 'center', flexWrap: 'wrap' }}>
         <button
+          type="button"
           onClick={copyLink}
-          className="spring-btn"
+          className="btn-secondary spring-btn"
           aria-label="Copy invitation link"
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '10px 18px',
-            minHeight: '44px',
-            background: copied ? 'var(--gain)' : 'var(--surface-container-low)',
-            color: copied ? '#0A0B0E' : 'var(--on-surface)',
-            borderRadius: 'var(--rounded-lg)',
-            fontSize: '0.875rem',
-            fontWeight: 700,
-            border: '1px solid rgba(255, 255, 255, 0.1)'
+            minHeight: '42px',
+            padding: '8px 16px',
+            fontSize: '0.84375rem',
+            background: copied ? 'var(--gain-subtle)' : undefined,
+            color: copied ? 'var(--gain-text)' : undefined,
+            borderColor: copied ? 'var(--gain)' : undefined
           }}
         >
-          {copied ? <Check size={16} /> : <Copy size={16} />}
-          {copied ? 'Link Copied!' : 'Copy Link'}
+          {copied ? <Check size={15} /> : <Copy size={15} />}
+          <span>{copied ? 'Link Copied' : 'Copy Link'}</span>
         </button>
 
         {onRegenerateCode && (
           <button
             type="button"
             onClick={onRegenerateCode}
-            className="spring-btn"
+            className="btn-secondary spring-btn"
             title="Generate a fresh new room code"
             aria-label="Generate new room code"
             style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              padding: '10px 18px',
-              minHeight: '44px',
-              background: 'var(--surface-container-low)',
-              color: 'var(--on-surface-variant)',
-              borderRadius: 'var(--rounded-lg)',
-              fontSize: '0.875rem',
-              fontWeight: 600,
-              border: '1px solid rgba(255, 255, 255, 0.08)'
+              minHeight: '42px',
+              padding: '8px 16px',
+              fontSize: '0.84375rem'
             }}
           >
-            <RefreshCw size={15} />
+            <RefreshCw size={14} />
             <span>New Code</span>
           </button>
         )}

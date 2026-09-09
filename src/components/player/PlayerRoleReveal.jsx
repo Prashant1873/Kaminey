@@ -90,9 +90,9 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
             height: '100%',
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
-            background: 'linear-gradient(180deg, #151824 0%, #0F1118 100%)',
+            background: 'linear-gradient(180deg, var(--surface-container-high) 0%, var(--surface-container-lowest) 100%)',
             borderRadius: 'var(--rounded-2xl)',
-            border: '1.5px solid rgba(229, 184, 105, 0.25)',
+            border: '1.5px solid var(--primary-subtle-border)',
             boxShadow: 'var(--shadow-elevated)',
             display: 'flex',
             flexDirection: 'column',
@@ -146,7 +146,7 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
             borderRadius: 'var(--rounded-2xl)',
             border: isKamina
               ? '2px solid rgba(239, 68, 68, 0.5)'
-              : '2px solid rgba(229, 184, 105, 0.5)',
+              : '2px solid var(--primary-subtle-border)',
             boxShadow: isKamina ? 'var(--shadow-glow-loss)' : 'var(--shadow-glow-primary)',
             display: 'flex',
             flexDirection: 'column',
@@ -160,8 +160,8 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
               width: '76px',
               height: '76px',
               borderRadius: '50%',
-              background: isKamina ? 'rgba(239, 68, 68, 0.15)' : 'rgba(229, 184, 105, 0.15)',
-              border: isKamina ? '1.5px solid rgba(239, 68, 68, 0.4)' : '1.5px solid rgba(229, 184, 105, 0.4)',
+              background: isKamina ? 'rgba(239, 68, 68, 0.15)' : 'var(--primary-subtle)',
+              border: isKamina ? '1.5px solid rgba(239, 68, 68, 0.4)' : '1.5px solid var(--primary-subtle-border)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'

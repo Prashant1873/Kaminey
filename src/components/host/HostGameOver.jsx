@@ -71,10 +71,10 @@ export default function HostGameOver({ winner, players, roles, onRestart }) {
           color: isBholeWin ? 'var(--gain-text)' : 'var(--loss-text)',
           marginBottom: '6px'
         }}>
-          {isBholeWin ? 'BHOLE WIN THE GAME!' : 'KAMINEY WIN THE GAME!'}
+          {isBholeWin ? 'BHOLE WIN THE MATCH' : 'KAMINEY WIN THE MATCH'}
         </h1>
         <p style={{ color: 'var(--on-surface-variant)', fontSize: '1rem' }}>
-          {isBholeWin ? 'All traitors were identified and banished!' : 'The traitors eliminated enough innocents to take control!'}
+          {isBholeWin ? 'All traitors were unmasked and banished.' : 'The traitors eliminated enough innocents to seize the palace.'}
         </p>
       </div>
 

@@ -56,27 +56,37 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
     }}>
       {/* Active Persona Banner */}
       <div style={{
-        textAlign: 'center',
-        padding: '20px 16px',
-        background: 'linear-gradient(180deg, rgba(229, 184, 105, 0.08) 0%, rgba(15, 17, 24, 0.7) 100%)',
+        padding: '18px 20px',
+        background: 'var(--surface-container-low)',
         borderRadius: 'var(--rounded-2xl)',
-        border: '1px solid rgba(229, 184, 105, 0.15)',
+        border: '1px solid var(--outline-variant)',
         boxShadow: 'var(--shadow-resting)',
         display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        gap: '16px'
       }}>
         <div style={{
-          marginBottom: '10px',
-          animation: 'float-slow 3.5s infinite ease-in-out'
+          position: 'relative',
+          flexShrink: 0
         }}>
-          <AvatarBadge avatar={activeAvatar} size={64} />
+          <AvatarBadge avatar={activeAvatar} size={58} />
         </div>
-        <div style={{ fontWeight: 800, fontSize: '1.2rem', color: 'var(--on-surface)' }}>
-          {activeAvatar.name}
-        </div>
-        <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
-          {activeAvatar.title}
+        <div style={{ minWidth: 0, flex: 1 }}>
+          <div style={{
+            fontSize: '0.6875rem',
+            fontWeight: 800,
+            letterSpacing: '0.08em',
+            color: 'var(--primary)',
+            marginBottom: '2px'
+          }}>
+            HANDSET IDENTITY
+          </div>
+          <div style={{ fontWeight: 800, fontSize: '1.2rem', color: 'var(--on-surface)', letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {activeAvatar.name}
+          </div>
+          <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
+            {activeAvatar.title}
+          </div>
         </div>
       </div>
 
@@ -179,22 +189,24 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
                   className="spring-btn"
                   aria-label={`Select avatar ${avatar.name}`}
                   style={{
-                    background: isSelected ? 'rgba(229, 184, 105, 0.15)' : 'var(--surface-container-low)',
+                    background: isSelected ? 'var(--primary-subtle)' : 'var(--surface-container-low)',
                     color: isSelected ? 'var(--primary)' : 'var(--on-surface)',
-                    border: isSelected ? '2px solid var(--primary)' : '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: 'var(--rounded-lg)',
+                    border: isSelected ? '2px solid var(--primary)' : '1px solid var(--outline-variant)',
+                    borderRadius: 'var(--rounded-xl)',
                     padding: '8px 4px',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    gap: '4px',
+                    gap: '6px',
                     minWidth: 0,
-                    minHeight: '56px',
+                    minHeight: '60px',
                     boxSizing: 'border-box',
-                    boxShadow: isSelected ? '0 0 12px rgba(229, 184, 105, 0.25)' : 'none'
+                    boxShadow: isSelected ? 'var(--shadow-glow-primary)' : 'var(--shadow-resting)',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease'
                   }}
                 >
-                  <AvatarBadge avatar={avatar} size={28} showRing={false} />
+                  <AvatarBadge avatar={avatar} size={30} showRing={false} />
                   <span style={{ fontSize: '0.625rem', fontWeight: 700, width: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', textAlign: 'center' }}>
                     {avatar.name}
                   </span>
@@ -209,7 +221,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
           type="submit"
           className="btn-primary spring-btn"
           aria-label="Enter the Haveli"
-          style={{ width: '100%', padding: '14px', fontSize: '1rem', boxSizing: 'border-box', minHeight: '48px', marginTop: '6px' }}
+          style={{ width: '100%', padding: '14px', fontSize: '0.9375rem', boxSizing: 'border-box', minHeight: '48px', marginTop: '6px' }}
         >
           <span>ENTER THE HAVELI</span>
           <ArrowRight size={18} />

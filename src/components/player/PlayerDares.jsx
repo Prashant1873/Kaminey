@@ -88,7 +88,7 @@ export default function PlayerDares({
 
         {mission?.prompt && (
           <div style={{
-            background: 'rgba(229, 184, 105, 0.08)',
+            background: 'var(--primary-subtle)',
             borderLeft: '3px solid var(--primary)',
             padding: '10px 12px',
             borderRadius: '0 var(--rounded-md) var(--rounded-md) 0',

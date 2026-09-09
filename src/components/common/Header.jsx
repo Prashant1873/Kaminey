@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Volume2, VolumeX, Users, Tv, Smartphone, Sun, Moon } from 'lucide-react';
+import { Volume2, VolumeX, Users, Tv, Smartphone, Sun, Moon, Crown } from 'lucide-react';
 import { sounds } from '../../audio/soundEffects';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -63,7 +63,7 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
       justifyContent: 'space-between',
       padding: '8px 16px',
       minHeight: '56px',
-      backgroundColor: isNight ? '#000000' : 'var(--surface-container-low)',
+      backgroundColor: isNight ? '#07090E' : 'var(--surface-container-low)',
       borderBottom: '1px solid var(--outline-variant)',
       boxShadow: 'var(--shadow-resting)',
       position: 'sticky',
@@ -95,18 +95,32 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
             minHeight: '48px'
           }}
         >
-          <span style={{ fontSize: '1.35rem', lineHeight: 1, display: 'inline-flex', alignItems: 'center' }}>
-            {isNight ? '🌙' : '🎭'}
-          </span>
-          <span style={{ fontWeight: 800, fontSize: '1.05rem', letterSpacing: '-0.02em', color: isNight ? '#ffffff' : 'var(--primary)', whiteSpace: 'nowrap' }}>
+          <div style={{
+            width: '32px',
+            height: '32px',
+            borderRadius: 'var(--rounded-md)',
+            background: isNight ? 'rgba(239, 68, 68, 0.15)' : 'var(--primary-subtle)',
+            border: isNight ? '1px solid rgba(239, 68, 68, 0.35)' : '1px solid var(--primary-subtle-border)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0
+          }}>
+            {isNight ? (
+              <Moon size={16} color="var(--loss-text)" strokeWidth={2.4} />
+            ) : (
+              <Crown size={16} color="var(--primary)" strokeWidth={2.4} />
+            )}
+          </div>
+          <span style={{ fontWeight: 800, fontSize: '1.05rem', letterSpacing: '-0.02em', color: isNight ? '#F8FAFC' : 'var(--primary)', whiteSpace: 'nowrap' }}>
             KAMINEY
           </span>
         </button>
 
         <div style={{ minWidth: 0, overflow: 'hidden' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span className={isNight ? 'badge-loss' : (isHost ? 'badge-gain' : 'badge-warning')} style={{ fontSize: '0.625rem', padding: '2px 8px', whiteSpace: 'nowrap' }}>
-              {isHost ? <><Tv size={11} /> Base</> : <><Smartphone size={11} /> Phone</>}
+            <span className={isNight ? 'badge-loss' : (isHost ? 'badge-gain' : 'badge-warning')} style={{ fontSize: '0.65625rem', padding: '2px 8px', whiteSpace: 'nowrap' }}>
+              {isHost ? <><Tv size={11} /> Base Station</> : <><Smartphone size={11} /> Handset</>}
             </span>
           </div>
           {currentPhase && (
@@ -122,13 +136,14 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
         {roomCode && (
           <div style={{
             background: 'var(--surface-container-low)',
-            padding: '6px 12px',
+            padding: '4px 10px',
             borderRadius: 'var(--rounded-md)',
             border: '1px solid var(--outline-variant)',
             display: 'flex',
             alignItems: 'center',
-            gap: '4px'
+            gap: '6px'
           }}>
+            <span style={{ fontSize: '0.625rem', color: 'var(--on-surface-variant)', fontWeight: 700, letterSpacing: '0.06em' }}>ROOM</span>
             <span className="tabular-nums" style={{ fontWeight: 800, fontSize: '0.875rem', letterSpacing: '0.08em', color: 'var(--primary)' }}>
               {roomCode}
             </span>

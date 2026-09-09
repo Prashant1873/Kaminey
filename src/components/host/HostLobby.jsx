@@ -34,41 +34,48 @@ export default function HostLobby({
       width: '100%',
       boxSizing: 'border-box'
     }}>
-      {/* Top Banner - Apple Dark Minimal Atmosphere */}
+      {/* Top Banner - Architectural Base Station Hub */}
       <div style={{
-        textAlign: 'center',
         padding: '20px 24px',
-        background: 'linear-gradient(180deg, rgba(229, 184, 105, 0.08) 0%, var(--surface-container) 100%)',
+        background: 'var(--surface-container-low)',
         borderRadius: 'var(--rounded-2xl)',
-        border: '1px solid rgba(229, 184, 105, 0.15)',
+        border: '1px solid var(--outline-variant)',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '6px'
       }}>
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-          background: 'rgba(229, 184, 105, 0.12)',
-          color: 'var(--primary)',
-          fontSize: '0.75rem',
-          fontWeight: 700,
-          letterSpacing: '0.08em',
-          padding: '4px 14px',
-          borderRadius: 'var(--rounded-full)',
-          marginBottom: '8px',
-          border: '1px solid rgba(229, 184, 105, 0.25)'
-        }}>
-          THE HAVELI COURTYARD
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            fontSize: '0.6875rem',
+            fontWeight: 800,
+            letterSpacing: '0.08em',
+            color: 'var(--primary)'
+          }}>
+            <span style={{
+              width: '8px',
+              height: '8px',
+              borderRadius: '50%',
+              backgroundColor: 'var(--gain)',
+              boxShadow: '0 0 8px var(--gain)',
+              display: 'inline-block'
+            }} />
+            BASE STATION LIVE • RECEPTION TERMINAL
+          </div>
+          {networkStatus && (
+            <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
+              {networkStatus}
+            </div>
+          )}
         </div>
-        <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
+        <h1 className="text-display" style={{ color: 'var(--on-surface)', margin: '4px 0 2px 0' }}>
           GATHER YOUR SUSPECTS
         </h1>
-        <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.9375rem', maxWidth: '540px', margin: '0 auto' }}>
-          Scan the QR code below or enter the room code on your phone to enter the conclave.
+        <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.90625rem', maxWidth: '640px', margin: 0, lineHeight: 1.45 }}>
+          Point phone cameras at the screen to join. When at least 4 guests assemble, launch the conclave.
         </p>
-        {networkStatus && (
-          <div style={{ marginTop: '8px', fontSize: '0.75rem', color: 'var(--gain-text)', fontWeight: 700, letterSpacing: '0.02em' }}>
-            ● {networkStatus}
-          </div>
-        )}
       </div>
 
       {/* Main Responsive Grid: QR & Settings (Left) vs Living Room Roster (Right) */}
@@ -87,7 +94,7 @@ export default function HostLobby({
 
           {/* Settings Box */}
           <div className="card-interactive" style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid var(--outline-variant)', paddingBottom: '12px' }}>
               <Settings2 size={20} color="var(--primary)" />
               <h2 className="text-title" style={{ color: 'var(--on-surface)' }}>Game Rules</h2>
             </div>
@@ -180,7 +187,7 @@ export default function HostLobby({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+              borderBottom: '1px solid var(--outline-variant)',
               paddingBottom: '14px',
               marginBottom: '18px'
             }}>
@@ -216,7 +223,7 @@ export default function HostLobby({
                       flexDirection: 'column',
                       alignItems: 'center',
                       textAlign: 'center',
-                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      border: '1px solid var(--outline-variant)',
                       boxShadow: 'var(--shadow-resting)'
                     }}
                   >
@@ -265,7 +272,7 @@ export default function HostLobby({
                     {p.isBot && (
                       <span style={{
                         fontSize: '0.625rem',
-                        background: 'rgba(255, 255, 255, 0.06)',
+                        background: 'var(--surface-container-high)',
                         color: 'var(--on-surface-variant)',
                         padding: '2px 8px',
                         borderRadius: 'var(--rounded-sm)',
@@ -273,7 +280,7 @@ export default function HostLobby({
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '4px',
-                        border: '1px solid rgba(255, 255, 255, 0.08)'
+                        border: '1px solid var(--outline-variant)'
                       }}>
                         <Bot size={10} /> BOT
                       </span>
@@ -297,8 +304,8 @@ export default function HostLobby({
                     width: '64px',
                     height: '64px',
                     borderRadius: '50%',
-                    background: 'rgba(229, 184, 105, 0.08)',
-                    border: '1px solid rgba(229, 184, 105, 0.15)',
+                    background: 'var(--primary-subtle)',
+                    border: '1px solid var(--primary-subtle-border)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -320,7 +327,7 @@ export default function HostLobby({
               display: 'flex',
               flexDirection: 'column',
               gap: '12px',
-              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+              borderTop: '1px solid var(--outline-variant)',
               paddingTop: '18px',
               marginTop: '18px'
             }}>
@@ -341,29 +348,19 @@ export default function HostLobby({
                   <button
                     type="button"
                     onClick={onQuickStartWithBots}
-                    className="spring-btn"
+                    className="btn-secondary spring-btn"
                     aria-label="Auto-fill bots and launch game"
                     style={{
                       flex: 1.2,
                       minWidth: '180px',
-                      minHeight: '48px',
+                      minHeight: '44px',
                       padding: '10px 16px',
-                      borderRadius: 'var(--rounded-xl)',
-                      background: 'rgba(229, 184, 105, 0.12)',
-                      color: 'var(--primary)',
-                      fontWeight: 700,
-                      fontSize: '0.875rem',
-                      border: '1px solid rgba(229, 184, 105, 0.3)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: '8px',
-                      cursor: 'pointer'
+                      fontSize: '0.875rem'
                     }}
                     title="Fill remaining slots with bots and launch immediately for testing"
                   >
                     <Sparkles size={16} />
-                    Auto-Fill Guests & Launch
+                    <span>Auto-Fill & Launch</span>
                   </button>
                 )}
               </div>
@@ -382,8 +379,8 @@ export default function HostLobby({
                   cursor: canStart ? 'pointer' : 'not-allowed'
                 }}
               >
-                <Play size={18} fill="#0A0B0E" color="#0A0B0E" />
-                {canStart ? 'BEGIN THE HAVELI CONCLAVE' : `Waiting for ${minPlayers - players.length} more guests (Min ${minPlayers})`}
+                <Play size={18} fill="currentColor" color="currentColor" />
+                <span>{canStart ? 'BEGIN THE HAVELI CONCLAVE' : `Waiting for ${minPlayers - players.length} more guests (Min ${minPlayers})`}</span>
               </button>
             </div>
           </div>

@@ -69,59 +69,67 @@ export default function HowToPlayModal({ isOpen, onClose }) {
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        backgroundColor: 'rgba(5, 7, 12, 0.72)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
         zIndex: 100,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '16px',
+        padding: '20px 16px',
         boxSizing: 'border-box'
       }}
     >
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: 'linear-gradient(180deg, #151824 0%, #0F1118 100%)',
-          border: '1.5px solid rgba(229, 184, 105, 0.2)',
+          background: 'var(--surface-container-lowest)',
+          border: '1px solid var(--outline-variant)',
           borderRadius: 'var(--rounded-2xl)',
-          maxWidth: '680px',
+          maxWidth: '720px',
           width: '100%',
-          maxHeight: '90vh',
+          maxHeight: '88vh',
           overflowY: 'auto',
           boxShadow: 'var(--shadow-floating)',
-          padding: '28px 24px',
           boxSizing: 'border-box',
           position: 'relative',
           display: 'flex',
-          flexDirection: 'column',
-          gap: '24px'
+          flexDirection: 'column'
         }}
       >
-        {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px' }}>
-          <div>
+        {/* Architectural Window Header Bar */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '20px 24px',
+          borderBottom: '1px solid var(--outline-variant)',
+          background: 'var(--surface-container-low)',
+          borderTopLeftRadius: 'var(--rounded-2xl)',
+          borderTopRightRadius: 'var(--rounded-2xl)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <div style={{
-              display: 'inline-flex',
+              width: '32px',
+              height: '32px',
+              borderRadius: 'var(--rounded-md)',
+              background: 'var(--primary-subtle)',
+              border: '1px solid var(--primary-subtle-border)',
+              display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              background: 'rgba(229, 184, 105, 0.1)',
-              color: 'var(--primary)',
-              fontSize: '0.75rem',
-              fontWeight: 700,
-              padding: '4px 12px',
-              borderRadius: 'var(--rounded-full)',
-              marginBottom: '8px',
-              border: '1px solid rgba(229, 184, 105, 0.2)'
+              justifyContent: 'center',
+              color: 'var(--primary)'
             }}>
-              <Sparkles size={12} />
-              RULES OF ENGAGEMENT
+              <Sparkles size={16} strokeWidth={2.4} />
             </div>
-            <h2 className="text-display" style={{ fontSize: '1.75rem', color: 'var(--on-surface)', marginBottom: '4px' }}>
-              HOW TO PLAY KAMINEY
-            </h2>
-            <p style={{ fontSize: '0.875rem', color: 'var(--on-surface-variant)' }}>
-              A high-stakes party game of deception, trust, and living room theatrics.
-            </p>
+            <div>
+              <div className="text-label" style={{ color: 'var(--primary)', letterSpacing: '0.08em' }}>
+                PROTOCOL SPECIFICATION
+              </div>
+              <h2 className="text-title" style={{ fontSize: '1.25rem', color: 'var(--on-surface)', margin: 0 }}>
+                Rules of Engagement
+              </h2>
+            </div>
           </div>
 
           <button
@@ -130,14 +138,14 @@ export default function HowToPlayModal({ isOpen, onClose }) {
             className="spring-btn"
             aria-label="Close rules guide"
             style={{
-              width: '44px',
-              height: '44px',
-              minWidth: '44px',
-              minHeight: '44px',
-              borderRadius: '50%',
-              background: 'rgba(255, 255, 255, 0.06)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              color: 'var(--on-surface)',
+              width: '38px',
+              height: '38px',
+              minWidth: '38px',
+              minHeight: '38px',
+              borderRadius: 'var(--rounded-lg)',
+              background: 'var(--surface)',
+              border: '1px solid var(--outline-variant)',
+              color: 'var(--on-surface-variant)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -145,125 +153,200 @@ export default function HowToPlayModal({ isOpen, onClose }) {
               flexShrink: 0
             }}
           >
-            <X size={20} />
+            <X size={18} strokeWidth={2.2} />
           </button>
         </div>
 
-        {/* 4 Steps Grid */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <div className="text-label" style={{ color: 'var(--primary)', letterSpacing: '0.06em' }}>
-            THE GAMEPLAY LOOP
-          </div>
+        {/* Modal Body Content */}
+        <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '26px' }}>
+          {/* Intro statement */}
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '12px'
+            background: 'var(--surface-container)',
+            border: '1px solid var(--outline-variant)',
+            borderRadius: 'var(--rounded-xl)',
+            padding: '16px 18px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '4px'
           }}>
-            {steps.map((s) => {
-              const IconComp = s.icon;
-              return (
-                <div
-                  key={s.step}
-                  style={{
-                    background: 'var(--surface-container-low)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: 'var(--rounded-xl)',
-                    padding: '16px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '10px'
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <div style={{
-                      width: '36px',
-                      height: '36px',
-                      borderRadius: 'var(--rounded-lg)',
-                      background: 'rgba(229, 184, 105, 0.12)',
-                      border: '1px solid rgba(229, 184, 105, 0.25)',
+            <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--on-surface)' }}>
+              A Living Room Psychological Mystery
+            </div>
+            <p style={{ fontSize: '0.84375rem', color: 'var(--on-surface-variant)', lineHeight: 1.5, margin: 0 }}>
+              The TV base screen runs the haveli court. Personal mobile phones act as secret ballot handsets. One room, two factions, zero trust.
+            </p>
+          </div>
+
+          {/* Gameplay Loop: Timeline Sequence */}
+          <div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginBottom: '14px'
+            }}>
+              <span className="text-label" style={{ color: 'var(--on-surface-variant)', letterSpacing: '0.06em' }}>
+                CHRONOLOGICAL CYCLE (4 PHASES)
+              </span>
+              <span className="text-label" style={{ color: 'var(--primary)' }}>
+                REPEATS EACH ROUND
+              </span>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '12px'
+            }}>
+              {steps.map((s) => {
+                const IconComp = s.icon;
+                return (
+                  <div
+                    key={s.step}
+                    style={{
+                      background: 'var(--surface-container-low)',
+                      border: '1px solid var(--outline-variant)',
+                      borderRadius: 'var(--rounded-xl)',
+                      padding: '16px',
                       display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'var(--primary)'
+                      flexDirection: 'column',
+                      gap: '10px',
+                      position: 'relative'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                      }}>
+                        <div style={{
+                          width: '32px',
+                          height: '32px',
+                          borderRadius: 'var(--rounded-md)',
+                          background: 'var(--primary-subtle)',
+                          border: '1px solid var(--primary-subtle-border)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'var(--primary)'
+                        }}>
+                          <IconComp size={16} strokeWidth={2.2} />
+                        </div>
+                        <span style={{ fontWeight: 800, fontSize: '0.9375rem', color: 'var(--on-surface)' }}>
+                          {s.title}
+                        </span>
+                      </div>
+                      <span className="tabular-nums" style={{
+                        fontSize: '0.6875rem',
+                        fontWeight: 800,
+                        color: 'var(--primary)',
+                        background: 'var(--primary-subtle)',
+                        padding: '2px 8px',
+                        borderRadius: 'var(--rounded-sm)',
+                        letterSpacing: '0.05em'
+                      }}>
+                        PHASE {s.step}
+                      </span>
+                    </div>
+
+                    <p style={{
+                      fontSize: '0.8125rem',
+                      color: 'var(--on-surface-variant)',
+                      lineHeight: 1.5,
+                      margin: 0
                     }}>
-                      <IconComp size={18} strokeWidth={2.2} />
-                    </div>
-                    <span className="tabular-nums" style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--on-surface-variant)' }}>
-                      PHASE {s.step}
-                    </span>
+                      {s.desc}
+                    </p>
                   </div>
-                  <div style={{ fontWeight: 800, fontSize: '0.9375rem', color: 'var(--on-surface)' }}>
-                    {s.title}
-                  </div>
-                  <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', lineHeight: 1.45 }}>
-                    {s.desc}
-                  </p>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
-        </div>
 
-        {/* Roles Section */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <div className="text-label" style={{ color: 'var(--primary)', letterSpacing: '0.06em' }}>
-            ROLES & FACTIONS
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {roles.map((r) => {
-              const IconComp = r.icon;
-              return (
-                <div
-                  key={r.title}
-                  style={{
-                    background: 'var(--surface-container-low)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: 'var(--rounded-xl)',
-                    padding: '14px 16px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '14px'
-                  }}
-                >
-                  <div style={{
-                    width: '42px',
-                    height: '42px',
-                    minWidth: '42px',
-                    borderRadius: 'var(--rounded-lg)',
-                    background: `${r.color}20`,
-                    border: `1px solid ${r.color}40`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: r.color
-                  }}>
-                    <IconComp size={22} strokeWidth={2.2} />
-                  </div>
-                  <div>
-                    <div style={{ fontWeight: 800, fontSize: '0.9375rem', color: r.color }}>
-                      {r.title}
+          {/* Faction Dossiers */}
+          <div>
+            <div style={{ marginBottom: '14px' }}>
+              <span className="text-label" style={{ color: 'var(--on-surface-variant)', letterSpacing: '0.06em' }}>
+                FACTION DOSSIERS
+              </span>
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '12px'
+            }}>
+              {roles.map((r) => {
+                const IconComp = r.icon;
+                return (
+                  <div
+                    key={r.title}
+                    style={{
+                      background: 'var(--surface-container-low)',
+                      border: '1px solid var(--outline-variant)',
+                      borderRadius: 'var(--rounded-xl)',
+                      padding: '16px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '10px'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <div style={{
+                        width: '36px',
+                        height: '36px',
+                        borderRadius: 'var(--rounded-md)',
+                        background: `${r.color}15`,
+                        border: `1px solid ${r.color}35`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: r.color,
+                        flexShrink: 0
+                      }}>
+                        <IconComp size={18} strokeWidth={2.2} />
+                      </div>
+                      <div style={{ fontWeight: 800, fontSize: '0.9375rem', color: r.color }}>
+                        {r.title}
+                      </div>
                     </div>
-                    <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '2px', lineHeight: 1.4 }}>
+                    <p style={{
+                      fontSize: '0.8125rem',
+                      color: 'var(--on-surface-variant)',
+                      lineHeight: 1.45,
+                      margin: 0
+                    }}>
                       {r.desc}
-                    </div>
+                    </p>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Action Bottom */}
-        <button
-          type="button"
-          onClick={onClose}
-          className="btn-primary spring-btn"
-          aria-label="Understood, close guide"
-          style={{ width: '100%', minHeight: '48px', fontSize: '0.9375rem' }}
-        >
-          <CheckCircle2 size={18} />
-          <span>I'M READY TO ENTER THE HAVELI</span>
-        </button>
+        {/* Action Footer Bar */}
+        <div style={{
+          padding: '16px 24px',
+          borderTop: '1px solid var(--outline-variant)',
+          background: 'var(--surface-container-low)',
+          display: 'flex',
+          justifyContent: 'flex-end',
+          borderBottomLeftRadius: 'var(--rounded-2xl)',
+          borderBottomRightRadius: 'var(--rounded-2xl)'
+        }}>
+          <button
+            type="button"
+            onClick={onClose}
+            className="btn-primary spring-btn"
+            aria-label="Understood, return to game"
+            style={{ minHeight: '44px', padding: '10px 24px', fontSize: '0.875rem' }}
+          >
+            <CheckCircle2 size={16} />
+            <span>RETURN TO GAME</span>
+          </button>
+        </div>
       </div>
     </div>
   );
