@@ -29,11 +29,21 @@ export default function HostRoleReveal({ players, onProceed }) {
       </div>
 
       <div>
-        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '12px' }}>
-          SECRET ROLES DELIVERED
+        <div className="badge-warning" style={{
+          marginBottom: '10px',
+          fontSize: '0.75rem',
+          padding: '4px 14px',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '6px'
+        }}>
+          <span>🤫 GUPT LIFFAFA DELIVERED</span>
+        </div>
+        <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '10px' }}>
+          PARDAFAASH KA WAQT!
         </h1>
         <p className="text-headline" style={{ color: 'var(--on-surface)', maxWidth: '650px', margin: '0 auto', fontWeight: 600 }}>
-          Check your mobile screens now!
+          Apna apna phone dekho chupke se...
         </p>
         <p className="text-body" style={{
           color: 'var(--loss-text)',
@@ -44,7 +54,7 @@ export default function HostRoleReveal({ players, onProceed }) {
           gap: '6px'
         }}>
           <ShieldAlert size={18} color="var(--loss-text)" />
-          <span>Keep your phone hidden. Some of you are Bhole... and some are Kaminey!</span>
+          <span>Aas-paas mat jhaanko! Kuch log Bhole hain aur kuch asteen ke Kaminey!</span>
         </p>
       </div>
 
@@ -80,7 +90,7 @@ export default function HostRoleReveal({ players, onProceed }) {
                 gap: '4px'
               }}>
                 <Lock size={12} />
-                <span>Envelope Delivered</span>
+                <span>Liffafa Delivered</span>
               </div>
             </div>
           );
@@ -97,7 +107,7 @@ export default function HostRoleReveal({ players, onProceed }) {
           marginTop: '10px'
         }}
       >
-        <span>All Roles Viewed — Let Night Fall</span>
+        <span>Sabne dekh liya? Haveli mein raat hone do! 🌙</span>
         <ArrowRight size={20} />
       </button>
     </div>

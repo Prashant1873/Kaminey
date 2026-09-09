@@ -206,7 +206,7 @@ export default function HostBaseStation({ onExit }) {
     getCustomStateForPlayer: (targetId) => getPlayerPersonalizedState(targetId)
   };
 
-  // Initialize Host PeerJS Network — ONLY depends on roomCode!
+  // Initialize Host PeerJS Network - ONLY depends on roomCode!
   // NEVER tears down when players join, bots are added, votes cast, or phase changes!
   useEffect(() => {
     const net = new HostNetwork(

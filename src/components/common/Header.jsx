@@ -15,15 +15,15 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
 
   const getPhaseLabel = (phase) => {
     switch (phase) {
-      case 'LOBBY': return 'Lobby';
-      case 'ROLE_REVEAL': return 'Role Reveal';
-      case 'NIGHT': return 'Night Conclave';
-      case 'MORNING': return 'Morning Reveal';
-      case 'DARES': return 'Social Tasks';
-      case 'DISCUSSION': return 'Round-Table Discussion';
-      case 'VOTING': return 'The Trial';
-      case 'EXILE': return 'The Exile';
-      case 'GAME_OVER': return 'Match Over';
+      case 'LOBBY': return 'Haveli Adda';
+      case 'ROLE_REVEAL': return 'Gupt Pehchan';
+      case 'NIGHT': return 'Kaali Raat (Kaminey)';
+      case 'MORNING': return 'Subah Ka Jatka';
+      case 'DARES': return 'Haveli Maha-Mission';
+      case 'DISCUSSION': return 'Emergency Panchayat';
+      case 'VOTING': return 'Gupt Faisla (Bhole vs Kaminey)';
+      case 'EXILE': return 'Haveli Ka Faisla';
+      case 'GAME_OVER': return 'Khel Khatam!';
       default: return phase || 'Kaminey';
     }
   };

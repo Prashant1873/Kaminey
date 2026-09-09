@@ -1,4 +1,4 @@
-# 🎭 Kaminey — Social Deduction Party Game
+# 🎭 Kaminey - Social Deduction Party Game
 
 A mobile-first multiplayer social deduction game inspired by *The Traitors* and *Among Us*, set in a suspenseful royal haveli theme. Built for living rooms with a TV "Base Station" host display and private smartphone controllers.
 
@@ -9,7 +9,7 @@ A mobile-first multiplayer social deduction game inspired by *The Traitors* and 
 ### 1. Living Room Base Station (TV / Laptop / Tablet)
 - **High-Visibility Lobby**: Features a massive 3.5rem+ room code and 220px high-contrast QR code canvas for effortless phone scanning across the room.
 - **Instant Auto-Fill Bots**: Host can tap to inject local test bots (Sher, Bhalu, Lomdi, etc.) to immediately test or fill vacant seats.
-- **Procedural Haveli Sound Engine**: Synthesizes suspense drones, atmospheric midnight hums, clock ticks, and resonant temple bell gongs using native Web Audio API — zero external audio assets required.
+- **Procedural Haveli Sound Engine**: Synthesizes suspense drones, atmospheric midnight hums, clock ticks, and resonant temple bell gongs using native Web Audio API - zero external audio assets required.
 - **Host-Authoritative Game Loop**: Manages discussion phases, secret voting countdowns, vote-card reveals, exile verdicts, and win-condition checks.
 
 ### 2. Mobile Controller View (Smartphones)

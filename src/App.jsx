@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import HostBaseStation from './components/host/HostBaseStation';
 import PlayerController from './components/player/PlayerController';
 import HowToPlayModal from './components/common/HowToPlayModal';
-import { Tv, Smartphone, ArrowRight, ShieldCheck, Skull, BookOpen, Sun, Moon, Crown } from 'lucide-react';
+import { Tv, Smartphone, ArrowRight, ShieldCheck, Skull, BookOpen, Sun, Moon, Crown, Sparkles, Flame, Laugh } from 'lucide-react';
 import { useTheme } from './context/ThemeContext';
+import { sounds } from './audio/soundEffects';
 
 export default function App() {
   const [showRules, setShowRules] = useState(false);
@@ -215,7 +216,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* Hero Section — Crafted Mystery Atmosphere */}
+      {/* Hero Section - Crafted Mystery Atmosphere */}
       <main style={{
         flex: 1,
         maxWidth: '960px',
@@ -235,25 +236,26 @@ export default function App() {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            padding: '5px 14px',
-            borderRadius: 'var(--rounded-md)',
+            padding: '6px 16px',
+            borderRadius: 'var(--rounded-full)',
             background: 'var(--primary-subtle)',
             border: '1px solid var(--primary-subtle-border)',
             color: 'var(--primary)',
-            fontSize: '0.6875rem',
+            fontSize: '0.75rem',
             fontWeight: 800,
-            letterSpacing: '0.08em',
-            marginBottom: '14px'
+            letterSpacing: '0.06em',
+            marginBottom: '16px'
           }}>
-            <span>THE HAVELI MURDER MYSTERY</span>
+            <Sparkles size={14} />
+            <span>SHARAFAT KA MUKHOTA YA ASLI KAMINA?</span>
             <span style={{ opacity: 0.4 }}>•</span>
-            <span>4 TO 12 GUESTS</span>
+            <span>4 SE 12 LOG</span>
           </div>
-          <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '8px' }}>
-            Trust No One in the Haveli
+          <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '10px' }}>
+            Kaminey Chhupenge, Bhole Phasenge!
           </h1>
-          <p className="text-headline" style={{ color: 'var(--on-surface-variant)', fontWeight: 500, fontSize: '1.0625rem', maxWidth: '540px', margin: '0 auto' }}>
-            One big screen for the living room courtyard. Personal phones for secret roles & betrayal.
+          <p className="text-headline" style={{ color: 'var(--on-surface-variant)', fontWeight: 500, fontSize: '1.08rem', maxWidth: '560px', margin: '0 auto' }}>
+            Living room TV pe Base Station. Apne phone pe secret control. Kaun doodh ka dhula hai aur kaun asteen ka saanp?
           </p>
         </div>
 
@@ -283,7 +285,7 @@ export default function App() {
               boxSizing: 'border-box'
             }}
           >
-            <span className="badge-warning">BASE STATION</span>
+            <span className="badge-warning">📺 TV BASE STATION</span>
 
             <div style={{
               width: '76px',
@@ -300,15 +302,15 @@ export default function App() {
 
             <div>
               <h2 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
-                Host on Living Room TV
+                TV Pe Haveli Kholo
               </h2>
               <div style={{ fontSize: '0.84rem', color: 'var(--on-surface-variant)', maxWidth: '270px', lineHeight: 1.5 }}>
-                Public courtyard scoreboard with instant QR access, round timers & synchronized drama
+                Badi screen pe sabke samne QR scan hoga, timer chalega aur jhooth pakda jayega!
               </div>
             </div>
 
             <div className="btn-primary" style={{ width: '100%', padding: '14px', minHeight: '48px', marginTop: 'auto' }}>
-              <span>Launch Base Station</span>
+              <span>Base Station Chalu Karo</span>
               <ArrowRight size={17} />
             </div>
           </button>
@@ -330,7 +332,7 @@ export default function App() {
               boxSizing: 'border-box'
             }}
           >
-            <span className="badge-gain">PERSONAL CONTROLLER</span>
+            <span className="badge-gain">📱 GUPT CONTROLLER</span>
 
             <div style={{
               width: '76px',
@@ -348,21 +350,21 @@ export default function App() {
 
             <div>
               <h2 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
-                Join on Personal Phone
+                Phone Se Haveli Mein Ghuso
               </h2>
               <div style={{ fontSize: '0.84rem', color: 'var(--on-surface-variant)', maxWidth: '270px', lineHeight: 1.5 }}>
-                Confidential mobile screen for unsealing secret identity, midnight murder & exile voting
+                Apna parda faash hone se bacho. Raat ka katal aur gupt voting mobile se chupke karo!
               </div>
             </div>
 
             <div className="btn-secondary" style={{ width: '100%', padding: '14px', minHeight: '48px', marginTop: 'auto' }}>
-              <span>Enter Room Code</span>
+              <span>Room Code Daalo Aur Ghuso</span>
               <ArrowRight size={17} />
             </div>
           </button>
         </div>
 
-        {/* 2 Faction Dossiers — Real Game Atmosphere */}
+        {/* 2 Faction Dossiers - Real Game Atmosphere */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
@@ -371,65 +373,65 @@ export default function App() {
           boxSizing: 'border-box'
         }}>
           {/* Kaminey Dossier */}
-          <div className="card-interactive" style={{
+          <div className="card-interactive kamina-card-glow" style={{
             padding: '20px',
             textAlign: 'left',
             display: 'flex',
             flexDirection: 'column',
             gap: '12px',
-            border: '1px solid rgba(255, 86, 48, 0.22)',
-            background: 'linear-gradient(180deg, rgba(255, 86, 48, 0.04) 0%, var(--surface-container-lowest) 100%)'
+            border: '1.5px solid rgba(255, 86, 48, 0.35)',
+            background: 'linear-gradient(180deg, rgba(255, 86, 48, 0.07) 0%, var(--surface-container-lowest) 100%)'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{
-                width: '40px',
-                height: '40px',
+                width: '42px',
+                height: '42px',
                 borderRadius: 'var(--rounded-lg)',
-                background: 'rgba(255, 86, 48, 0.12)',
-                border: '1px solid rgba(255, 86, 48, 0.25)',
+                background: 'rgba(255, 86, 48, 0.15)',
+                border: '1px solid rgba(255, 86, 48, 0.3)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center'
               }}>
-                <Skull size={22} color="var(--loss-text)" />
+                <Skull size={24} color="var(--loss-text)" />
               </div>
-              <span className="badge-loss">TRAITOR FACTION</span>
+              <span className="badge-loss">😈 ASLI KAMINEY</span>
             </div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--loss-text)', letterSpacing: '-0.01em' }}>
-                Kaminey Conclave
+              <div style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--loss-text)', letterSpacing: '-0.01em' }}>
+                Asteen Ke Saanp (Kaminey)
               </div>
-              <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px', lineHeight: 1.45 }}>
-                Chosen in secret at game start. Silently conspire on your handset each night to eliminate an innocent guest.
+              <p style={{ fontSize: '0.84rem', color: 'var(--on-surface-variant)', marginTop: '6px', lineHeight: 1.45 }}>
+                Raat ke sannate mein aapas mein whispering. Din ke ujaale mein sabse masoom banne ki acting!
               </p>
             </div>
             <div style={{
-              fontSize: '0.6875rem',
-              fontWeight: 700,
+              fontSize: '0.72rem',
+              fontWeight: 800,
               color: 'var(--loss-text)',
               letterSpacing: '0.04em',
               marginTop: 'auto',
-              borderTop: '1px solid var(--outline-variant)',
+              borderTop: '1px solid rgba(255, 86, 48, 0.2)',
               paddingTop: '10px'
             }}>
-              OBJECTIVE: OUTNUMBER THE COURTYARD
+              TARGET: Bhole logon ko chun-chun ke bahar karo!
             </div>
           </div>
 
           {/* Bhole Dossier */}
-          <div className="card-interactive" style={{
+          <div className="card-interactive bhola-card-glow" style={{
             padding: '20px',
             textAlign: 'left',
             display: 'flex',
             flexDirection: 'column',
             gap: '12px',
-            border: '1px solid var(--primary-subtle-border)',
+            border: '1.5px solid var(--primary-subtle-border)',
             background: 'linear-gradient(180deg, var(--primary-subtle) 0%, var(--surface-container-lowest) 100%)'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{
-                width: '40px',
-                height: '40px',
+                width: '42px',
+                height: '42px',
                 borderRadius: 'var(--rounded-lg)',
                 background: 'var(--primary-subtle)',
                 border: '1px solid var(--primary-subtle-border)',
@@ -437,28 +439,28 @@ export default function App() {
                 alignItems: 'center',
                 justifyContent: 'center'
               }}>
-                <ShieldCheck size={22} color="var(--primary)" />
+                <ShieldCheck size={24} color="var(--primary)" />
               </div>
-              <span className="badge-gain">INNOCENT MAJORITY</span>
+              <span className="badge-gain">😇 DUDH KE DHULE</span>
             </div>
             <div>
-              <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--primary)', letterSpacing: '-0.01em' }}>
-                Bhole Courtyard
+              <div style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--primary)', letterSpacing: '-0.01em' }}>
+                Masoom Log (Bhole)
               </div>
-              <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px', lineHeight: 1.45 }}>
-                Observe real-world nervous tells, challenge party dares, and vote to banish suspects in the secret ballot.
+              <p style={{ fontSize: '0.84rem', color: 'var(--on-surface-variant)', marginTop: '6px', lineHeight: 1.45 }}>
+                Aankhon ki chori pakdo, ajeeb harkatein note karo, aur Kaminey ko Haveli se dhakke maar ke nikalo!
               </p>
             </div>
             <div style={{
-              fontSize: '0.6875rem',
-              fontWeight: 700,
+              fontSize: '0.72rem',
+              fontWeight: 800,
               color: 'var(--primary)',
               letterSpacing: '0.04em',
               marginTop: 'auto',
               borderTop: '1px solid var(--outline-variant)',
               paddingTop: '10px'
             }}>
-              OBJECTIVE: EXILE ALL CONSPIRATORS
+              TARGET: Har ek Kamina pakad ke Haveli se exile karo!
             </div>
           </div>
         </div>

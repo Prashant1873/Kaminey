@@ -53,17 +53,17 @@ export default function HostVoting({
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
           <div className="badge-gain" style={{ fontSize: '0.6875rem', letterSpacing: '0.06em' }}>
             <Scale size={13} />
-            SECRET BALLOT CHAMBER
+            ⚖️ GUPT VOTE MANDAL
           </div>
           <div className="tabular-nums" style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
             {votedCount} OF {totalAlive} SUBMITTED
           </div>
         </div>
         <h1 className="text-display" style={{ color: 'var(--on-surface)', margin: '4px 0 2px 0' }}>
-          CAST YOUR CONFIDENTIAL VOTE
+          UNGLI UTHAO, EXILE CHUNO!
         </h1>
         <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.90625rem', margin: 0 }}>
-          Secret ballots are encrypted on personal handset screens. The court majority decides exile.
+          Secret voting phone pe lock ho rahi hai... Jiske khilaaf ungli uthi, wo seedha Haveli se bahar!
         </p>
       </div>
 
@@ -90,7 +90,7 @@ export default function HostVoting({
           {votedCount} / {totalAlive}
         </span>
         <span style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--on-surface-variant)' }}>
-          votes securely submitted
+          votes thoke ja chuke hain
         </span>
       </div>
 
@@ -136,23 +136,17 @@ export default function HostVoting({
                   {hasVoted ? (
                     <>
                       <CheckCircle2 size={16} color="var(--gain-text)" />
-                      <span>Ballot In</span>
+                      <span>Vote Thok Diya</span>
                     </>
                   ) : (
                     <>
                       <Clock size={16} color="var(--outline)" />
-                      <span>Deciding...</span>
+                      <span>Soch Raha Hai...</span>
                     </>
                   )}
                 </div>
               ) : (
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '4px',
-                  marginTop: '4px'
-                }}>
+                <div className="stamp-slam-effect" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', marginTop: '4px' }}>
                   <div className="tabular-nums" style={{
                     fontSize: '1.75rem',
                     fontWeight: 800,
@@ -166,10 +160,10 @@ export default function HostVoting({
           );
         })}
 
-        {/* Skip Vote Box in Revealed State */}
+        {/* Skip Option Display if revealed */}
         {revealed && (
           <div
-            className="card-interactive"
+            className="card-interactive stamp-slam-effect"
             style={{
               padding: '18px 12px',
               display: 'flex',
@@ -181,7 +175,7 @@ export default function HostVoting({
             }}
           >
             <MinusCircle size={36} color="var(--on-surface-variant)" />
-            <div style={{ fontWeight: 700, fontSize: '1rem' }}>Skip Vote</div>
+            <div style={{ fontWeight: 700, fontSize: '1rem' }}>Skip Vote (Maafi)</div>
             <div className="tabular-nums" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--on-surface-variant)' }}>
               {tallies['skip'] || 0} Votes
             </div>
@@ -198,7 +192,7 @@ export default function HostVoting({
             className="btn-danger spring-btn"
             style={{ padding: '16px 36px', fontSize: '1.125rem' }}
           >
-            <span>Lock Ballots & Reveal Votes</span>
+            <span>Vote Lock Karo & Parda Uthao! 🔨</span>
           </button>
         ) : (
           <button
@@ -207,7 +201,7 @@ export default function HostVoting({
             className="btn-primary spring-btn"
             style={{ padding: '16px 40px', fontSize: '1.125rem' }}
           >
-            <span>Proceed to The Haveli Exile</span>
+            <span>Exile Verdict Sunao ⚖️</span>
             <ArrowRight size={20} />
           </button>
         )}

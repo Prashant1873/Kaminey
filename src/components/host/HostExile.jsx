@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { getAvatarById } from '../../data/animalAvatars';
 import AvatarBadge from '../common/AvatarBadge';
-import { Shield, Skull, ArrowRight, Sparkles, Scale, ShieldCheck } from 'lucide-react';
+import { Shield, Skull, ArrowRight, Sparkles, Scale, ShieldCheck, Frown } from 'lucide-react';
+import confetti from 'canvas-confetti';
 import { sounds } from '../../audio/soundEffects';
 
 export default function HostExile({ exiledPlayer, role, onProceed }) {
@@ -14,6 +15,13 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
       setRevealed(true);
       if (role === 'kamina') {
         sounds.playVictory();
+        try {
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+        } catch (e) {}
       } else {
         sounds.playDramaticStinger();
       }
@@ -61,13 +69,13 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
               gap: '6px'
             }}>
               <Scale size={14} />
-              <span>THE VERDICT</span>
+              <span>⚖️ HAVELI KA FAISLA</span>
             </div>
             <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
-              {exiledPlayer.name} IS BANISHED
+              {exiledPlayer.name} KO HAVELI SE DHAKKA MILA!
             </h1>
             <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.9375rem' }}>
-              Unmasking secret identity...
+              Kundli khol rahe hain... Bhola nikla ya Kamina?
             </p>
           </div>
 
@@ -110,11 +118,11 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
                 gap: '8px',
                 animation: 'pulse-subtle 1.2s infinite'
               }}>
-                <span>Checking secret records...</span>
+                <span>Jasoosi records check ho rahe hain...</span>
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                <div style={{
+                <div className="stamp-slam-effect" style={{
                   fontSize: '2rem',
                   fontWeight: 900,
                   letterSpacing: '0.05em',
@@ -125,12 +133,12 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
                   gap: '10px'
                 }}>
                   {isKamina ? <Skull size={32} /> : <ShieldCheck size={32} />}
-                  <span>{isKamina ? 'WAS A KAMINA' : 'WAS A BHOLA'}</span>
+                  <span>{isKamina ? '🔥 ASLI KAMINA THA!' : '🤦‍♂️ MASOOM BHOLA THA!'}</span>
                 </div>
                 <p style={{ fontSize: '0.9375rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
                   {isKamina
-                    ? 'Court victory. One conspirator has been identified and banished.'
-                    : 'Judicial failure. An innocent guest was falsely accused and exiled.'}
+                    ? 'Bhole ki jeet! Ek asteen ka saanp Haveli se bahar fek diya gaya!'
+                    : 'Bhaari mistake! Kaminey ne sabko ullu banaya aur beqasoor Bhola mara gaya!'}
                 </p>
               </div>
             )}
@@ -152,10 +160,10 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
             <Scale size={50} color="var(--primary)" />
           </div>
           <h1 className="text-display" style={{ color: 'var(--primary)' }}>
-            NO ONE WAS EXILED
+            🤝 TIE HO GAYA! KOI NAHI NIKLA
           </h1>
           <p className="text-body" style={{ color: 'var(--on-surface-variant)' }}>
-            The vote ended in a tie or the majority chose to Skip. The haveli gates remain open and everyone stays for another night.
+            Vote barabar rahe ya sabne Skip chuna. Haveli ke darwaze khule hain, raat fir aayegi!
           </p>
         </div>
       )}
@@ -167,7 +175,7 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
         className="btn-primary spring-btn"
         style={{ padding: '16px 36px', fontSize: '1.125rem' }}
       >
-        <span>Continue Haveli Mystery</span>
+        <span>Agla Round Chalu Karo ⏭️</span>
         <ArrowRight size={20} />
       </button>
     </div>

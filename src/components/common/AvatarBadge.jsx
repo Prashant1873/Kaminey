@@ -14,7 +14,7 @@ export default function AvatarBadge({
 
   return (
     <span
-      className={`avatar-badge ${className}`}
+      className={`avatar-badge cheeky-avatar ${className}`}
       role="img"
       aria-label={`${av.name} (${av.title})`}
       title={`${av.name} (${av.title})`}

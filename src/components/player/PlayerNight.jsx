@@ -64,15 +64,15 @@ export default function PlayerNight({
 
       <div>
         <div className={isKamina ? 'badge-loss' : 'badge-warning'} style={{ marginBottom: '8px', fontSize: '0.75rem', letterSpacing: '0.06em' }}>
-          {isKamina ? 'THE KAMINA CONCLAVE' : 'PEACEFUL SLEEP'}
+          {isKamina ? '😈 KAMINEY CONCLAVE' : '😴 BHOLE KI GAHRI NEEND'}
         </div>
         <h1 className="text-headline" style={{ color: '#F8FAFC', fontSize: '1.45rem', marginBottom: '6px' }}>
-          {isKamina ? 'CHOOSE YOUR TARGET' : 'THE HAVELI RESTS'}
+          {isKamina ? 'KISKA KAAM TAMAAM KARNA HAI?' : 'AANKHEIN BAND, CHAADAR TAAN!'}
         </h1>
         <p style={{ fontSize: '0.8125rem', color: '#94A3B8', maxWidth: '340px', lineHeight: 1.45 }}>
           {isKamina
-            ? 'Whisper quietly. Select an innocent guest to assassinate tonight.'
-            : 'You are resting in your chambers. Keep your eyes lowered and pray for the morning sun...'}
+            ? 'Fellow Kaminey se aakhein milao aur ek masoom Bhola chuno!'
+            : 'Kaminey shikaar par nikle hain... Bas dua karo subah nashte pe tumhari kursi khali na mile!'}
         </p>
       </div>
 
@@ -80,7 +80,7 @@ export default function PlayerNight({
       {isKamina ? (
         <div style={{ width: '100%', maxWidth: '380px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <div className="text-label" style={{ color: '#94A3B8', textAlign: 'left', marginBottom: '4px', fontSize: '0.75rem' }}>
-            AVAILABLE TARGETS ({potentialVictims.length}):
+            BHOLE TARGETS ({potentialVictims.length}):
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -119,10 +119,10 @@ export default function PlayerNight({
                   <div>
                     {isSelectedByMe ? (
                       <span className="badge-loss" style={{ fontSize: '0.75rem', fontWeight: 800 }}>
-                        <Crosshair size={14} /> MARKED
+                        <Crosshair size={14} /> 🎯 NISHANA
                       </span>
                     ) : (
-                      <span style={{ fontSize: '0.75rem', color: '#94A3B8' }}>Select</span>
+                      <span style={{ fontSize: '0.75rem', color: '#94A3B8' }}>Chuno</span>
                     )}
                   </div>
                 </button>
@@ -140,7 +140,7 @@ export default function PlayerNight({
               color: '#F8FAFC',
               marginTop: '8px'
             }}>
-              Target marked! Waiting for the living room host to break the dawn.
+              🎯 Nishana lag gaya! Host ke suraj ugane ka intezar karo.
             </div>
           )}
         </div>
@@ -172,11 +172,11 @@ export default function PlayerNight({
             <Moon size={40} strokeWidth={2.2} />
           </div>
           <div style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--primary)' }}>
-            The Haveli is Silent
+            Haveli Mein Gehri Khamoshi Hai
           </div>
           <p style={{ fontSize: '0.8125rem', color: '#94A3B8', lineHeight: 1.5 }}>
-            Do not make noise or reveal that you are checking your screen.
-            When the gong strikes, morning will be announced on the living room screen.
+            Koi aawaz mat nikalna aur screen ko normal pakde raho.
+            Subah ka gong bajte hi TV screen pe khulasa hoga!
           </p>
         </div>
       )}

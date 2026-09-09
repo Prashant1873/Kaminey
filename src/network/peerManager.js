@@ -97,7 +97,7 @@ export class HostNetwork {
       this.isReady = true;
       this.reconnectAttempts = 0;
       this.startHeartbeat();
-      this.getHandlers().onStatusChange?.('Online — Ready for guests');
+      this.getHandlers().onStatusChange?.('Online - Ready for guests');
     });
 
     this.peer.on('connection', (conn) => {

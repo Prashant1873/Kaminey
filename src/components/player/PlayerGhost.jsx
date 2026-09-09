@@ -53,24 +53,24 @@ export default function PlayerGhost({ playerName, isExiled }) {
 
       <div>
         <span className="badge-loss" style={{ fontSize: '0.75rem', marginBottom: '8px', letterSpacing: '0.04em' }}>
-          SPECTATOR GHOST MODE
+          👻 BHOOT MANDALI (SPECTATOR MODE)
         </span>
         <h1 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
-          YOU ARE NOW A GHOST
+          AAP AB BHOOT BAN CHUKE HAIN! 👻
         </h1>
         <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
           {isExiled
-            ? 'You were banished by the round-table verdict.'
-            : 'You were assassinated during the night by the Kaminey.'}
+            ? 'Panchayat ne aapko Haveli se nikal phenka! Masoom the ya Kaminey, ab kismat ko koso.'
+            : 'Kaali raat ke sannate mein Kaminey ne aapka patta saaf kar diya!'}
           <br />
-          <strong>Silence in the court!</strong> Ghosts may watch the living room drama unfold but cannot speak or vote.
+          <strong>🤫 Bolna bilkul mana hai!</strong> Popcorn khao, zinda logon ka tamasha dekho aur TV screen par bhoot signals feko.
         </p>
       </div>
 
       {/* Ghost Vector Reactions */}
       <div className="card-interactive" style={{ width: '100%', padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: '14px', boxSizing: 'border-box' }}>
         <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--primary)', letterSpacing: '0.04em' }}>
-          GHOST SPECTATOR SIGNALS
+          👻 BHOOTIYA REACTION FEKO (TV PAR DIKHEGA)
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
           {GHOST_REACTIONS.map(item => {

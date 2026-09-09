@@ -79,7 +79,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
             color: 'var(--primary)',
             marginBottom: '2px'
           }}>
-            HANDSET IDENTITY
+            🎭 GUPT ENTRY IDENTITY
           </div>
           <div style={{ fontWeight: 800, fontSize: '1.2rem', color: 'var(--on-surface)', letterSpacing: '-0.02em', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {activeAvatar.name}
@@ -101,7 +101,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
         {/* Room Code */}
         <div>
           <label className="text-label" style={{ display: 'block', marginBottom: '6px', color: 'var(--on-surface-variant)' }}>
-            ROOM CODE
+            TV KA ROOM CODE
           </label>
           <input
             type="text"
@@ -127,7 +127,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
             <label className="text-label" style={{ color: 'var(--on-surface-variant)' }}>
-              YOUR NAME
+              APNA NAAM (SPY BAN KE AAO)
             </label>
             <button
               type="button"
@@ -150,7 +150,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
               title="Roll a random secret name"
             >
               <Dices size={14} />
-              <span>Roll Name</span>
+              <span>🎲 Random Naam</span>
             </button>
           </div>
 
@@ -159,7 +159,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
             maxLength={18}
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Enter name or tap Roll Name"
+            placeholder="Apna naam dalo ya random chuno"
             className="input-base"
             style={{ boxSizing: 'border-box', minHeight: '48px' }}
           />
@@ -168,7 +168,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
         {/* Avatar Grid */}
         <div>
           <label className="text-label" style={{ display: 'block', marginBottom: '8px', color: 'var(--on-surface-variant)' }}>
-            CHOOSE AVATAR ({ANIMAL_AVATARS.length})
+            AVATAR CHUNO (KOI SHAK NA KARE)
           </label>
           <div style={{
             display: 'grid',
@@ -223,7 +223,7 @@ export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
           aria-label="Enter the Haveli"
           style={{ width: '100%', padding: '14px', fontSize: '0.9375rem', boxSizing: 'border-box', minHeight: '48px', marginTop: '6px' }}
         >
-          <span>ENTER THE HAVELI</span>
+          <span>HAVELI MEIN GHUSO 🚪</span>
           <ArrowRight size={18} />
         </button>
       </form>

@@ -49,15 +49,15 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
       {/* Warning Notice */}
       <div className="badge-warning" style={{ padding: '6px 14px', fontSize: '0.75rem', letterSpacing: '0.04em' }}>
         <ShieldAlert size={14} />
-        <span>TILT PHONE AWAY FROM EYES AROUND YOU</span>
+        <span>🚨 PHONE CHHUPA KE RAKHO! KOI JHAANK NA LE!</span>
       </div>
 
       <div>
         <h1 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
-          CONFIDENTIAL DOSSIER
+          GUPT LIFFAFA
         </h1>
         <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem' }}>
-          Hold your finger down on the wax seal below to peek. Release to instantly conceal.
+          Neeche royal wax seal pe ungli dabaa ke rakho. Ungli hataate hi parda wapas gir jayega!
         </p>
       </div>
 
@@ -103,7 +103,7 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
             gap: '16px'
           }}>
             {/* Wax Seal Medallion */}
-            <div style={{
+            <div className="cheeky-avatar" style={{
               width: '88px',
               height: '88px',
               borderRadius: '50%',
@@ -112,7 +112,8 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 8px 24px rgba(158, 42, 43, 0.5), inset 0 2px 6px rgba(255, 255, 255, 0.4)'
+              boxShadow: '0 8px 24px rgba(158, 42, 43, 0.5), inset 0 2px 6px rgba(255, 255, 255, 0.4)',
+              transition: 'transform 0.15s ease'
             }}>
               <Lock size={36} color="#0A0B0E" strokeWidth={2.4} />
             </div>
@@ -124,10 +125,10 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
                 color: 'var(--primary)',
                 letterSpacing: '0.06em'
               }}>
-                PRESS & HOLD TO UNSEAL
+                SEAL DABAA KE RAKHO 🔴
               </div>
               <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px', maxWidth: '260px' }}>
-                Releasing finger conceals the identity instantly
+                Ungli dabaaye rakho aur dekho: Bhola ho ya Kamina!
               </p>
             </div>
           </div>
@@ -175,22 +176,22 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
 
             <div>
               <div className="text-label" style={{ color: isKamina ? 'var(--loss-text)' : 'var(--primary)', letterSpacing: '0.12em' }}>
-                CONFIDENTIAL IDENTITY
+                APNA ASLI ROOP
               </div>
               <div style={{
-                fontSize: '1.85rem',
+                fontSize: '1.75rem',
                 fontWeight: 900,
                 color: isKamina ? 'var(--loss-text)' : '#FFFFFF',
                 letterSpacing: '0.04em'
               }}>
-                {isKamina ? 'YOU ARE A KAMINA' : 'YOU ARE A BHOLA'}
+                {isKamina ? '😈 TUM HO ASLI KAMINA!' : '😇 TUM HO MASOOM BHOLA!'}
               </div>
             </div>
 
-            <p style={{ fontSize: '0.8125rem', lineHeight: 1.45, color: 'var(--on-surface-variant)', maxWidth: '300px' }}>
+            <p style={{ fontSize: '0.8125rem', lineHeight: 1.45, color: '#CBD5E1', maxWidth: '300px' }}>
               {isKamina
-                ? 'Conspire secretly in the night to murder the Bhole. Deflect suspicion during daylight discussions!'
-                : 'Innocent resident of the court. Watch for unusual whispers, complete tasks, and vote out the traitors!'}
+                ? 'Raat ko aapas mein shikaar chunna, din mein sabse masoom banne ka acting karna!'
+                : 'Haveli mein asteen ke saanp ghoom rahe hain. Sharafat ka mukhota pahan ke Kaminey ko dhoondho!'}
             </p>
 
             {/* If Kamina, reveal fellow traitors */}

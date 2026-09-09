@@ -20,13 +20,13 @@ export default function PlayerDiscussion({ players = [], myPlayerId }) {
     }}>
       <div style={{ textAlign: 'center' }}>
         <div className="badge-warning" style={{ marginBottom: '8px', fontSize: '0.75rem', letterSpacing: '0.04em' }}>
-          ROUND-TABLE IN SESSION
+          🗣️ HAVELI PANCHAYAT IN SESSION
         </div>
         <h1 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
-          THE HAVELI DISCUSSION
+          KAUN HAI WO ASTEEN KA SAANP?
         </h1>
         <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
-          Listen carefully to statements made across the room. Keep an eye on the TV countdown timer.
+          Room mein sabke chehre dekho! Kisne nazrein churayi? TV screen timer pe dhyan rakho.
         </p>
       </div>
 
@@ -34,12 +34,12 @@ export default function PlayerDiscussion({ players = [], myPlayerId }) {
       <div className="card-interactive" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.875rem', fontWeight: 700, color: 'var(--primary)' }}>
           <Edit3 size={16} />
-          <span>Private Suspect Notes (Confidential):</span>
+          <span>🕵️ Gupt Jasoosi Diary (Kispe shak hai?):</span>
         </div>
         <textarea
           value={scratchNotes}
           onChange={(e) => setScratchNotes(e.target.value)}
-          placeholder="e.g. Kabir was shifting eyes... Simran hesitated during the task..."
+          placeholder="Jaise: Dev achanak chup kyu ho gaya? Simran ki aankhein fati reh gayi..."
           className="input-base"
           style={{
             minHeight: '100px',
@@ -53,7 +53,7 @@ export default function PlayerDiscussion({ players = [], myPlayerId }) {
       {/* Alive Suspects List */}
       <div>
         <div className="text-label" style={{ color: 'var(--on-surface-variant)', marginBottom: '8px', fontSize: '0.75rem' }}>
-          LIVING SUSPECTS ({alivePlayers.length}):
+          ZINDA LOG ({alivePlayers.length}):
         </div>
         <div style={{
           display: 'grid',

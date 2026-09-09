@@ -62,7 +62,7 @@ export default function HostLobby({
               boxShadow: '0 0 8px var(--gain)',
               display: 'inline-block'
             }} />
-            BASE STATION LIVE • RECEPTION TERMINAL
+            HAVELI RECEPTION • LIVE
           </div>
           {networkStatus && (
             <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
@@ -71,10 +71,10 @@ export default function HostLobby({
           )}
         </div>
         <h1 className="text-display" style={{ color: 'var(--on-surface)', margin: '4px 0 2px 0' }}>
-          GATHER YOUR SUSPECTS
+          BAKRE IKATTHA HO RAHE HAIN 🎭
         </h1>
         <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.90625rem', maxWidth: '640px', margin: 0, lineHeight: 1.45 }}>
-          Point phone cameras at the screen to join. When at least 4 guests assemble, launch the conclave.
+          Phone se QR scan maro! Kaminey asteen mein chhupe hain aur Bhole bekhabar hain.
         </p>
       </div>
 
@@ -96,13 +96,13 @@ export default function HostLobby({
           <div className="card-interactive" style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid var(--outline-variant)', paddingBottom: '12px' }}>
               <Settings2 size={20} color="var(--primary)" />
-              <h2 className="text-title" style={{ color: 'var(--on-surface)' }}>Game Rules</h2>
+              <h2 className="text-title" style={{ color: 'var(--on-surface)' }}>Haveli Niyam (Settings)</h2>
             </div>
 
             {/* Discussion Timer */}
             <div>
               <label className="text-label" style={{ display: 'block', marginBottom: '8px', color: 'var(--on-surface-variant)' }}>
-                Round-Table Discussion Timer
+                Kaminey-Pan Ki Behass (Discussion Timer)
               </label>
               <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                 {discussionOptions.map(sec => (
@@ -122,7 +122,7 @@ export default function HostLobby({
             {/* Voting Timer */}
             <div>
               <label className="text-label" style={{ display: 'block', marginBottom: '8px', color: 'var(--on-surface-variant)' }}>
-                Secret Ballot Timer
+                Secret Ballot (Vote Ka Faisla Timer)
               </label>
               <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                 {votingOptions.map(sec => (
@@ -142,7 +142,7 @@ export default function HostLobby({
             {/* Kaminey Ratio */}
             <div>
               <label className="text-label" style={{ display: 'block', marginBottom: '8px', color: 'var(--on-surface-variant)' }}>
-                Kaminey (Traitors)
+                Kitne Kaminey Chahiye?
               </label>
               <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                 {kamineyOptions.map(opt => (
@@ -153,7 +153,7 @@ export default function HostLobby({
                     onClick={() => onUpdateSettings({ ...settings, kamineyCount: opt })}
                     className={settings.kamineyCount === opt ? 'category-pill-active' : 'category-pill'}
                   >
-                    {opt === 'auto' ? 'Auto Balanced' : `${opt} Traitor`}
+                    {opt === 'auto' ? 'Auto Balanced' : opt === '1' ? '1 Kamina' : `${opt} Kaminey`}
                   </button>
                 ))}
               </div>
@@ -162,9 +162,9 @@ export default function HostLobby({
             {/* Dares Toggle */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '6px' }}>
               <div>
-                <div style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--on-surface)' }}>House Party Dares</div>
+                <div style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--on-surface)' }}>Masaledaar Haveli Dares</div>
                 <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)' }}>
-                  Secret side-quests to confuse the court
+                  Reel shoot, peg toast aur hasi-mazak tasks
                 </div>
               </div>
               <button
@@ -176,6 +176,24 @@ export default function HostLobby({
                 {settings.enableDares ? 'Active' : 'Off'}
               </button>
             </div>
+          </div>
+
+          {/* Fun Haveli Pro Tip Card */}
+          <div style={{
+            background: 'var(--primary-subtle)',
+            border: '1px solid var(--primary-subtle-border)',
+            borderRadius: 'var(--rounded-xl)',
+            padding: '12px 16px',
+            fontSize: '0.8125rem',
+            color: 'var(--on-surface)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px'
+          }}>
+            <Sparkles size={18} color="var(--primary)" style={{ flexShrink: 0 }} />
+            <span>
+              <strong>Haveli Pro-Tip:</strong> Jo sabse zyada masoom Bhola bane, aksar wahi sabse bada Kamina nikalta hai!
+            </span>
           </div>
         </div>
 
@@ -193,10 +211,10 @@ export default function HostLobby({
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <Users size={22} color="var(--primary)" />
-                <h2 className="text-title" style={{ color: 'var(--on-surface)' }}>Living Room Guests ({players.length})</h2>
+                <h2 className="text-title" style={{ color: 'var(--on-surface)' }}>Haveli Ke Mehman ({players.length})</h2>
               </div>
               <span className={canStart ? 'badge-gain' : 'badge-warning'}>
-                {canStart ? 'Ready to Begin' : `Need ${minPlayers - players.length} more`}
+                {canStart ? 'Khel Ke Liye Ready!' : `Aur ${minPlayers - players.length} Bakre Chahiye`}
               </span>
             </div>
 
@@ -314,9 +332,9 @@ export default function HostLobby({
                   }}>
                     <Smartphone size={28} strokeWidth={2.2} />
                   </div>
-                  <div style={{ fontWeight: 700, fontSize: '1.05rem', color: 'var(--on-surface)' }}>No guests entered the haveli</div>
+                  <div style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--on-surface)' }}>Haveli Mein Sannata Hai!</div>
                   <div style={{ fontSize: '0.875rem', marginTop: '6px', maxWidth: '340px' }}>
-                    Point phone cameras at the QR code on the left or enter room code <strong style={{ color: 'var(--primary)' }}>{roomCode}</strong>
+                    Phone camera se QR code scan karo ya room code dalo: <strong style={{ color: 'var(--primary)' }}>{roomCode}</strong>
                   </div>
                 </div>
               )}
@@ -341,7 +359,7 @@ export default function HostLobby({
                   title="Add single simulated player"
                 >
                   <UserPlus size={16} />
-                  Add Guest (+1)
+                  +1 Bakra Jodo (Bot)
                 </button>
 
                 {!canStart && onQuickStartWithBots && (
@@ -360,7 +378,7 @@ export default function HostLobby({
                     title="Fill remaining slots with bots and launch immediately for testing"
                   >
                     <Sparkles size={16} />
-                    <span>Auto-Fill & Launch</span>
+                    <span>Auto-Fill & Khel Shuru ⚡</span>
                   </button>
                 )}
               </div>
@@ -380,7 +398,7 @@ export default function HostLobby({
                 }}
               >
                 <Play size={18} fill="currentColor" color="currentColor" />
-                <span>{canStart ? 'BEGIN THE HAVELI CONCLAVE' : `Waiting for ${minPlayers - players.length} more guests (Min ${minPlayers})`}</span>
+                <span>{canStart ? 'KAMINEY VS BHOLE: KHEL SHURU! ⚡' : `Aur ${minPlayers - players.length} Bakre Chahiye (Min ${minPlayers})`}</span>
               </button>
             </div>
           </div>

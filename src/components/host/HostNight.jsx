@@ -25,20 +25,43 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
       textAlign: 'center',
       gap: '32px'
     }}>
-      {/* Glowing Moon / Blood Icon */}
+      {/* Sneaky Eyes Delight Animation in Background */}
       <div style={{
-        width: '110px',
-        height: '110px',
-        borderRadius: 'var(--rounded-full)',
-        background: 'radial-gradient(circle, #200000 0%, #000000 70%)',
-        border: '2px solid var(--loss)',
         display: 'flex',
+        gap: '40px',
         alignItems: 'center',
         justifyContent: 'center',
-        boxShadow: 'var(--shadow-glow-loss)',
-        animation: 'float-slow 4s infinite ease-in-out'
+        position: 'relative'
       }}>
-        <Moon size={54} color="var(--loss)" />
+        {/* Glowing Moon / Blood Icon */}
+        <div style={{
+          width: '110px',
+          height: '110px',
+          borderRadius: 'var(--rounded-full)',
+          background: 'radial-gradient(circle, #2a0404 0%, #050608 75%)',
+          border: '2px solid var(--loss)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: 'var(--shadow-glow-loss)',
+          animation: 'float-slow 4s infinite ease-in-out',
+          position: 'relative'
+        }}>
+          <Moon size={54} color="var(--loss)" />
+        </div>
+
+        {/* Sneaky Blinking Eyes lurking in the dark */}
+        <div style={{
+          position: 'absolute',
+          right: '-70px',
+          top: '20px',
+          display: 'flex',
+          gap: '8px',
+          animation: 'sneaky-blink 3.2s infinite ease-in-out'
+        }}>
+          <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#EF4444', boxShadow: '0 0 10px #EF4444' }} />
+          <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#EF4444', boxShadow: '0 0 10px #EF4444' }} />
+        </div>
       </div>
 
       <div style={{ maxWidth: '600px' }}>
@@ -51,13 +74,13 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
           gap: '6px'
         }}>
           <Moon size={14} />
-          <span>THE MIDNIGHT CONCLAVE</span>
+          <span>🌙 SANNATA AUR SAZISH</span>
         </div>
         <h1 className="text-display" style={{ color: '#ffffff', marginBottom: '8px' }}>
-          NIGHT IN THE HAVELI
+          HAVELI MEIN KAALI RAAT
         </h1>
         <p style={{ fontSize: '1.1rem', color: '#9aa0a6' }}>
-          Innocents sleep. <strong style={{ color: 'var(--loss)' }}>Kaminey</strong> are whispering in secret...
+          Bhole chaadar taan ke so rahe hain... aur <strong style={{ color: 'var(--loss)' }}>Kaminey</strong> chupke se shikaar chun rahe hain! 😈
         </p>
       </div>
 
@@ -86,11 +109,11 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
             animation: 'pulse-subtle 1.2s infinite'
           }} />
           <span style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#ffffff' }}>
-            {nightMurderSelected ? 'Target Marked in the Shadows' : 'Kaminey are voting on their phones...'}
+            {nightMurderSelected ? '🎯 Target Lock Ho Gaya! Shikaar Tay Hai!' : 'Kaminey aapas mein aakhein lada rahe hain...'}
           </span>
         </div>
         <div style={{ fontSize: '0.8125rem', color: '#80868b' }}>
-          Eyes on your own screen!
+          Apne apne phone pe nazrein tikaaye rakho!
         </div>
       </div>
 
@@ -105,7 +128,7 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
         }}
       >
         <Sun size={18} />
-        <span>BREAK THE DAWN</span>
+        <span>Suraj Ugao: Subah Ka Tamasha Dekho ☀️</span>
       </button>
     </div>
   );

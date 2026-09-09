@@ -19,47 +19,53 @@ export default function HowToPlayModal({ isOpen, onClose }) {
     {
       step: '01',
       icon: QrCode,
-      title: 'Assemble on TV',
-      desc: 'Launch the Base Station on your living room TV or laptop screen. Friends point their phone cameras at the QR code to step into the courtyard.'
+      title: 'QR Scan & Haveli Entry',
+      desc: 'TV screen par QR code dekho, phone camera se scan karo, apna spicy spy naam aur mast avatar chuno.'
     },
     {
       step: '02',
       icon: Moon,
-      title: 'The Night Conclave',
-      desc: 'All guests lower their heads in silence. The secret Kaminey whisper and select an innocent target on their personal phone screens.'
+      title: 'Kaali Raat & Kaminey Sazish',
+      desc: 'Sab log aankhein band karke sar jhukao! Chhupe hue Kaminey chupke se kisi masoom Bhole ka shikar karenge.'
     },
     {
       step: '03',
       icon: MessageSquare,
-      title: 'Daybreak & Debates',
-      desc: 'The victim is unmasked on the TV screen. Survive secret party dares, observe fidgety behavior, and challenge suspect alibis around the table.'
+      title: 'Subah Ka Jatka & Panchayat',
+      desc: 'TV screen par parda uthega kiska kaam tamaam hua! Jhooth pakdo, haveli dares khelo aur shakki bhediye ko ghero.'
     },
     {
       step: '04',
       icon: Scale,
-      title: 'The Secret Ballot',
-      desc: 'Cast your confidential exile vote on your phone. The court majority decides who gets banished from the haveli.'
+      title: 'Gupt Vote & Haveli Se Dhakka',
+      desc: 'Apne phone par secret vote thoko. Jisko sabse zyada vote pade, wo seedha haveli se bahar!'
     }
   ];
 
   const roles = [
     {
-      title: 'Bhole (Innocent Majority)',
+      title: 'Masoom Log (Bhole)',
+      badge: '😇 DOODH KE DHULE',
+      glowClass: 'bhola-card-glow',
       icon: ShieldCheck,
       color: 'var(--primary)',
-      desc: 'Unite the courtyard, observe physical tells, and vote out the conspirators before the innocents are outnumbered.'
+      desc: 'Haveli ke sacche log! Kaminey ke tevar aur jhooth pehchano, unhe vote out karo aur haveli bachao.'
     },
     {
-      title: 'Kaminey (Secret Traitors)',
+      title: 'Asteen Ke Saanp (Kaminey)',
+      badge: '😈 SHIKARI SAANP',
+      glowClass: 'kamina-card-glow',
       icon: Skull,
       color: 'var(--loss-text)',
-      desc: 'Assassinate innocents under cover of night, steer accusations toward others, and conquer the palace.'
+      desc: 'Raat mein target chun ke maaro, din mein masoom bhole ban kar ghoomo aur bholon ko fasao.'
     },
     {
-      title: 'Spectator Ghosts',
+      title: 'Bhoot Mandali (Spectators)',
+      badge: '👻 GUPT BHOOT',
+      glowClass: '',
       icon: Ghost,
       color: '#94A3B8',
-      desc: 'Eliminated players observe the living room drama in silence and can send subtle ghost signals.'
+      desc: 'Jo bahar ho gaye wo bhoot ban kar poora tamasha dekhenge! Bolna mana hai, bas screen par reaction barsao.'
     }
   ];
 
@@ -124,10 +130,10 @@ export default function HowToPlayModal({ isOpen, onClose }) {
             </div>
             <div>
               <div className="text-label" style={{ color: 'var(--primary)', letterSpacing: '0.08em' }}>
-                PROTOCOL SPECIFICATION
+                ✦ HAVELI SURVIVAL PROTOCOL ✦
               </div>
               <h2 className="text-title" style={{ fontSize: '1.25rem', color: 'var(--on-surface)', margin: 0 }}>
-                Rules of Engagement
+                Khel Ke Asli Niyam 📜
               </h2>
             </div>
           </div>
@@ -170,10 +176,10 @@ export default function HowToPlayModal({ isOpen, onClose }) {
             gap: '4px'
           }}>
             <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--on-surface)' }}>
-              A Living Room Psychological Mystery
+              Haveli Ka Ek Hi Usool: Kaminey Bachna Nahi Chahiye! 🏰
             </div>
             <p style={{ fontSize: '0.84375rem', color: 'var(--on-surface-variant)', lineHeight: 1.5, margin: 0 }}>
-              The TV base screen runs the haveli court. Personal mobile phones act as secret ballot handsets. One room, two factions, zero trust.
+              TV screen par chalega poora adda. Phone par aayegi aapki gupt chitthi. Do factions, ek kamra, aur har taraf asteen ke saanp!
             </p>
           </div>
 
@@ -186,10 +192,10 @@ export default function HowToPlayModal({ isOpen, onClose }) {
               marginBottom: '14px'
             }}>
               <span className="text-label" style={{ color: 'var(--on-surface-variant)', letterSpacing: '0.06em' }}>
-                CHRONOLOGICAL CYCLE (4 PHASES)
+                ROUND KA CHAKRAVYUH (4 PHASES)
               </span>
               <span className="text-label" style={{ color: 'var(--primary)' }}>
-                REPEATS EACH ROUND
+                HAR ROUND REPEAT
               </span>
             </div>
 
@@ -268,7 +274,7 @@ export default function HowToPlayModal({ isOpen, onClose }) {
           <div>
             <div style={{ marginBottom: '14px' }}>
               <span className="text-label" style={{ color: 'var(--on-surface-variant)', letterSpacing: '0.06em' }}>
-                FACTION DOSSIERS
+                FACTIONS AUR ROLES (KAUN KISKA SATHI?)
               </span>
             </div>
 
@@ -282,6 +288,7 @@ export default function HowToPlayModal({ isOpen, onClose }) {
                 return (
                   <div
                     key={r.title}
+                    className={r.glowClass}
                     style={{
                       background: 'var(--surface-container-low)',
                       border: '1px solid var(--outline-variant)',
@@ -292,24 +299,29 @@ export default function HowToPlayModal({ isOpen, onClose }) {
                       gap: '10px'
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <div style={{
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: 'var(--rounded-md)',
-                        background: `${r.color}15`,
-                        border: `1px solid ${r.color}35`,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: r.color,
-                        flexShrink: 0
-                      }}>
-                        <IconComp size={18} strokeWidth={2.2} />
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div style={{
+                          width: '36px',
+                          height: '36px',
+                          borderRadius: 'var(--rounded-md)',
+                          background: `${r.color}15`,
+                          border: `1px solid ${r.color}35`,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: r.color,
+                          flexShrink: 0
+                        }}>
+                          <IconComp size={18} strokeWidth={2.2} />
+                        </div>
+                        <div style={{ fontWeight: 800, fontSize: '0.9375rem', color: r.color }}>
+                          {r.title}
+                        </div>
                       </div>
-                      <div style={{ fontWeight: 800, fontSize: '0.9375rem', color: r.color }}>
-                        {r.title}
-                      </div>
+                      <span style={{ fontSize: '0.6875rem', fontWeight: 700, opacity: 0.85 }}>
+                        {r.badge}
+                      </span>
                     </div>
                     <p style={{
                       fontSize: '0.8125rem',
@@ -344,7 +356,7 @@ export default function HowToPlayModal({ isOpen, onClose }) {
             style={{ minHeight: '44px', padding: '10px 24px', fontSize: '0.875rem' }}
           >
             <CheckCircle2 size={16} />
-            <span>RETURN TO GAME</span>
+            <span>SAMJH GAYE, KHEL SHURU KARO! 🚀</span>
           </button>
         </div>
       </div>

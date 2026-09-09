@@ -55,15 +55,15 @@ export default function PlayerDares({
         fontWeight: 800,
         margin: '0 auto'
       }}>
-        {mission?.badge || 'HAVELI TEAM MISSION'}
+        {mission?.badge || '🎭 HAVELI GROUP MISSION'}
       </div>
 
       <div>
         <h1 className="text-headline" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
-          {mission?.title || 'GROUP PARTY ACTIVITY'}
+          {mission?.title || 'GROUP ACTIVITY'}
         </h1>
         <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem' }}>
-          Follow along with the living room screen! Everyone in the room is doing this together.
+          TV screen par dhyan do! Sab log milke ye bakchodi kar rahe hain.
         </p>
       </div>
 
@@ -117,7 +117,7 @@ export default function PlayerDares({
           }}
         >
           <CheckCircle2 size={18} />
-          <span>{markedReady ? "I'm Ready for Council!" : "Ready for Council / Done"}</span>
+          <span>{markedReady ? "Main Taiyaar Hoon! 👍" : "Panchayat Ke Liye Taiyaar Hoon ⚡"}</span>
         </button>
       </div>
 
@@ -140,7 +140,7 @@ export default function PlayerDares({
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <Skull size={18} color="var(--loss)" />
               <span style={{ fontWeight: 800, fontSize: '0.875rem', color: 'var(--loss)', letterSpacing: '0.04em' }}>
-                SECRET CONCLAVE HIT LIST
+                💀 GUPT SHIKAR HITLIST (SIRF KAMINEY)
               </span>
             </div>
 
@@ -165,12 +165,12 @@ export default function PlayerDares({
               title="Quickly hide hit list if someone is looking"
             >
               {showHitList ? <EyeOff size={12} /> : <Eye size={12} />}
-              <span>{showHitList ? 'Quick Hide' : 'Show Targets'}</span>
+              <span>{showHitList ? 'Chhupao 🙈' : 'Dikhao 👁️'}</span>
             </button>
           </div>
 
           <p style={{ fontSize: '0.75rem', color: '#c4cbd4', margin: 0 }}>
-            Vote your murder sacrifice right now while everyone is looking at their screens for the group mission. No one will suspect you!
+            Sab log task padhne mein busy hain! Mauka accha hai, chupke se kisi Masoom Bhole ko target kar do.
           </p>
 
           {showHitList && (
@@ -225,7 +225,7 @@ export default function PlayerDares({
                         </span>
                       ) : (
                         <span style={{ fontSize: '0.75rem', color: 'var(--loss)', fontWeight: 700 }}>
-                          Eliminate
+                          🎯 Kaam Tamaam
                         </span>
                       )}
                     </div>
@@ -244,7 +244,7 @@ export default function PlayerDares({
                   textAlign: 'center',
                   marginTop: '4px'
                 }}>
-                  Kill order locked in. Will execute when night falls.
+                  🩸 Nishana pakka ho gaya. Raat aate hi faisla hoga.
                 </div>
               )}
             </div>
@@ -253,7 +253,7 @@ export default function PlayerDares({
       )}
 
       <div style={{ fontSize: '0.75rem', color: 'var(--outline)' }}>
-        Host will call the emergency round-table discussion on the TV when ready.
+        Host jab TV screen se bulayega tab Emergency Panchayat shuru hogi.
       </div>
     </div>
   );

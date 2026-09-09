@@ -41,15 +41,15 @@ export default function HostDiscussion({
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px', flexWrap: 'wrap', gap: '8px' }}>
           <div className="badge-loss" style={{ fontSize: '0.6875rem', letterSpacing: '0.06em' }}>
             <AlertCircle size={13} />
-            EMERGENCY COUNCIL IN SESSION
+            EMERGENCY PANCHAYAT
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
             <Mic size={15} color="var(--primary)" />
-            <span>Open Floor</span>
+            <span>Khuli Behass</span>
           </div>
         </div>
         <h1 className="text-display" style={{ color: 'var(--on-surface)', margin: '4px 0 2px 0' }}>
-          WHO IS THE KAMINA?
+          ASLI KAMINA KAUN HAI?
         </h1>
         <p style={{
           color: 'var(--on-surface-variant)',
@@ -57,7 +57,7 @@ export default function HostDiscussion({
           margin: 0,
           lineHeight: 1.45
         }}>
-          Debate openly around the room. Tap any guest below to yield the floor for their defense.
+          Khul ke arop lagao! Kisko kathghare mein khada karna hai? Neeche tap karke peshi lagao!
         </p>
       </div>
 
@@ -67,7 +67,7 @@ export default function HostDiscussion({
           duration={duration}
           onExpire={onStartVoting}
           active={true}
-          label="Discussion Time Remaining"
+          label="Panchayat Timer"
         />
       </div>
 
@@ -89,10 +89,10 @@ export default function HostDiscussion({
             <AvatarBadge avatarId={spotlightPlayer.avatarId} size={48} />
             <div>
               <div className="text-label" style={{ color: 'var(--primary)', letterSpacing: '0.06em' }}>
-                HOT SEAT SPOTLIGHT
+                🔥 KATHGHARA SPOTLIGHT
               </div>
               <div style={{ fontSize: '1.125rem', fontWeight: 800, color: 'var(--on-surface)' }}>
-                {spotlightPlayer.name} has the floor
+                {spotlightPlayer.name} ki peshi! Apni sharafat ka saboot do!
               </div>
             </div>
           </div>
@@ -101,7 +101,7 @@ export default function HostDiscussion({
             className="btn-secondary spring-btn"
             style={{ fontSize: '0.8125rem', minHeight: '38px', padding: '6px 14px' }}
           >
-            Yield Floor
+            Kathghara Chhodo
           </button>
         </div>
       )}
@@ -109,7 +109,7 @@ export default function HostDiscussion({
       {/* Round-Table Grid of Living Players */}
       <div>
         <div className="text-label" style={{ color: 'var(--on-surface-variant)', marginBottom: '12px' }}>
-          CLICK A SUSPECT TO PUT THEM ON THE DEFENSE FLOOR ({alivePlayers.length} ALIVE)
+          TAP KAR KE KATHGHARE MEIN BITHAO ({alivePlayers.length} LOG ZINDA)
         </div>
         <div style={{
           display: 'grid',
@@ -140,11 +140,11 @@ export default function HostDiscussion({
                 <div style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--on-surface)', width: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</div>
                 {isSelected ? (
                   <span className="badge-loss" style={{ fontSize: '0.625rem', marginTop: '2px' }}>
-                    Speaking
+                    Peshi Chal Rahi Hai
                   </span>
                 ) : (
                   <span className="text-label" style={{ fontSize: '0.625rem', color: 'var(--on-surface-variant)' }}>
-                    Accuse
+                    Arop Lagao
                   </span>
                 )}
               </button>
@@ -164,7 +164,7 @@ export default function HostDiscussion({
             fontSize: '1.125rem'
           }}
         >
-          <span>End Discussion & Open Voting Now</span>
+          <span>Behass Band! Gupt Vote Se Faisla Karo ⚖️</span>
           <ArrowRight size={20} />
         </button>
       </div>

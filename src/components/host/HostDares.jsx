@@ -43,14 +43,14 @@ export default function HostDares({
           letterSpacing: '0.04em',
           marginBottom: '6px'
         }}>
-          {mission?.badge || 'HAVELI TEAM MISSION'}
+          {mission?.badge || '🎭 HAVELI CHILL & MAHA-MISSION'}
         </div>
 
         <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
-          {mission?.title || 'FULL ROOM ACTIVITY'}
+          {mission?.title || 'HAVELI MAHA-ACTIVITY'}
         </h1>
         <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
-          Everyone participates together in real life! Watch how people react, speak, and deflect.
+          Poore kamre ke bakre milke ye task karenge! Chehre ke expressions aur shakki harkaton par dhyan do.
         </p>
       </div>
 
@@ -90,7 +90,7 @@ export default function HostDares({
             gap: '8px'
           }}>
             <Sparkles size={16} color="var(--primary)" style={{ flexShrink: 0 }} />
-            <span><strong>Director's Note:</strong> {mission.prompt}</span>
+            <span><strong>Haveli Darbar Hukm:</strong> {mission.prompt}</span>
           </div>
         )}
 
@@ -119,7 +119,7 @@ export default function HostDares({
             title="Roll another random party mission"
           >
             <Shuffle size={18} />
-            <span>Reshuffle Task</span>
+            <span>Naya Task Lao 🎲</span>
           </button>
 
           {/* Do Our Own Thing Button */}
@@ -139,7 +139,7 @@ export default function HostDares({
             title="Skip app task and chill with drinks/discussion on your own"
           >
             <Wine size={18} />
-            <span>We'll Do Our Own Thing</span>
+            <span>Apna Hi Adda Jamate Hain 🍷</span>
           </button>
 
           {/* Mission Accomplished -> Emergency Council */}
@@ -158,7 +158,7 @@ export default function HostDares({
             }}
           >
             <AlertTriangle size={18} />
-            <span>Mission Done! Call Emergency Council</span>
+            <span>Task Ho Gaya! Panchayat Bulao 🚨</span>
           </button>
         </div>
       </div>

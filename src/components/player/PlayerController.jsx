@@ -319,7 +319,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                     marginBottom: '12px',
                     textAlign: 'left'
                   }}>
-                    GUESTS IN COURTYARD ({gameState?.players?.length || 1})
+                    HAVELI KE MEHMAAN / BAKRE ({gameState?.players?.length || 1})
                   </div>
 
                   <div style={{
@@ -348,7 +348,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                           }}
                         >
                           <AvatarBadge avatar={av} size={16} showRing={false} />
-                          <span>{p.name} {isMe && '(You)'}</span>
+                          <span>{p.name} {isMe && '(Aap)'}</span>
                         </span>
                       );
                     })}
@@ -365,7 +365,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   fontWeight: 600
                 }}>
                   <Clock size={16} className="animate-spin" color="var(--primary)" />
-                  <span>Waiting for host to begin the conclave...</span>
+                  <span>Host ke khel shuru karne ka intezaar... ⏳</span>
                 </div>
 
                 {/* Change identity button */}
@@ -386,7 +386,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                     textDecoration: 'underline'
                   }}
                 >
-                  Change Name or Avatar
+                  Naam ya Avatar Badlo 🔄
                 </button>
               </div>
             )}
@@ -438,7 +438,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                 </div>
 
                 <h1 className="text-headline" style={{ color: 'var(--on-surface)' }}>
-                  DAWN BREAKS
+                  SUBAH KA JATKA ☀️
                 </h1>
 
                 {gameState?.morningVictim ? (
@@ -456,10 +456,10 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   }}>
                     <AvatarBadge avatar={getAvatarById(gameState.morningVictim.avatarId)} size={54} />
                     <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--loss-text)' }}>
-                      {gameState.morningVictim.name} was assassinated!
+                      {gameState.morningVictim.name} ka patta saaf! 🩸
                     </div>
                     <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
-                      Check the main living room screen for the crime scene report!
+                      TV screen par dekho kiska kaam tamaam hua!
                     </p>
                   </div>
                 ) : (
@@ -477,10 +477,10 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   }}>
                     <ShieldCheck size={48} color="var(--gain-text)" />
                     <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--gain-text)' }}>
-                      Peaceful Dawn!
+                      Sab Bakre Salamaat! ✨
                     </div>
                     <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
-                      No one was harmed during the night!
+                      Raat ko sab bach gaye, Haveli mein chamatkar ho gaya!
                     </p>
                   </div>
                 )}
@@ -533,7 +533,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
               }}>
                 <Scale size={56} color="var(--primary)" strokeWidth={2} />
                 <h1 className="text-headline" style={{ color: 'var(--on-surface)' }}>
-                  COUNCIL VERDICT
+                  HAVELI KA FAISLA ⚖️
                 </h1>
 
                 {gameState?.exiledPlayer ? (
@@ -551,15 +551,15 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   }}>
                     <AvatarBadge avatar={getAvatarById(gameState.exiledPlayer.avatarId)} size={54} />
                     <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--primary)' }}>
-                      {gameState.exiledPlayer.name} has been banished!
+                      {gameState.exiledPlayer.name} ko Haveli se bahar phenk diya!
                     </div>
                     <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
-                      Look up at the TV screen to reveal their true secret identity!
+                      TV screen par dekho: Wo Asli Kamina tha ya Masoom Bhola... 🎭
                     </p>
                   </div>
                 ) : (
                   <p className="text-body" style={{ color: 'var(--on-surface-variant)' }}>
-                    Watch the TV base station for the unmasking!
+                    TV screen par dekho kiski kismat bachi!
                   </p>
                 )}
               </div>
@@ -579,10 +579,10 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
               }}>
                 <Trophy size={60} color="var(--primary)" strokeWidth={2.2} />
                 <h1 className="text-headline" style={{ color: 'var(--primary)' }}>
-                  {gameState?.winner === 'kaminey' ? 'KAMINEY CONQUERED' : 'BHOLE TRIUMPHED'}
+                  {gameState?.winner === 'kaminey' ? '😈 HAVELI PE KAMINEY KA KABZA!' : '😇 MASOOM BHOLE JEET GAYE!'}
                 </h1>
                 <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
-                  Look at the living room screen for the full roster unmasking!
+                  TV screen par sabke asli mukhote utar chuke hain! 🎭
                 </p>
 
                 <button
@@ -599,7 +599,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   style={{ width: '100%', padding: '14px', marginTop: '10px', minHeight: '48px', gap: '8px' }}
                 >
                   <RotateCcw size={16} />
-                  <span>PLAY ANOTHER MATCH</span>
+                  <span>Naya Match Shuru Karo 🔄</span>
                 </button>
               </div>
             )}
