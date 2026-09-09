@@ -11,6 +11,7 @@ import PlayerGhost from './PlayerGhost';
 import { PlayerNetwork } from '../../network/peerManager';
 import { Wifi, Clock, Users, ArrowLeft, ShieldCheck, Scale, Trophy, RotateCcw, Sun } from 'lucide-react';
 import AvatarBadge from '../common/AvatarBadge';
+import { getAvatarById } from '../../data/animalAvatars';
 
 export default function PlayerController({ initialRoomCode = '', onExit }) {
   const [playerData, setPlayerData] = useState(() => {
