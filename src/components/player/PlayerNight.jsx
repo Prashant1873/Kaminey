@@ -67,12 +67,12 @@ export default function PlayerNight({
           {isKamina ? 'KAMINEY STRIKE' : 'NIGHT FALLS'}
         </div>
         <h1 className="text-headline" style={{ color: '#F8FAFC', fontSize: '1.45rem', marginBottom: '6px' }}>
-          {isKamina ? 'CHOOSE A VICTIM TO ELIMINATE' : 'KEEP HEAD DOWN & EYES CLOSED'}
+          {isKamina ? 'CHOOSE A VICTIM TO ELIMINATE' : 'REST IN THE SHADOWS'}
         </h1>
         <p style={{ fontSize: '0.8125rem', color: '#94A3B8', maxWidth: '340px', lineHeight: 1.45 }}>
           {isKamina
             ? 'Coordinate silently with fellow Kaminey. You can vote now, or wait for the cover task when everyone naturally looks at their phones.'
-            : 'Night is active. Stay quiet and wait for dawn to break on the big screen.'}
+            : 'Night is active. Observe the room quietly and wait for the Host to advance.'}
         </p>
       </div>
 

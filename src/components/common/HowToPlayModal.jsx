@@ -25,14 +25,14 @@ export default function HowToPlayModal({ isOpen, onClose }) {
     {
       step: '02',
       icon: Moon,
-      title: 'Night Phase & Kaminey Strike',
-      desc: 'All players close their eyes and lower their heads. The secret Kaminey coordinate on their phones to eliminate a target.'
+      title: 'Night Phase & Cover Missions',
+      desc: 'Darkness falls on the estate. The secret Kaminey coordinate to eliminate a target under cover of night missions and tasks.'
     },
     {
       step: '03',
       icon: MessageSquare,
       title: 'Dawn Report & Council Debate',
-      desc: 'The big screen reveals who was eliminated. Players complete party dares, question suspicious behavior, and present alibis.'
+      desc: 'The big screen reveals who was eliminated. Players question suspicious behavior, challenge body language, and present alibis.'
     },
     {
       step: '04',

@@ -84,7 +84,7 @@ export default function HostNight({
           NIGHT FALLS ON THE HAVELI
         </h1>
         <p style={{ fontSize: '1.05rem', color: '#9aa0a6' }}>
-          Silence descends across the Haveli. All players keep eyes closed and heads down.
+          Silence descends across the Haveli as shadows shroud the estate.
         </p>
       </div>
 
@@ -117,7 +117,7 @@ export default function HostNight({
           </span>
         </div>
         <div style={{ fontSize: '0.8125rem', color: '#94a3b8' }}>
-          Keep phones down and remain silent until the Host advances.
+          Awaiting the Host to advance the night conclave.
         </div>
       </div>
 
