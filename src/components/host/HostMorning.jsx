@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Sun, Skull, ShieldCheck, ArrowRight } from 'lucide-react';
 import { getAvatarById } from '../../data/animalAvatars';
+import AvatarBadge from '../common/AvatarBadge';
 import { sounds } from '../../audio/soundEffects';
 
 export default function HostMorning({ victim, onProceed }) {
@@ -36,8 +37,25 @@ export default function HostMorning({ victim, onProceed }) {
       </div>
 
       <div>
-        <div className="badge-loss" style={{ color: victim ? 'var(--loss-text)' : 'var(--gain-text)', marginBottom: '6px', fontSize: '0.75rem', padding: '4px 12px' }}>
-          {victim ? '🩸 BLOOD AT DAWN' : '🛡️ MORNING LIGHT'}
+        <div className={victim ? 'badge-loss' : 'badge-gain'} style={{
+          marginBottom: '6px',
+          fontSize: '0.75rem',
+          padding: '4px 14px',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '6px'
+        }}>
+          {victim ? (
+            <>
+              <Skull size={14} />
+              <span>BLOOD AT DAWN</span>
+            </>
+          ) : (
+            <>
+              <ShieldCheck size={14} />
+              <span>MORNING LIGHT</span>
+            </>
+          )}
         </div>
         <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
           {victim ? `${victim.name.toUpperCase()} WAS KILLED!` : 'NO ONE WAS MURDERED!'}
@@ -47,30 +65,27 @@ export default function HostMorning({ victim, onProceed }) {
         </p>
       </div>
 
-      {/* Victim Card */}
+      {/* Victim Card with Dark Haveli Glass */}
       {victim && victimAvatar ? (
         <div
           className="card-interactive"
           style={{
-            padding: '24px 20px',
-            maxWidth: '420px',
+            padding: '28px 24px',
+            maxWidth: '440px',
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '12px',
-            border: '2px solid rgba(255, 86, 48, 0.3)',
-            backgroundColor: '#fff9f8',
+            gap: '14px',
+            background: 'rgba(32, 16, 22, 0.72)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            border: '1px solid rgba(239, 68, 68, 0.35)',
+            boxShadow: '0 20px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
             boxSizing: 'border-box'
           }}
         >
-          <div style={{
-            fontSize: '4rem',
-            lineHeight: 1,
-            filter: 'grayscale(50%)'
-          }}>
-            {victimAvatar.emoji}
-          </div>
+          <AvatarBadge avatarId={victim.avatarId} size={76} />
           <div>
             <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--loss-text)' }}>
               {victim.name}
@@ -79,23 +94,27 @@ export default function HostMorning({ victim, onProceed }) {
               {victimAvatar.name} ({victimAvatar.title})
             </div>
           </div>
-          <div className="badge-loss" style={{ fontSize: '0.75rem', padding: '4px 12px' }}>
-            MURDERED BY KAMINEY
+          <div className="badge-loss" style={{ fontSize: '0.75rem', padding: '4px 14px', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <Skull size={14} />
+            <span>MURDERED BY KAMINEY</span>
           </div>
         </div>
       ) : (
         <div
           className="card-interactive"
           style={{
-            padding: '24px 20px',
-            maxWidth: '420px',
+            padding: '28px 24px',
+            maxWidth: '440px',
             width: '100%',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '10px',
-            border: '2px solid rgba(54, 179, 126, 0.3)',
-            backgroundColor: '#f6fbf8',
+            gap: '12px',
+            background: 'rgba(12, 28, 22, 0.72)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            border: '1px solid rgba(16, 185, 129, 0.35)',
+            boxShadow: '0 20px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
             boxSizing: 'border-box'
           }}
         >
@@ -116,7 +135,7 @@ export default function HostMorning({ victim, onProceed }) {
           fontSize: '1.0625rem'
         }}
       >
-        <span>CONTINUE TO COUNCIL 📢</span>
+        <span>CONTINUE TO COUNCIL</span>
         <ArrowRight size={18} />
       </button>
     </div>

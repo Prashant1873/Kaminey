@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Countdown from '../common/Countdown';
 import { getAvatarById } from '../../data/animalAvatars';
-import { Vote, CheckCircle2, Clock, ShieldAlert, ArrowRight } from 'lucide-react';
+import AvatarBadge from '../common/AvatarBadge';
+import { Vote, CheckCircle2, Clock, ShieldAlert, ArrowRight, Scale, MinusCircle } from 'lucide-react';
 import { sounds } from '../../audio/soundEffects';
 
 export default function HostVoting({
@@ -43,25 +44,25 @@ export default function HostVoting({
     }}>
       {/* Header */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(0, 61, 155, 0.08), rgba(0, 82, 204, 0.05))',
+        background: 'linear-gradient(135deg, rgba(229, 184, 105, 0.08), rgba(239, 68, 68, 0.05))',
         borderRadius: 'var(--rounded-xl)',
         padding: '18px 20px',
-        border: '1px solid rgba(0, 61, 155, 0.15)'
+        border: '1px solid rgba(229, 184, 105, 0.2)'
       }}>
         <div style={{
           display: 'inline-flex',
           alignItems: 'center',
           gap: '6px',
           background: 'var(--primary)',
-          color: '#ffffff',
+          color: '#0A0B0E',
           padding: '4px 14px',
           borderRadius: 'var(--rounded-full)',
           fontSize: '0.75rem',
           fontWeight: 800,
           marginBottom: '8px'
         }}>
-          <Vote size={14} />
-          THE SECRET BALLOT ⚖️
+          <Scale size={14} />
+          <span>THE SECRET BALLOT</span>
         </div>
         <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
           CAST YOUR VOTES
@@ -108,7 +109,6 @@ export default function HostVoting({
         width: '100%'
       }}>
         {alivePlayers.map(p => {
-          const avatar = getAvatarById(p.avatarId);
           const hasVoted = Boolean(votes[p.id]);
           const receivedVotes = tallies[p.id] || 0;
 
@@ -122,11 +122,11 @@ export default function HostVoting({
                 flexDirection: 'column',
                 alignItems: 'center',
                 gap: '8px',
-                border: revealed && receivedVotes > 0 ? '2px solid var(--loss)' : '1px solid rgba(9, 30, 66, 0.1)',
-                backgroundColor: revealed && receivedVotes > 0 ? 'rgba(255, 86, 48, 0.05)' : 'var(--surface-container-lowest)'
+                border: revealed && receivedVotes > 0 ? '2px solid var(--loss)' : '1px solid rgba(255, 255, 255, 0.08)',
+                backgroundColor: revealed && receivedVotes > 0 ? 'rgba(239, 68, 68, 0.12)' : 'rgba(18, 22, 32, 0.65)'
               }}
             >
-              <div style={{ fontSize: '2.5rem', lineHeight: 1 }}>{avatar.emoji}</div>
+              <AvatarBadge avatarId={p.avatarId} size={50} />
               <div style={{ fontWeight: 700, fontSize: '1rem' }}>{p.name}</div>
 
               {!revealed ? (
@@ -185,7 +185,7 @@ export default function HostVoting({
               border: '1px dashed var(--outline-variant)'
             }}
           >
-            <div style={{ fontSize: '2rem' }}>🤷‍♂️</div>
+            <MinusCircle size={36} color="var(--on-surface-variant)" />
             <div style={{ fontWeight: 700, fontSize: '1rem' }}>Skip Vote</div>
             <div className="tabular-nums" style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--on-surface-variant)' }}>
               {tallies['skip'] || 0} Votes

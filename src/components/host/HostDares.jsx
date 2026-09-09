@@ -1,6 +1,7 @@
 import React from 'react';
 import { Shuffle, Wine, AlertTriangle, CheckCircle2, Users, Sparkles } from 'lucide-react';
 import { getAvatarById } from '../../data/animalAvatars';
+import AvatarBadge from '../common/AvatarBadge';
 
 export default function HostDares({
   mission,
@@ -42,7 +43,7 @@ export default function HostDares({
           letterSpacing: '0.04em',
           marginBottom: '6px'
         }}>
-          {mission?.badge || '🎯 HAVELI TEAM MISSION'}
+          {mission?.badge || 'HAVELI TEAM MISSION'}
         </div>
 
         <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
@@ -63,9 +64,7 @@ export default function HostDares({
         display: 'flex',
         flexDirection: 'column',
         gap: '18px',
-        border: '2px solid rgba(0, 61, 155, 0.15)',
-        boxShadow: '0 8px 30px rgba(0, 61, 155, 0.08)',
-        background: 'linear-gradient(135deg, var(--surface-container-lowest), var(--surface-container-low))'
+        border: '1px solid rgba(255, 255, 255, 0.1)'
       }}>
         <div style={{
           fontSize: '1.35rem',
@@ -78,16 +77,20 @@ export default function HostDares({
 
         {mission?.prompt && (
           <div style={{
-            background: 'rgba(0, 61, 155, 0.05)',
+            background: 'rgba(229, 184, 105, 0.08)',
             borderLeft: '4px solid var(--primary)',
             padding: '12px 16px',
             borderRadius: '0 var(--rounded-md) var(--rounded-md) 0',
             fontSize: '0.875rem',
             color: 'var(--on-surface-variant)',
             textAlign: 'left',
-            fontStyle: 'italic'
+            fontStyle: 'italic',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
           }}>
-            💡 <strong>Director's Note:</strong> {mission.prompt}
+            <Sparkles size={16} color="var(--primary)" style={{ flexShrink: 0 }} />
+            <span><strong>Director's Note:</strong> {mission.prompt}</span>
           </div>
         )}
 
@@ -116,7 +119,7 @@ export default function HostDares({
             title="Roll another random party mission"
           >
             <Shuffle size={18} />
-            <span>Reshuffle Task 🔀</span>
+            <span>Reshuffle Task</span>
           </button>
 
           {/* Do Our Own Thing Button */}
@@ -136,7 +139,7 @@ export default function HostDares({
             title="Skip app task and chill with drinks/discussion on your own"
           >
             <Wine size={18} />
-            <span>We'll Do Our Own Thing 🥂</span>
+            <span>We'll Do Our Own Thing</span>
           </button>
 
           {/* Mission Accomplished -> Emergency Council */}
@@ -155,7 +158,7 @@ export default function HostDares({
             }}
           >
             <AlertTriangle size={18} />
-            <span>Mission Done! Call Emergency Council 📢</span>
+            <span>Mission Done! Call Emergency Council</span>
           </button>
         </div>
       </div>
@@ -172,23 +175,24 @@ export default function HostDares({
           justifyContent: 'flex-start'
         }}>
           {alivePlayers.map(p => {
-            const avatar = getAvatarById(p.avatarId);
             return (
               <div
                 key={p.id}
                 style={{
-                  background: 'var(--surface-container-low)',
-                  border: '1px solid var(--outline-variant)',
+                  background: 'rgba(18, 22, 32, 0.65)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
                   borderRadius: 'var(--rounded-full)',
                   padding: '6px 14px',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '6px',
+                  gap: '8px',
                   fontSize: '0.8125rem',
                   fontWeight: 600
                 }}
               >
-                <span>{avatar.emoji}</span>
+                <AvatarBadge avatarId={p.avatarId} size={22} />
                 <span>{p.name}</span>
               </div>
             );

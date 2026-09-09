@@ -1,12 +1,25 @@
 import React, { useState } from 'react';
-import { Ghost, Sparkles, Eye } from 'lucide-react';
+import { Ghost, Skull, Flame, Eye, Zap, Sparkles, Heart, HelpCircle, Check } from 'lucide-react';
+
+const GHOST_REACTIONS = [
+  { id: 'ghost', icon: Ghost, label: 'Spook', color: '#94A3B8' },
+  { id: 'skull', icon: Skull, label: 'Doom', color: '#EF4444' },
+  { id: 'flame', icon: Flame, label: 'Burn', color: '#F97316' },
+  { id: 'eye', icon: Eye, label: 'Watching', color: '#60A5FA' },
+  { id: 'zap', icon: Zap, label: 'Shock', color: '#FBBF24' },
+  { id: 'sparkles', icon: Sparkles, label: 'Glow', color: '#E5B869' },
+  { id: 'heart', icon: Heart, label: 'Pity', color: '#F472B6' },
+  { id: 'help', icon: HelpCircle, label: 'Clueless', color: '#A8A29E' }
+];
 
 export default function PlayerGhost({ playerName, isExiled }) {
   const [reactionSent, setReactionSent] = useState('');
-  const emojis = ['👻', '😱', '😂', '🕵️', '🍿', '💀', '🔥', '👏'];
 
-  const sendReaction = (emoji) => {
-    setReactionSent(emoji);
+  const sendReaction = (reactionId) => {
+    setReactionSent(reactionId);
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+      try { navigator.vibrate([25]); } catch (e) {}
+    }
     setTimeout(() => setReactionSent(''), 1500);
   };
 
@@ -20,25 +33,26 @@ export default function PlayerGhost({ playerName, isExiled }) {
       flexDirection: 'column',
       alignItems: 'center',
       textAlign: 'center',
-      gap: '18px',
+      gap: '20px',
       boxSizing: 'border-box'
     }}>
       <div style={{
-        width: '80px',
-        height: '80px',
-        borderRadius: 'var(--rounded-full)',
-        background: 'rgba(67, 70, 84, 0.1)',
+        width: '84px',
+        height: '84px',
+        borderRadius: '50%',
+        background: 'rgba(148, 163, 184, 0.12)',
+        border: '1.5px solid rgba(148, 163, 184, 0.25)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: '3rem',
-        animation: 'float-slow 3s infinite ease-in-out'
+        color: '#94A3B8',
+        animation: 'float-slow 3.5s infinite ease-in-out'
       }}>
-        👻
+        <Ghost size={44} strokeWidth={2} />
       </div>
 
       <div>
-        <span className="badge-loss" style={{ fontSize: '0.75rem', marginBottom: '8px' }}>
+        <span className="badge-loss" style={{ fontSize: '0.75rem', marginBottom: '8px', letterSpacing: '0.04em' }}>
           SPECTATOR GHOST MODE
         </span>
         <h1 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '6px' }}>
@@ -46,40 +60,54 @@ export default function PlayerGhost({ playerName, isExiled }) {
         </h1>
         <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
           {isExiled
-            ? 'You were banished by the round-table vote.'
-            : 'You were eliminated during the night by the Kaminey.'}
+            ? 'You were banished by the round-table verdict.'
+            : 'You were assassinated during the night by the Kaminey.'}
           <br />
-          <strong>Silence in the haveli!</strong> Ghosts may observe the living room drama but cannot speak or vote.
+          <strong>Silence in the court!</strong> Ghosts may watch the living room drama unfold but cannot speak or vote.
         </p>
       </div>
 
-      {/* Fun Ghost Emoji Reactions */}
-      <div className="card-interactive" style={{ width: '100%', padding: '20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--primary)' }}>
-          GHOST SPECTATOR REACTIONS:
+      {/* Ghost Vector Reactions */}
+      <div className="card-interactive" style={{ width: '100%', padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: '14px', boxSizing: 'border-box' }}>
+        <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: 'var(--primary)', letterSpacing: '0.04em' }}>
+          GHOST SPECTATOR SIGNALS
         </div>
-        <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          {emojis.map(e => (
-            <button
-              key={e}
-              type="button"
-              onClick={() => sendReaction(e)}
-              className="spring-btn"
-              style={{
-                fontSize: '1.75rem',
-                background: 'var(--surface-container-low)',
-                padding: '8px 12px',
-                borderRadius: 'var(--rounded-lg)',
-                border: '1px solid var(--outline-variant)'
-              }}
-            >
-              {e}
-            </button>
-          ))}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+          {GHOST_REACTIONS.map(item => {
+            const IconComp = item.icon;
+            const isSent = reactionSent === item.id;
+
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => sendReaction(item.id)}
+                className="spring-btn"
+                aria-label={`Send ghost signal ${item.label}`}
+                style={{
+                  background: isSent ? `${item.color}26` : 'var(--surface-container-low)',
+                  border: isSent ? `1.5px solid ${item.color}` : '1px solid rgba(255, 255, 255, 0.08)',
+                  padding: '12px 6px',
+                  borderRadius: 'var(--rounded-xl)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '6px',
+                  minHeight: '64px',
+                  boxSizing: 'border-box'
+                }}
+              >
+                <IconComp size={22} color={item.color} />
+                <span style={{ fontSize: '0.6875rem', fontWeight: 700, color: 'var(--on-surface-variant)' }}>
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
         </div>
         {reactionSent && (
-          <div style={{ fontSize: '0.8125rem', color: 'var(--gain-text)', fontWeight: 600 }}>
-            Ghost reaction {reactionSent} sent!
+          <div className="badge-gain" style={{ alignSelf: 'center', fontSize: '0.75rem', padding: '4px 10px' }}>
+            <Check size={12} /> Ghost signal whispered!
           </div>
         )}
       </div>

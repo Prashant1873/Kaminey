@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { getAvatarById } from '../../data/animalAvatars';
-import { Trophy, RotateCcw, Award } from 'lucide-react';
+import AvatarBadge from '../common/AvatarBadge';
+import { Trophy, RotateCcw, Award, ShieldCheck, Skull } from 'lucide-react';
 import { sounds } from '../../audio/soundEffects';
 
 export default function HostGameOver({ winner, players, roles, onRestart }) {
@@ -55,8 +56,16 @@ export default function HostGameOver({ winner, players, roles, onRestart }) {
       </div>
 
       <div>
-        <div className={isBholeWin ? 'badge-gain' : 'badge-loss'} style={{ fontSize: '0.8125rem', padding: '4px 16px', marginBottom: '8px' }}>
-          {isBholeWin ? '🕊️ INNOCENTS TRIUMPH' : '🎭 TRAITORS CONQUER'}
+        <div className={isBholeWin ? 'badge-gain' : 'badge-loss'} style={{
+          fontSize: '0.8125rem',
+          padding: '4px 16px',
+          marginBottom: '8px',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '6px'
+        }}>
+          {isBholeWin ? <ShieldCheck size={14} /> : <Skull size={14} />}
+          <span>{isBholeWin ? 'INNOCENTS TRIUMPH' : 'TRAITORS CONQUER'}</span>
         </div>
         <h1 className="text-display" style={{
           color: isBholeWin ? 'var(--gain-text)' : 'var(--loss-text)',
@@ -82,7 +91,6 @@ export default function HostGameOver({ winner, players, roles, onRestart }) {
           margin: '0 auto'
         }}>
           {players.map(p => {
-            const avatar = getAvatarById(p.avatarId);
             const playerRole = roles[p.id] || 'bhola';
             const isKamina = playerRole === 'kamina';
 
@@ -96,20 +104,26 @@ export default function HostGameOver({ winner, players, roles, onRestart }) {
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: '8px',
-                  border: isKamina ? '2px solid var(--loss)' : '2px solid var(--gain)',
-                  backgroundColor: isKamina ? 'rgba(255, 86, 48, 0.05)' : 'rgba(54, 179, 126, 0.05)'
+                  border: isKamina ? '1.5px solid var(--loss)' : '1.5px solid var(--gain)',
+                  backgroundColor: isKamina ? 'rgba(239, 68, 68, 0.12)' : 'rgba(16, 185, 129, 0.12)'
                 }}
               >
-                <div style={{ fontSize: '2.75rem', lineHeight: 1 }}>{avatar.emoji}</div>
+                <AvatarBadge avatarId={p.avatarId} size={54} />
                 <div style={{ fontWeight: 800, fontSize: '1.0625rem' }}>{p.name}</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)' }}>
-                  {avatar.name}
-                </div>
                 <div
                   className={isKamina ? 'badge-loss' : 'badge-gain'}
-                  style={{ fontSize: '0.75rem', fontWeight: 800, marginTop: '4px' }}
+                  style={{
+                    fontSize: '0.75rem',
+                    fontWeight: 800,
+                    marginTop: '4px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '3px 10px'
+                  }}
                 >
-                  {isKamina ? '🎭 KAMINA' : '🕊️ BHOLA'}
+                  {isKamina ? <Skull size={12} /> : <ShieldCheck size={12} />}
+                  <span>{isKamina ? 'KAMINA' : 'BHOLA'}</span>
                 </div>
                 <div style={{ fontSize: '0.6875rem', color: 'var(--outline)', marginTop: '2px' }}>
                   {p.isAlive && !p.isExiled ? 'Survived' : p.isExiled ? 'Banished' : 'Murdered'}

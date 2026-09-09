@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getAvatarById } from '../../data/animalAvatars';
-import { Shield, Skull, ArrowRight, Sparkles } from 'lucide-react';
+import AvatarBadge from '../common/AvatarBadge';
+import { Shield, Skull, ArrowRight, Sparkles, Scale, ShieldCheck } from 'lucide-react';
 import { sounds } from '../../audio/soundEffects';
 
 export default function HostExile({ exiledPlayer, role, onProceed }) {
@@ -45,15 +46,22 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '2.5rem',
             boxShadow: 'var(--shadow-glow-loss)'
           }}>
-            ⚖️
+            <Scale size={44} color="#ffffff" />
           </div>
 
           <div>
-            <div className="badge-loss" style={{ marginBottom: '6px', fontSize: '0.75rem', padding: '4px 12px' }}>
-              ⚖️ THE VERDICT
+            <div className="badge-loss" style={{
+              marginBottom: '6px',
+              fontSize: '0.75rem',
+              padding: '4px 14px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <Scale size={14} />
+              <span>THE VERDICT</span>
             </div>
             <h1 className="text-display" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
               {exiledPlayer.name} IS BANISHED
@@ -63,7 +71,7 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
             </p>
           </div>
 
-          {/* Suspense Reveal Box */}
+          {/* Suspense Reveal Box with Frosted Glass */}
           <div
             className="card-interactive"
             style={{
@@ -75,17 +83,20 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
               alignItems: 'center',
               gap: '16px',
               backgroundColor: revealed
-                ? (isKamina ? 'rgba(0, 240, 144, 0.08)' : 'rgba(255, 86, 48, 0.08)')
-                : 'var(--surface-container-lowest)',
+                ? (isKamina ? 'rgba(16, 185, 129, 0.12)' : 'rgba(239, 68, 68, 0.12)')
+                : 'rgba(18, 22, 32, 0.72)',
+              backdropFilter: 'blur(28px)',
+              WebkitBackdropFilter: 'blur(28px)',
               border: revealed
                 ? (isKamina ? '2px solid var(--gain)' : '2px solid var(--loss)')
-                : '1px solid var(--outline-variant)',
+                : '1px solid rgba(255, 255, 255, 0.1)',
+              boxShadow: revealed
+                ? (isKamina ? '0 0 32px rgba(16, 185, 129, 0.25)' : '0 0 32px rgba(239, 68, 68, 0.25)')
+                : 'var(--shadow-resting)',
               transition: 'all 0.5s ease'
             }}
           >
-            <div style={{ fontSize: '4.5rem', lineHeight: 1 }}>
-              {avatar.emoji}
-            </div>
+            <AvatarBadge avatarId={exiledPlayer.avatarId} size={84} />
 
             <div style={{ fontSize: '1.75rem', fontWeight: 800 }}>
               {exiledPlayer.name}
@@ -109,9 +120,14 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
                   fontSize: '2rem',
                   fontWeight: 900,
                   letterSpacing: '0.05em',
-                  color: isKamina ? 'var(--gain-text)' : 'var(--loss-text)'
+                  color: isKamina ? 'var(--gain-text)' : 'var(--loss-text)',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '10px'
                 }}>
-                  {isKamina ? '🎭 WAS A KAMINA!' : '💔 WAS A BHOLA!'}
+                  {isKamina ? <Skull size={32} /> : <ShieldCheck size={32} />}
+                  <span>{isKamina ? 'WAS A KAMINA!' : 'WAS A BHOLA!'}</span>
                 </div>
                 <p style={{ fontSize: '0.9375rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
                   {isKamina
@@ -125,7 +141,18 @@ export default function HostExile({ exiledPlayer, role, onProceed }) {
       ) : (
         /* Tied or Skipped Vote */
         <div style={{ maxWidth: '600px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-          <div style={{ fontSize: '4rem' }}>⚖️</div>
+          <div style={{
+            width: '90px',
+            height: '90px',
+            borderRadius: 'var(--rounded-full)',
+            background: 'rgba(229, 184, 105, 0.12)',
+            border: '1px solid rgba(229, 184, 105, 0.3)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <Scale size={50} color="var(--primary)" />
+          </div>
           <h1 className="text-display" style={{ color: 'var(--primary)' }}>
             NO ONE WAS EXILED
           </h1>

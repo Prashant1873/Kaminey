@@ -9,8 +9,8 @@ import PlayerVoting from './PlayerVoting';
 import PlayerGhost from './PlayerGhost';
 
 import { PlayerNetwork } from '../../network/peerManager';
-import { getAvatarById } from '../../data/animalAvatars';
-import { Wifi, Clock, Users, ArrowLeft } from 'lucide-react';
+import { Wifi, Clock, Users, ArrowLeft, ShieldCheck, Scale, Trophy, RotateCcw, Sun } from 'lucide-react';
+import AvatarBadge from '../common/AvatarBadge';
 
 export default function PlayerController({ initialRoomCode = '', onExit }) {
   const [playerData, setPlayerData] = useState(() => {
@@ -159,10 +159,14 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                 background: 'var(--primary-container)',
                 color: '#ffffff',
                 borderRadius: 'var(--rounded-lg)',
-                border: 'none'
+                border: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px'
               }}
             >
-              🔄 Retry Connection
+              <RotateCcw size={14} />
+              <span>Retry Connection</span>
             </button>
 
             <button
@@ -267,31 +271,25 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                 boxSizing: 'border-box'
               }}>
                 {/* My Persona Card */}
-                <div style={{
+                <div className="card-interactive" style={{
                   width: '100%',
-                  background: 'linear-gradient(135deg, var(--surface-container-lowest), var(--surface-container-low))',
-                  borderRadius: 'var(--rounded-2xl)',
                   padding: '24px 16px',
-                  border: '1px solid var(--outline-variant)',
-                  boxShadow: 'var(--shadow-resting)',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
+                  textAlign: 'center',
                   boxSizing: 'border-box'
                 }}>
                   <div style={{
-                    fontSize: '4.5rem',
-                    lineHeight: 1,
-                    filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.12))',
-                    animation: 'float-slow 3s infinite ease-in-out',
-                    marginBottom: '8px'
+                    animation: 'float-slow 3.5s infinite ease-in-out',
+                    marginBottom: '12px'
                   }}>
-                    {myAvatar.emoji}
+                    <AvatarBadge avatar={myAvatar} size={64} />
                   </div>
-                  <h1 className="text-headline" style={{ color: 'var(--primary)', marginBottom: '2px' }}>
+                  <h1 className="text-headline" style={{ color: 'var(--on-surface)', marginBottom: '4px' }}>
                     {playerData.name}
                   </h1>
-                  <span className="badge-neutral" style={{ fontSize: '0.75rem', marginBottom: '12px' }}>
+                  <span className="badge-warning" style={{ fontSize: '0.75rem', marginBottom: '14px' }}>
                     {myAvatar.title}
                   </span>
 
@@ -299,25 +297,26 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '6px',
-                    background: 'rgba(0, 61, 155, 0.08)',
-                    padding: '6px 12px',
+                    background: 'rgba(229, 184, 105, 0.1)',
+                    padding: '6px 14px',
                     borderRadius: 'var(--rounded-full)',
                     fontSize: '0.75rem',
                     fontWeight: 700,
-                    color: 'var(--primary)'
+                    color: 'var(--primary)',
+                    border: '1px solid rgba(229, 184, 105, 0.25)'
                   }}>
                     <Wifi size={14} /> Room: {playerData.roomCode}
                   </div>
                 </div>
 
                 {/* Living Room Guests Roster */}
-                <div className="card-interactive" style={{ width: '100%', padding: '14px', boxSizing: 'border-box' }}>
+                <div className="card-interactive" style={{ width: '100%', padding: '16px', boxSizing: 'border-box' }}>
                   <div style={{
                     fontSize: '0.75rem',
                     fontWeight: 800,
-                    letterSpacing: '0.05em',
+                    letterSpacing: '0.06em',
                     color: 'var(--on-surface-variant)',
-                    marginBottom: '10px',
+                    marginBottom: '12px',
                     textAlign: 'left'
                   }}>
                     GUESTS IN COURTYARD ({gameState?.players?.length || 1})
@@ -326,7 +325,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   <div style={{
                     display: 'flex',
                     flexWrap: 'wrap',
-                    gap: '6px',
+                    gap: '8px',
                     justifyContent: 'flex-start'
                   }}>
                     {gameState?.players?.map(p => {
@@ -338,17 +337,17 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                           style={{
                             display: 'inline-flex',
                             alignItems: 'center',
-                            gap: '4px',
-                            background: isMe ? 'var(--primary-container)' : 'var(--surface-container-low)',
-                            color: isMe ? '#ffffff' : 'var(--on-surface)',
+                            gap: '6px',
+                            background: isMe ? 'rgba(229, 184, 105, 0.15)' : 'var(--surface-container-low)',
+                            color: isMe ? 'var(--primary)' : 'var(--on-surface)',
                             padding: '4px 10px',
                             borderRadius: 'var(--rounded-full)',
                             fontSize: '0.75rem',
                             fontWeight: isMe ? 700 : 500,
-                            border: '1px solid var(--outline-variant)'
+                            border: isMe ? '1px solid var(--primary)' : '1px solid rgba(255, 255, 255, 0.08)'
                           }}
                         >
-                          <span>{av.emoji}</span>
+                          <AvatarBadge avatar={av} size={16} showRing={false} />
                           <span>{p.name} {isMe && '(You)'}</span>
                         </span>
                       );
@@ -365,8 +364,8 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                   color: 'var(--on-surface-variant)',
                   fontWeight: 600
                 }}>
-                  <span className="animate-spin" style={{ display: 'inline-block' }}>⏳</span>
-                  <span>Waiting for host to start the haveli mystery...</span>
+                  <Clock size={16} className="animate-spin" color="var(--primary)" />
+                  <span>Waiting for host to begin the conclave...</span>
                 </div>
 
                 {/* Change identity button */}
@@ -425,11 +424,17 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                 gap: '16px'
               }}>
                 <div style={{
-                  fontSize: '4.5rem',
-                  lineHeight: 1,
+                  width: '72px',
+                  height: '72px',
+                  borderRadius: 'var(--rounded-full)',
+                  background: 'linear-gradient(135deg, var(--primary-container), var(--primary))',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: 'var(--shadow-glow-primary)',
                   animation: 'float-slow 3s infinite ease-in-out'
                 }}>
-                  🌅
+                  <Sun size={38} color="#0A0B0E" />
                 </div>
 
                 <h1 className="text-headline" style={{ color: 'var(--on-surface)' }}>
@@ -438,37 +443,43 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
 
                 {gameState?.morningVictim ? (
                   <div style={{
-                    background: 'var(--surface-container-lowest)',
-                    border: '2px solid var(--loss)',
+                    background: 'var(--surface-container-low)',
+                    border: '1.5px solid var(--loss)',
                     borderRadius: 'var(--rounded-xl)',
-                    padding: '16px',
+                    padding: '20px 16px',
                     width: '100%',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '10px'
                   }}>
-                    <div style={{ fontSize: '2.5rem', marginBottom: '4px' }}>
-                      {getAvatarById(gameState.morningVictim.avatarId).emoji}
-                    </div>
+                    <AvatarBadge avatar={getAvatarById(gameState.morningVictim.avatarId)} size={54} />
                     <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--loss-text)' }}>
-                      {gameState.morningVictim.name} was eliminated!
+                      {gameState.morningVictim.name} was assassinated!
                     </div>
-                    <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px' }}>
-                      Check the living room screen for the crime scene report!
+                    <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
+                      Check the main living room screen for the crime scene report!
                     </p>
                   </div>
                 ) : (
                   <div style={{
-                    background: 'var(--surface-container-lowest)',
-                    border: '2px solid var(--gain)',
+                    background: 'var(--surface-container-low)',
+                    border: '1.5px solid var(--gain)',
                     borderRadius: 'var(--rounded-xl)',
-                    padding: '16px',
+                    padding: '20px 16px',
                     width: '100%',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '10px'
                   }}>
-                    <div style={{ fontSize: '2.5rem', marginBottom: '4px' }}>🛡️</div>
+                    <ShieldCheck size={48} color="var(--gain-text)" />
                     <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--gain-text)' }}>
                       Peaceful Dawn!
                     </div>
-                    <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px' }}>
+                    <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
                       No one was harmed during the night!
                     </p>
                   </div>
@@ -520,28 +531,30 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                 alignItems: 'center',
                 gap: '16px'
               }}>
-                <div style={{ fontSize: '4.5rem', lineHeight: 1 }}>⚖️</div>
-                <h1 className="text-headline" style={{ color: 'var(--primary)' }}>
+                <Scale size={56} color="var(--primary)" strokeWidth={2} />
+                <h1 className="text-headline" style={{ color: 'var(--on-surface)' }}>
                   COUNCIL VERDICT
                 </h1>
 
                 {gameState?.exiledPlayer ? (
                   <div style={{
-                    background: 'var(--surface-container-lowest)',
-                    border: '2px solid var(--primary)',
+                    background: 'var(--surface-container-low)',
+                    border: '1.5px solid var(--primary)',
                     borderRadius: 'var(--rounded-xl)',
-                    padding: '16px',
+                    padding: '20px 16px',
                     width: '100%',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '10px'
                   }}>
-                    <div style={{ fontSize: '2.5rem', marginBottom: '4px' }}>
-                      {gameState.exiledPlayer.avatarId ? getAvatarById(gameState.exiledPlayer.avatarId).emoji : '🏛️'}
-                    </div>
+                    <AvatarBadge avatar={getAvatarById(gameState.exiledPlayer.avatarId)} size={54} />
                     <div style={{ fontWeight: 800, fontSize: '1.15rem', color: 'var(--primary)' }}>
                       {gameState.exiledPlayer.name} has been banished!
                     </div>
-                    <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px' }}>
-                      Look up at the TV base station to reveal their true secret identity!
+                    <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)' }}>
+                      Look up at the TV screen to reveal their true secret identity!
                     </p>
                   </div>
                 ) : (
@@ -564,9 +577,9 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                 alignItems: 'center',
                 gap: '16px'
               }}>
-                <div style={{ fontSize: '5rem', lineHeight: 1 }}>🏆</div>
+                <Trophy size={60} color="var(--primary)" strokeWidth={2.2} />
                 <h1 className="text-headline" style={{ color: 'var(--primary)' }}>
-                  {gameState?.winner === 'kaminey' ? '😈 KAMINEY WON' : '🕊️ BHOLE TRIUMPHED'}
+                  {gameState?.winner === 'kaminey' ? 'KAMINEY CONQUERED' : 'BHOLE TRIUMPHED'}
                 </h1>
                 <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
                   Look at the living room screen for the full roster unmasking!
@@ -582,9 +595,11 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                     onExit();
                   }}
                   className="btn-primary spring-btn"
-                  style={{ width: '100%', padding: '14px', marginTop: '10px' }}
+                  aria-label="Play another match"
+                  style={{ width: '100%', padding: '14px', marginTop: '10px', minHeight: '48px', gap: '8px' }}
                 >
-                  PLAY ANOTHER MATCH 🔄
+                  <RotateCcw size={16} />
+                  <span>PLAY ANOTHER MATCH</span>
                 </button>
               </div>
             )}

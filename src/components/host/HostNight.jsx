@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Moon, Skull, EyeOff, ShieldAlert, ArrowRight } from 'lucide-react';
+import { Moon, Skull, EyeOff, ShieldAlert, ArrowRight, Sun, Crosshair } from 'lucide-react';
 import { sounds } from '../../audio/soundEffects';
 
 export default function HostNight({ onProceed, nightMurderSelected }) {
@@ -16,7 +16,7 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
   return (
     <div className="theme-simsim-night" style={{
       minHeight: '80vh',
-      backgroundColor: '#000000',
+      backgroundColor: 'transparent',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -42,8 +42,16 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
       </div>
 
       <div style={{ maxWidth: '600px' }}>
-        <div className="badge-loss" style={{ marginBottom: '8px', fontSize: '0.8125rem', padding: '4px 14px' }}>
-          🌙 THE MIDNIGHT CONCLAVE
+        <div className="badge-loss" style={{
+          marginBottom: '8px',
+          fontSize: '0.8125rem',
+          padding: '4px 14px',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '6px'
+        }}>
+          <Moon size={14} />
+          <span>THE MIDNIGHT CONCLAVE</span>
         </div>
         <h1 className="text-display" style={{ color: '#ffffff', marginBottom: '8px' }}>
           NIGHT IN THE HAVELI
@@ -55,8 +63,10 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
 
       {/* Atmospheric Night Indicator */}
       <div style={{
-        background: '#080808',
-        border: '1px solid rgba(255, 86, 48, 0.25)',
+        background: 'rgba(18, 21, 31, 0.75)',
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+        border: '1px solid rgba(239, 68, 68, 0.25)',
         borderRadius: 'var(--rounded-xl)',
         padding: '18px 24px',
         maxWidth: '480px',
@@ -65,7 +75,7 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
         flexDirection: 'column',
         alignItems: 'center',
         gap: '10px',
-        boxShadow: '0 12px 36px rgba(0,0,0,0.8)',
+        boxShadow: '0 16px 40px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.06)',
         boxSizing: 'border-box'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -78,7 +88,7 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
             animation: 'pulse-subtle 1.2s infinite'
           }} />
           <span style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#ffffff' }}>
-            {nightMurderSelected ? 'Target Marked in the Shadows 🎯' : 'Kaminey are voting on their phones...'}
+            {nightMurderSelected ? 'Target Marked in the Shadows' : 'Kaminey are voting on their phones...'}
           </span>
         </div>
         <div style={{ fontSize: '0.8125rem', color: '#80868b' }}>
@@ -96,8 +106,8 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
           fontSize: '1.0625rem'
         }}
       >
-        <Skull size={18} />
-        <span>BREAK THE DAWN 🌅</span>
+        <Sun size={18} />
+        <span>BREAK THE DAWN</span>
       </button>
     </div>
   );

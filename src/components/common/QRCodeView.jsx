@@ -2,11 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import QRCode from 'qrcode';
 import { Copy, Check, QrCode, RefreshCw } from 'lucide-react';
 
-export default function QRCodeView({ roomCode, size = 180, onRegenerateCode }) {
+export default function QRCodeView({ roomCode, size = 220, onRegenerateCode }) {
   const canvasRef = useRef(null);
   const [copied, setCopied] = useState(false);
 
-  // Generate clean full join URL based on hash router format to prevent 404s on refresh
   const cleanPath = typeof window !== 'undefined'
     ? window.location.pathname.replace(/index\.html$/, '')
     : '/';
@@ -21,8 +20,8 @@ export default function QRCodeView({ roomCode, size = 180, onRegenerateCode }) {
         width: size,
         margin: 1,
         color: {
-          dark: '#003d9b',
-          light: '#ffffff'
+          dark: '#0A0B0E',
+          light: '#FFFFFF'
         }
       }, (error) => {
         if (error) console.error('QR code generation error:', error);
@@ -45,55 +44,65 @@ export default function QRCodeView({ roomCode, size = 180, onRegenerateCode }) {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      gap: '12px',
-      padding: '16px',
-      background: '#ffffff',
+      gap: '16px',
+      padding: '24px 20px',
+      background: 'var(--surface-container-lowest)',
       borderRadius: 'var(--rounded-2xl)',
-      border: '1px solid rgba(9, 30, 66, 0.1)',
-      boxShadow: 'var(--shadow-resting)'
+      border: '1px solid rgba(255, 255, 255, 0.08)',
+      boxShadow: 'var(--shadow-elevated)',
+      width: '100%',
+      boxSizing: 'border-box'
     }}>
       <div style={{
-        padding: '10px',
+        padding: '12px',
         borderRadius: 'var(--rounded-xl)',
-        background: 'var(--surface-container-low)',
-        display: 'inline-block'
+        background: '#FFFFFF',
+        display: 'inline-block',
+        boxShadow: '0 8px 30px rgba(0, 0, 0, 0.4)'
       }}>
         <canvas ref={canvasRef} style={{ display: 'block', borderRadius: 'var(--rounded-md)' }} />
       </div>
 
-      <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
-          Scan to join from your phone
+      <div style={{ textAlign: 'center', width: '100%' }}>
+        <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', fontWeight: 600, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+          Room Access Code
         </div>
         <div className="tabular-nums" style={{
-          fontSize: '1.75rem',
+          fontSize: 'clamp(2.5rem, 6vw, 3.75rem)',
           fontWeight: 800,
-          letterSpacing: '0.1em',
+          letterSpacing: '0.12em',
           color: 'var(--primary)',
-          marginTop: '4px'
+          lineHeight: 1.1,
+          marginTop: '6px',
+          textShadow: '0 2px 20px rgba(229, 184, 105, 0.25)'
         }}>
           {roomCode}
         </div>
+        <div style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px' }}>
+          Point phone camera at QR or enter code at home
+        </div>
       </div>
 
-      <div style={{ display: 'flex', gap: '8px', width: '100%', justifyContent: 'center', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', gap: '10px', width: '100%', justifyContent: 'center', flexWrap: 'wrap' }}>
         <button
           onClick={copyLink}
           className="spring-btn"
+          aria-label="Copy invitation link"
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '6px',
-            padding: '8px 14px',
+            gap: '8px',
+            padding: '10px 18px',
+            minHeight: '44px',
             background: copied ? 'var(--gain)' : 'var(--surface-container-low)',
-            color: copied ? '#ffffff' : 'var(--primary)',
+            color: copied ? '#0A0B0E' : 'var(--on-surface)',
             borderRadius: 'var(--rounded-lg)',
-            fontSize: '0.8125rem',
+            fontSize: '0.875rem',
             fontWeight: 700,
-            border: '1px solid var(--outline-variant)'
+            border: '1px solid rgba(255, 255, 255, 0.1)'
           }}
         >
-          {copied ? <Check size={14} /> : <Copy size={14} />}
+          {copied ? <Check size={16} /> : <Copy size={16} />}
           {copied ? 'Link Copied!' : 'Copy Link'}
         </button>
 
@@ -103,21 +112,23 @@ export default function QRCodeView({ roomCode, size = 180, onRegenerateCode }) {
             onClick={onRegenerateCode}
             className="spring-btn"
             title="Generate a fresh new room code"
+            aria-label="Generate new room code"
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '6px',
-              padding: '8px 14px',
-              background: 'var(--surface-container-lowest)',
+              gap: '8px',
+              padding: '10px 18px',
+              minHeight: '44px',
+              background: 'var(--surface-container-low)',
               color: 'var(--on-surface-variant)',
               borderRadius: 'var(--rounded-lg)',
-              fontSize: '0.8125rem',
-              fontWeight: 700,
-              border: '1px solid var(--outline-variant)'
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              border: '1px solid rgba(255, 255, 255, 0.08)'
             }}
           >
-            <RefreshCw size={14} />
-            <span>New Code 🎲</span>
+            <RefreshCw size={15} />
+            <span>New Code</span>
           </button>
         )}
       </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Sparkles, CheckCircle2, Skull, Eye, EyeOff, Crosshair, ShieldAlert } from 'lucide-react';
 import { getAvatarById } from '../../data/animalAvatars';
+import AvatarBadge from '../common/AvatarBadge';
 
 export default function PlayerDares({
   mission,
@@ -44,7 +45,6 @@ export default function PlayerDares({
       <div style={{
         display: 'inline-flex',
         alignItems: 'center',
-        justifyContent: 'center',
         gap: '6px',
         background: mission?.categoryColor ? `${mission.categoryColor}18` : 'rgba(255, 159, 10, 0.15)',
         color: mission?.categoryColor || 'var(--warning-text)',
@@ -55,7 +55,7 @@ export default function PlayerDares({
         fontWeight: 800,
         margin: '0 auto'
       }}>
-        {mission?.badge || '🎯 HAVELI TEAM MISSION'}
+        {mission?.badge || 'HAVELI TEAM MISSION'}
       </div>
 
       <div>
@@ -73,8 +73,7 @@ export default function PlayerDares({
         display: 'flex',
         flexDirection: 'column',
         gap: '14px',
-        border: '2px solid rgba(0, 61, 155, 0.15)',
-        backgroundColor: 'var(--surface-container-lowest)',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
         textAlign: 'left'
       }}>
         <div style={{
@@ -89,15 +88,19 @@ export default function PlayerDares({
 
         {mission?.prompt && (
           <div style={{
-            background: 'rgba(0, 61, 155, 0.05)',
+            background: 'rgba(229, 184, 105, 0.08)',
             borderLeft: '3px solid var(--primary)',
             padding: '10px 12px',
             borderRadius: '0 var(--rounded-md) var(--rounded-md) 0',
             fontSize: '0.8125rem',
             color: 'var(--on-surface-variant)',
-            fontStyle: 'italic'
+            fontStyle: 'italic',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
           }}>
-            💡 {mission.prompt}
+            <Sparkles size={14} color="var(--primary)" style={{ flexShrink: 0 }} />
+            <span>{mission.prompt}</span>
           </div>
         )}
 
@@ -114,7 +117,7 @@ export default function PlayerDares({
           }}
         >
           <CheckCircle2 size={18} />
-          <span>{markedReady ? "I'm Ready for Council! 🎉" : "Ready for Council / Done 👍"}</span>
+          <span>{markedReady ? "I'm Ready for Council!" : "Ready for Council / Done"}</span>
         </button>
       </div>
 
@@ -201,7 +204,7 @@ export default function PlayerDares({
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <span style={{ fontSize: '1.75rem' }}>{avatar.emoji}</span>
+                      <AvatarBadge avatar={avatar} size={34} />
                       <div>
                         <div style={{ fontWeight: 800, fontSize: '0.9375rem' }}>{victim.name}</div>
                         <div style={{ fontSize: '0.6875rem', color: '#9aa0a6' }}>
@@ -218,7 +221,7 @@ export default function PlayerDares({
                     <div>
                       {isSelectedByMe ? (
                         <span className="badge-loss" style={{ fontSize: '0.6875rem', fontWeight: 800 }}>
-                          <Crosshair size={12} /> MARKED 🩸
+                          <Crosshair size={12} /> MARKED
                         </span>
                       ) : (
                         <span style={{ fontSize: '0.75rem', color: 'var(--loss)', fontWeight: 700 }}>
@@ -241,7 +244,7 @@ export default function PlayerDares({
                   textAlign: 'center',
                   marginTop: '4px'
                 }}>
-                  🩸 Kill order locked in! Will execute when night falls.
+                  Kill order locked in. Will execute when night falls.
                 </div>
               )}
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Shield, EyeOff, ArrowRight } from 'lucide-react';
-import { getAvatarById } from '../../data/animalAvatars';
+import { Mail, ShieldAlert, ArrowRight, Lock } from 'lucide-react';
+import AvatarBadge from '../common/AvatarBadge';
 
 export default function HostRoleReveal({ players, onProceed }) {
   return (
@@ -22,11 +22,10 @@ export default function HostRoleReveal({ players, onProceed }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: '2.5rem',
         boxShadow: 'var(--shadow-glow-primary)',
         animation: 'pulse-subtle 2s infinite'
       }}>
-        ✉️
+        <Mail size={36} color="#0A0B0E" />
       </div>
 
       <div>
@@ -36,37 +35,52 @@ export default function HostRoleReveal({ players, onProceed }) {
         <p className="text-headline" style={{ color: 'var(--on-surface)', maxWidth: '650px', margin: '0 auto', fontWeight: 600 }}>
           Check your mobile screens now!
         </p>
-        <p className="text-body" style={{ color: 'var(--loss-text)', marginTop: '8px', fontWeight: 700 }}>
-          ⚠️ Keep your phone hidden. Some of you are Bhole... and some are Kaminey!
+        <p className="text-body" style={{
+          color: 'var(--loss-text)',
+          marginTop: '8px',
+          fontWeight: 700,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '6px'
+        }}>
+          <ShieldAlert size={18} color="var(--loss-text)" />
+          <span>Keep your phone hidden. Some of you are Bhole... and some are Kaminey!</span>
         </p>
       </div>
 
       {/* Grid of Players checking their phones */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
         gap: '14px',
         width: '100%',
-        maxWidth: '700px'
+        maxWidth: '750px'
       }}>
         {players.map(p => {
-          const avatar = getAvatarById(p.avatarId);
           return (
             <div
               key={p.id}
               className="card-interactive"
               style={{
-                padding: '16px 12px',
+                padding: '18px 12px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: '6px'
+                gap: '8px'
               }}
             >
-              <div style={{ fontSize: '2rem' }}>{avatar.emoji}</div>
+              <AvatarBadge avatarId={p.avatarId} size={48} />
               <div style={{ fontWeight: 700, fontSize: '0.9375rem' }}>{p.name}</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--gain-text)', fontWeight: 600 }}>
-                Envelope Delivered
+              <div style={{
+                fontSize: '0.75rem',
+                color: 'var(--gain-text)',
+                fontWeight: 600,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '4px'
+              }}>
+                <Lock size={12} />
+                <span>Envelope Delivered</span>
               </div>
             </div>
           );

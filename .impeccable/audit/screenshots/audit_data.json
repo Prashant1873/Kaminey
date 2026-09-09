@@ -1,0 +1,19 @@
+{
+  "pages": [
+    {
+      "page": "Landing",
+      "viewport": "desktop",
+      "issues": [],
+      "maxOverflow": 0
+    },
+    {
+      "page": "Landing",
+      "viewport": "mobile",
+      "issues": [],
+      "maxOverflow": 0
+    }
+  ],
+  "a11yIssues": [],
+  "layoutIssues": [],
+  "perfMetrics": []
+}

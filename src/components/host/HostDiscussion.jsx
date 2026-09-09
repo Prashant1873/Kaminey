@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Countdown from '../common/Countdown';
 import { getAvatarById } from '../../data/animalAvatars';
-import { MessageSquare, AlertCircle, Volume2, ArrowRight, UserX } from 'lucide-react';
+import AvatarBadge from '../common/AvatarBadge';
+import { MessageSquare, AlertCircle, Volume2, ArrowRight, UserX, Mic } from 'lucide-react';
 import { sounds } from '../../audio/soundEffects';
 
 export default function HostDiscussion({
@@ -31,10 +32,10 @@ export default function HostDiscussion({
     }}>
       {/* Emergency Header */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(0, 61, 155, 0.08), rgba(255, 86, 48, 0.08))',
+        background: 'linear-gradient(135deg, rgba(229, 184, 105, 0.08), rgba(239, 68, 68, 0.08))',
         borderRadius: 'var(--rounded-xl)',
         padding: '18px 20px',
-        border: '1px solid rgba(0, 61, 155, 0.15)'
+        border: '1px solid rgba(229, 184, 105, 0.2)'
       }}>
         <div style={{
           display: 'inline-flex',
@@ -49,17 +50,25 @@ export default function HostDiscussion({
           marginBottom: '8px'
         }}>
           <AlertCircle size={14} />
-          EMERGENCY COUNCIL
+          <span>EMERGENCY COUNCIL</span>
         </div>
         <h1 className="text-display" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
           WHO IS THE KAMINA?
         </h1>
-        <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.9375rem' }}>
-          Debate openly. Click any player below to give them the floor 🎙️
+        <p style={{
+          color: 'var(--on-surface-variant)',
+          fontSize: '0.9375rem',
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '6px'
+        }}>
+          <span>Debate openly. Click any player below to give them the floor</span>
+          <Mic size={16} color="var(--primary)" />
         </p>
       </div>
 
-      {/* Among Us Timed Countdown Bar */}
+      {/* Timed Countdown Bar */}
       <div className="card-interactive" style={{ padding: '20px 24px' }}>
         <Countdown
           duration={duration}
@@ -72,18 +81,20 @@ export default function HostDiscussion({
       {/* Spotlighted Player Bar (if Host clicked someone) */}
       {spotlightPlayer && spotlightAvatar && (
         <div style={{
-          background: 'var(--surface-container-lowest)',
+          background: 'rgba(22, 26, 38, 0.85)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
           borderRadius: 'var(--rounded-xl)',
           padding: '16px 24px',
-          border: '2px solid var(--primary-container)',
-          boxShadow: 'var(--shadow-elevated)',
+          border: '2px solid var(--primary)',
+          boxShadow: 'var(--shadow-glow-primary)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           gap: '16px',
           animation: 'pulse-subtle 1.5s infinite'
         }}>
-          <span style={{ fontSize: '2.5rem' }}>{spotlightAvatar.emoji}</span>
+          <AvatarBadge avatarId={spotlightPlayer.avatarId} size={54} />
           <div style={{ textAlign: 'left' }}>
             <div className="text-label" style={{ color: 'var(--primary)' }}>HOT SEAT SPOTLIGHT</div>
             <div style={{ fontSize: '1.25rem', fontWeight: 800 }}>{spotlightPlayer.name} has the floor to defend themselves!</div>
@@ -111,7 +122,6 @@ export default function HostDiscussion({
           margin: '0 auto'
         }}>
           {alivePlayers.map(p => {
-            const avatar = getAvatarById(p.avatarId);
             const isSelected = p.id === spotlightId;
             return (
               <button
@@ -124,18 +134,15 @@ export default function HostDiscussion({
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: '6px',
-                  border: isSelected ? '2px solid var(--primary)' : '1px solid rgba(9, 30, 66, 0.1)',
-                  backgroundColor: isSelected ? 'rgba(0, 82, 204, 0.05)' : 'var(--surface-container-lowest)'
+                  gap: '8px',
+                  border: isSelected ? '2px solid var(--primary)' : '1px solid rgba(255, 255, 255, 0.08)',
+                  backgroundColor: isSelected ? 'rgba(229, 184, 105, 0.12)' : 'rgba(18, 22, 32, 0.65)'
                 }}
               >
-                <div style={{ fontSize: '2.75rem', lineHeight: 1 }}>{avatar.emoji}</div>
+                <AvatarBadge avatarId={p.avatarId} size={54} />
                 <div style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--on-surface)' }}>{p.name}</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)', fontWeight: 600 }}>
-                  {avatar.name}
-                </div>
                 {isSelected && (
-                  <span className="badge-loss" style={{ fontSize: '0.625rem', marginTop: '4px' }}>
+                  <span className="badge-loss" style={{ fontSize: '0.625rem', marginTop: '2px' }}>
                     Accused / Speaking
                   </span>
                 )}
