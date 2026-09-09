@@ -1,14 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import QRCode from 'qrcode';
-import { Copy, Check, QrCode } from 'lucide-react';
+import { Copy, Check, QrCode, RefreshCw } from 'lucide-react';
 
-export default function QRCodeView({ roomCode, size = 180 }) {
+export default function QRCodeView({ roomCode, size = 180, onRegenerateCode }) {
   const canvasRef = useRef(null);
   const [copied, setCopied] = useState(false);
 
-  // Generate full join URL based on hash router format to prevent 404s on refresh
+  // Generate clean full join URL based on hash router format to prevent 404s on refresh
+  const cleanPath = typeof window !== 'undefined'
+    ? window.location.pathname.replace(/index\.html$/, '')
+    : '/';
+
   const joinUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}${window.location.pathname}#/join/${roomCode}`
+    ? `${window.location.origin}${cleanPath}#/join/${roomCode}`
     : `https://kaminey.game/#/join/${roomCode}`;
 
   useEffect(() => {
@@ -72,25 +76,51 @@ export default function QRCodeView({ roomCode, size = 180 }) {
         </div>
       </div>
 
-      <button
-        onClick={copyLink}
-        className="spring-btn"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px',
-          padding: '8px 14px',
-          background: copied ? 'var(--gain)' : 'var(--surface-container-low)',
-          color: copied ? '#ffffff' : 'var(--primary)',
-          borderRadius: 'var(--rounded-lg)',
-          fontSize: '0.8125rem',
-          fontWeight: 700,
-          border: '1px solid var(--outline-variant)'
-        }}
-      >
-        {copied ? <Check size={14} /> : <Copy size={14} />}
-        {copied ? 'Link Copied!' : 'Copy Join Link'}
-      </button>
+      <div style={{ display: 'flex', gap: '8px', width: '100%', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <button
+          onClick={copyLink}
+          className="spring-btn"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '8px 14px',
+            background: copied ? 'var(--gain)' : 'var(--surface-container-low)',
+            color: copied ? '#ffffff' : 'var(--primary)',
+            borderRadius: 'var(--rounded-lg)',
+            fontSize: '0.8125rem',
+            fontWeight: 700,
+            border: '1px solid var(--outline-variant)'
+          }}
+        >
+          {copied ? <Check size={14} /> : <Copy size={14} />}
+          {copied ? 'Link Copied!' : 'Copy Link'}
+        </button>
+
+        {onRegenerateCode && (
+          <button
+            type="button"
+            onClick={onRegenerateCode}
+            className="spring-btn"
+            title="Generate a fresh new room code"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '8px 14px',
+              background: 'var(--surface-container-lowest)',
+              color: 'var(--on-surface-variant)',
+              borderRadius: 'var(--rounded-lg)',
+              fontSize: '0.8125rem',
+              fontWeight: 700,
+              border: '1px solid var(--outline-variant)'
+            }}
+          >
+            <RefreshCw size={14} />
+            <span>New Code 🎲</span>
+          </button>
+        )}
+      </div>
     </div>
   );
 }

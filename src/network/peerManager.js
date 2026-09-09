@@ -13,29 +13,49 @@ const PEER_CONFIG = {
       { urls: 'stun:stun.l.google.com:19302' },
       { urls: 'stun:stun1.l.google.com:19302' },
       { urls: 'stun:stun2.l.google.com:19302' },
-      { urls: 'stun:stun3.l.google.com:19302' },
-      { urls: 'stun:stun4.l.google.com:19302' },
-      { urls: 'stun:global.stun.twilio.com:3478' }
+      { urls: 'stun:stun.cloudflare.com:3478' },
+      { urls: 'stun:global.stun.twilio.com:3478' },
+      {
+        urls: 'turn:openrelay.metered.ca:80',
+        username: 'openrelayproject',
+        credential: 'openrelayproject'
+      },
+      {
+        urls: 'turn:openrelay.metered.ca:443',
+        username: 'openrelayproject',
+        credential: 'openrelayproject'
+      },
+      {
+        urls: 'turn:openrelay.metered.ca:443?transport=tcp',
+        username: 'openrelayproject',
+        credential: 'openrelayproject'
+      }
     ]
   }
 };
 
-// Generate 6-character room code
+// Generate highly unique 6-character room code (e.g. HAV412, SHI829)
 export function generateRoomCode() {
-  const words = ['HAVELI', 'SHIKAR', 'JUNGLE', 'CHETAK', 'TOOFAN', 'RAAJAH', 'DIWAAN', 'BAAZIG', 'SULTAN', 'MALANG', 'JADUVI', 'BEGUM'];
+  const words = [
+    'HAVELI', 'SHIKAR', 'JUNGLE', 'CHETAK', 'TOOFAN', 'RAAJAH',
+    'DIWAAN', 'BAAZIG', 'SULTAN', 'MALANG', 'JADUVI', 'BEGUM',
+    'DARBAR', 'MAHAL', 'THAKUR', 'KOTWAL', 'NAWAAB', 'ZAMEEN'
+  ];
   const base = words[Math.floor(Math.random() * words.length)];
-  const num = Math.floor(10 + Math.random() * 89);
-  return `${base.slice(0, 4)}${num}`;
+  const num = Math.floor(100 + Math.random() * 900);
+  return `${base.slice(0, 3)}${num}`;
 }
 
 export class HostNetwork {
-  constructor(roomCode, onPlayerJoin, onPlayerMessage, onPlayerLeave, onStatusChange) {
+  constructor(roomCode, onPlayerJoin, onPlayerMessage, onPlayerLeave, onStatusChange, onCodeUnavailable, getCustomStateForPlayer) {
     this.roomCode = roomCode.toUpperCase().trim();
     this.peerId = `${PEER_PREFIX}${this.roomCode}`;
     this.onPlayerJoin = onPlayerJoin;
     this.onPlayerMessage = onPlayerMessage;
     this.onPlayerLeave = onPlayerLeave;
     this.onStatusChange = onStatusChange;
+    this.onCodeUnavailable = onCodeUnavailable;
+    this.getCustomStateForPlayer = getCustomStateForPlayer;
     this.connections = new Map(); // playerId -> dataConnection
     this.peer = null;
     this.isReady = false;
@@ -52,29 +72,40 @@ export class HostNetwork {
     });
 
     this.peer.on('connection', (conn) => {
-      const registerPlayer = (data) => {
+      const registerAndSync = (data) => {
         const playerId = data?.id || conn.metadata?.id || conn.peer;
         const name = data?.name || conn.metadata?.name || 'Guest';
         const avatarId = data?.avatarId || conn.metadata?.avatarId || 'lion';
         conn.playerId = playerId;
         this.connections.set(playerId, conn);
+
+        // Notify host base station to register player in game state
         this.onPlayerJoin?.({ id: playerId, name, avatarId }, conn);
+
+        // Instantly reply with personalized state sync so mobile device enters lobby immediately
+        if (conn.open && this.getCustomStateForPlayer) {
+          try {
+            const state = this.getCustomStateForPlayer(playerId);
+            conn.send({ type: 'STATE_SYNC', payload: state });
+          } catch (e) {
+            console.warn('Direct state sync send error:', e);
+          }
+        }
       };
 
-      // If connection arrives with metadata, pre-register immediately
+      // If connection arrives with metadata, register right away
       if (conn.metadata?.id) {
-        registerPlayer(conn.metadata);
+        registerAndSync(conn.metadata);
       }
 
       conn.on('open', () => {
-        if (conn.metadata?.id) {
-          registerPlayer(conn.metadata);
-        }
+        const data = conn.metadata || { id: conn.peer };
+        registerAndSync(data);
       });
 
       conn.on('data', (data) => {
         if (data && data.type === 'PLAYER_JOIN') {
-          registerPlayer(data.payload);
+          registerAndSync(data.payload);
         } else {
           const playerId = conn.playerId || conn.metadata?.id || conn.peer;
           this.onPlayerMessage?.(data, playerId);
@@ -95,7 +126,10 @@ export class HostNetwork {
     this.peer.on('error', (err) => {
       console.error('Host Peer error:', err);
       if (err.type === 'unavailable-id') {
-        this.onStatusChange?.('Room code active. Reconnecting...');
+        this.onStatusChange?.('Room code busy on network, generating new code...');
+        if (this.onCodeUnavailable) {
+          this.onCodeUnavailable();
+        }
       } else {
         this.onStatusChange?.(`Status: ${err.type}`);
       }
@@ -182,7 +216,8 @@ export class PlayerNetwork {
   connectToHost() {
     this.onStatusChange?.(`Joining room ${this.roomCode}...`);
     this.conn = this.peer.connect(this.hostPeerId, {
-      metadata: this.playerData
+      metadata: this.playerData,
+      reliable: true
     });
 
     this.conn.on('open', () => {
@@ -200,7 +235,7 @@ export class PlayerNetwork {
         if (this.conn && this.conn.open) {
           this.send('PLAYER_JOIN', this.playerData);
         }
-      }, 1200);
+      }, 800);
     });
 
     this.conn.on('data', (msg) => {

@@ -11,6 +11,7 @@ export default function HostLobby({
   onStartGame,
   onAddBot,
   onRemovePlayer,
+  onRegenerateCode,
   networkStatus
 }) {
   const minPlayers = 4;
@@ -64,7 +65,7 @@ export default function HostLobby({
         {/* Left Column: QR Code & Game Rules */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {/* QR Code Container */}
-          <QRCodeView roomCode={roomCode} size={200} />
+          <QRCodeView roomCode={roomCode} size={200} onRegenerateCode={onRegenerateCode} />
 
           {/* Settings Box */}
           <div className="card-interactive" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>

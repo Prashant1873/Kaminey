@@ -24,6 +24,7 @@ export default function PlayerNight({
       width: '100%',
       minHeight: 'auto',
       flex: 1,
+      backgroundColor: '#000000',
       padding: '20px 14px',
       display: 'flex',
       flexDirection: 'column',
@@ -85,8 +86,8 @@ export default function PlayerNight({
                     justifyContent: 'space-between',
                     padding: '14px 16px',
                     borderRadius: 'var(--rounded-xl)',
-                    background: isSelectedByMe ? 'rgba(255, 86, 48, 0.2)' : '#121827',
-                    border: isSelectedByMe ? '2px solid var(--loss)' : '1px solid rgba(255, 255, 255, 0.1)',
+                    background: isSelectedByMe ? 'rgba(255, 86, 48, 0.2)' : '#080808',
+                    border: isSelectedByMe ? '2px solid var(--loss)' : '1px solid #1a1a1a',
                     color: '#ffffff',
                     boxShadow: isSelectedByMe ? 'var(--shadow-glow-loss)' : 'none'
                   }}
@@ -115,7 +116,7 @@ export default function PlayerNight({
 
           {mySelectedTarget && (
             <div style={{
-              background: 'rgba(255, 86, 48, 0.12)',
+              background: '#0d0d0d',
               border: '1px solid rgba(255, 86, 48, 0.3)',
               borderRadius: 'var(--rounded-lg)',
               padding: '12px',
@@ -132,7 +133,7 @@ export default function PlayerNight({
         <div style={{
           width: '100%',
           maxWidth: '360px',
-          background: '#121827',
+          background: '#080808',
           borderRadius: 'var(--rounded-2xl)',
           padding: '30px 20px',
           border: '1px solid rgba(0, 240, 144, 0.2)',

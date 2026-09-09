@@ -345,21 +345,33 @@ button:active {
   gap: 4px;
 }
 
-/* SimSim Dark Theme for Night / Murder Conclave */
+/* Pitch Black OLED Theme for Night / Murder Conclave */
 .theme-simsim-night {
-  background-color: var(--simsim-surface) !important;
+  background-color: #000000 !important;
   color: #f0f3fa !important;
 }
 
+body:has(.theme-simsim-night),
+html:has(.theme-simsim-night) {
+  background-color: #000000 !important;
+}
+
+.theme-simsim-night.app-header,
+.theme-simsim-night .app-header {
+  background-color: #000000 !important;
+  border-bottom: 1px solid #141414 !important;
+  box-shadow: none !important;
+}
+
 .theme-simsim-night .card-interactive {
-  background-color: #121827;
-  border-color: rgba(255, 255, 255, 0.1);
+  background-color: #080808 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
   color: #f0f3fa;
 }
 
 .theme-simsim-night .card-interactive:hover {
-  border-color: var(--simsim-neon);
-  box-shadow: var(--shadow-glow-neon);
+  border-color: var(--loss);
+  box-shadow: 0 0 16px rgba(255, 86, 48, 0.25);
 }
 
 /* Animations */

@@ -18,13 +18,19 @@ import { sounds } from '../../audio/soundEffects';
 const BOT_NAMES = ['Aarav', 'Meera', 'Rohan', 'Ananya', 'Kabir', 'Tara', 'Arjun', 'Diya', 'Vikram', 'Pooja'];
 
 export default function HostBaseStation({ onExit }) {
-  const [roomCode] = useState(() => {
-    const saved = sessionStorage.getItem('kaminey_host_room');
-    if (saved) return saved;
+  const [roomCode, setRoomCode] = useState(() => {
     const newCode = generateRoomCode();
     sessionStorage.setItem('kaminey_host_room', newCode);
     return newCode;
   });
+
+  const handleRegenerateCode = useCallback(() => {
+    const newCode = generateRoomCode();
+    sessionStorage.setItem('kaminey_host_room', newCode);
+    setRoomCode(newCode);
+    setPlayers([]);
+    setNetworkStatus('Re-initializing base station with new code...');
+  }, []);
 
   const [networkStatus, setNetworkStatus] = useState('Initializing base station...');
   const [phase, setPhase] = useState('LOBBY');
@@ -133,7 +139,7 @@ export default function HostBaseStation({ onExit }) {
   useEffect(() => {
     const net = new HostNetwork(
       roomCode,
-      (playerData) => {
+      (playerData, conn) => {
         setPlayers(prev => {
           // If player with this exact ID already exists, update info (reconnect)
           const index = prev.findIndex(p => p.id === playerData.id);
@@ -167,19 +173,17 @@ export default function HostBaseStation({ onExit }) {
         });
 
         // Instant direct state sync back to newly connected player
-        setTimeout(() => {
+        if (conn && conn.open) {
           try {
-            if (conn && conn.open) {
-              const directState = getPlayerPersonalizedState(playerData.id);
-              conn.send({
-                type: 'STATE_SYNC',
-                payload: directState
-              });
-            }
+            const directState = getPlayerPersonalizedState(playerData.id);
+            conn.send({
+              type: 'STATE_SYNC',
+              payload: directState
+            });
           } catch (e) {
             console.warn('Initial state sync direct send error:', e);
           }
-        }, 50);
+        }
       },
       handlePlayerMessage,
       (playerId) => {
@@ -187,7 +191,12 @@ export default function HostBaseStation({ onExit }) {
       },
       (status) => {
         setNetworkStatus(status);
-      }
+      },
+      () => {
+        // onCodeUnavailable: auto-generate new code to avoid network conflicts
+        handleRegenerateCode();
+      },
+      (targetId) => getPlayerPersonalizedState(targetId)
     );
 
     networkRef.current = net;
@@ -196,7 +205,7 @@ export default function HostBaseStation({ onExit }) {
     return () => {
       net.destroy();
     };
-  }, [roomCode, handlePlayerMessage]);
+  }, [roomCode, handlePlayerMessage, getPlayerPersonalizedState, handleRegenerateCode]);
 
   // Remove / kick player from lobby setup screen
   const handleRemovePlayer = useCallback((playerId) => {
@@ -450,8 +459,16 @@ export default function HostBaseStation({ onExit }) {
 
   const nightMurderSelected = Object.keys(nightVotes).length > 0;
 
+  const isNight = phase === 'NIGHT';
+
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className={isNight ? 'theme-simsim-night' : ''} style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: isNight ? '#000000' : undefined,
+      transition: 'background-color 0.3s ease'
+    }}>
       <Header
         isHost={true}
         roomCode={roomCode}
@@ -460,7 +477,10 @@ export default function HostBaseStation({ onExit }) {
         onLeave={onExit}
       />
 
-      <main style={{ flex: 1 }}>
+      <main style={{
+        flex: 1,
+        backgroundColor: isNight ? '#000000' : undefined
+      }}>
         {phase === 'LOBBY' && (
           <HostLobby
             roomCode={roomCode}
@@ -470,6 +490,7 @@ export default function HostBaseStation({ onExit }) {
             onStartGame={handleStartGame}
             onAddBot={addBotPlayer}
             onRemovePlayer={handleRemovePlayer}
+            onRegenerateCode={handleRegenerateCode}
             networkStatus={networkStatus}
           />
         )}

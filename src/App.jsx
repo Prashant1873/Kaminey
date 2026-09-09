@@ -75,6 +75,7 @@ export default function App() {
   const navigateToLanding = () => {
     sessionStorage.removeItem('kaminey_host_active');
     sessionStorage.removeItem('kaminey_player_session');
+    sessionStorage.removeItem('kaminey_host_room');
     window.location.hash = '#/';
     setRoute('LANDING');
   };
@@ -109,7 +110,22 @@ export default function App() {
         top: 0,
         zIndex: 50
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <button
+          type="button"
+          onClick={navigateToLanding}
+          className="spring-btn"
+          title="Go to Home"
+          style={{
+            background: 'transparent',
+            border: 'none',
+            padding: 0,
+            margin: 0,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            cursor: 'pointer'
+          }}
+        >
           <div style={{
             width: '36px',
             height: '36px',
@@ -127,7 +143,7 @@ export default function App() {
           <span style={{ fontWeight: 800, fontSize: '1.15rem', letterSpacing: '-0.02em', color: 'var(--primary)' }}>
             KAMINEY
           </span>
-        </div>
+        </button>
         <div className="badge-gain" style={{ fontSize: '0.6875rem' }}>
           Live Multiplayer
         </div>

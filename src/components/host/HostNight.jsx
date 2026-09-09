@@ -16,6 +16,7 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
   return (
     <div className="theme-simsim-night" style={{
       minHeight: '80vh',
+      backgroundColor: '#000000',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -29,7 +30,7 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
         width: '110px',
         height: '110px',
         borderRadius: 'var(--rounded-full)',
-        background: 'radial-gradient(circle, #2a0808 0%, #070A12 70%)',
+        background: 'radial-gradient(circle, #200000 0%, #000000 70%)',
         border: '2px solid var(--loss)',
         display: 'flex',
         alignItems: 'center',
@@ -54,7 +55,7 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
 
       {/* Atmospheric Night Indicator */}
       <div style={{
-        background: '#121827',
+        background: '#080808',
         border: '1px solid rgba(255, 86, 48, 0.25)',
         borderRadius: 'var(--rounded-xl)',
         padding: '18px 24px',
@@ -64,7 +65,7 @@ export default function HostNight({ onProceed, nightMurderSelected }) {
         flexDirection: 'column',
         alignItems: 'center',
         gap: '10px',
-        boxShadow: '0 12px 36px rgba(0,0,0,0.5)',
+        boxShadow: '0 12px 36px rgba(0,0,0,0.8)',
         boxSizing: 'border-box'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ANIMAL_AVATARS, getAvatarById } from '../../data/animalAvatars';
 import { Sparkles, ArrowRight, Dices, User } from 'lucide-react';
 
@@ -7,6 +7,12 @@ const SPY_NAMES = ['Kabir', 'Simran', 'Dev', 'Zoya', 'Rocky', 'Tara', 'Arjun', '
 export default function PlayerJoin({ initialRoomCode = '', onJoin }) {
   const [roomCode, setRoomCode] = useState(initialRoomCode);
   const [name, setName] = useState('');
+
+  useEffect(() => {
+    if (initialRoomCode) {
+      setRoomCode(initialRoomCode.toUpperCase().trim());
+    }
+  }, [initialRoomCode]);
   // Randomize initial avatar so multiple players never collide by default
   const [selectedAvatarId, setSelectedAvatarId] = useState(() => {
     const randomIndex = Math.floor(Math.random() * ANIMAL_AVATARS.length);

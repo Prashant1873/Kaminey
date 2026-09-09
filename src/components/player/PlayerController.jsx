@@ -16,10 +16,27 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
   const [playerData, setPlayerData] = useState(() => {
     try {
       const saved = sessionStorage.getItem('kaminey_player_session');
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (initialRoomCode && parsed.roomCode !== initialRoomCode.toUpperCase().trim()) {
+          sessionStorage.removeItem('kaminey_player_session');
+          return null;
+        }
+        return parsed;
+      }
     } catch (e) {}
     return null;
   });
+
+  // If user scanned another room's QR code while already in a session, reset and join new room
+  useEffect(() => {
+    if (initialRoomCode && playerData && playerData.roomCode !== initialRoomCode.toUpperCase().trim()) {
+      if (networkRef.current) networkRef.current.destroy();
+      sessionStorage.removeItem('kaminey_player_session');
+      setPlayerData(null);
+      setGameState(null);
+    }
+  }, [initialRoomCode, playerData]);
 
   const [networkStatus, setNetworkStatus] = useState('');
   const [gameState, setGameState] = useState(null); // Synced state from host
@@ -164,35 +181,54 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
   const phase = gameState?.phase || 'LOBBY';
   const mySecret = gameState?.mySecret || {};
 
+  const isNight = phase === 'NIGHT';
+
   return (
-    <div style={{ minHeight: '100dvh', width: '100%', maxWidth: '100vw', overflowX: 'hidden', display: 'flex', flexDirection: 'column' }}>
+    <div className={isNight ? 'theme-simsim-night' : ''} style={{
+      minHeight: '100dvh',
+      width: '100%',
+      maxWidth: '100vw',
+      overflowX: 'hidden',
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: isNight ? '#000000' : undefined,
+      transition: 'background-color 0.3s ease'
+    }}>
       <Header
         isHost={false}
         roomCode={playerData.roomCode}
         currentPhase={phase}
         onLeave={() => {
           if (networkRef.current) networkRef.current.destroy();
+          sessionStorage.removeItem('kaminey_player_session');
           setPlayerData(null);
           setGameState(null);
+          if (onExit) onExit();
         }}
       />
 
       {/* Network / Status Bar */}
       {networkStatus && (
         <div style={{
-          backgroundColor: 'var(--surface-container-low)',
+          backgroundColor: isNight ? '#000000' : 'var(--surface-container-low)',
           padding: '6px 14px',
           fontSize: '0.75rem',
           textAlign: 'center',
-          color: 'var(--on-surface-variant)',
-          borderBottom: '1px solid var(--outline-variant)'
+          color: isNight ? '#777777' : 'var(--on-surface-variant)',
+          borderBottom: isNight ? '1px solid #141414' : '1px solid var(--outline-variant)'
         }}>
           {networkStatus}
         </div>
       )}
 
       {/* Main Screen according to Phase */}
-      <main style={{ flex: 1, paddingBottom: '24px', width: '100%', boxSizing: 'border-box' }}>
+      <main style={{
+        flex: 1,
+        paddingBottom: '24px',
+        width: '100%',
+        boxSizing: 'border-box',
+        backgroundColor: isNight ? '#000000' : undefined
+      }}>
         {/* If Player is dead/exiled and match is in progress, show Ghost Spectator mode */}
         {isDead && phase !== 'LOBBY' && phase !== 'ROLE_REVEAL' && phase !== 'GAME_OVER' ? (
           <PlayerGhost playerName={playerData.name} isExiled={isExiled} />
