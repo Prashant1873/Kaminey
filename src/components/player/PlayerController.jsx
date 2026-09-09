@@ -102,6 +102,59 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
     );
   }
 
+  // While connecting to host, show dedicated connecting screen
+  if (!gameState) {
+    return (
+      <div style={{ minHeight: '100dvh', width: '100%', maxWidth: '100vw', display: 'flex', flexDirection: 'column' }}>
+        <Header isHost={false} roomCode={playerData.roomCode} onLeave={onExit} />
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '30px 20px',
+          textAlign: 'center',
+          gap: '16px'
+        }}>
+          <div style={{ fontSize: '3.5rem' }} className="animate-spin">
+            ⏳
+          </div>
+          <h2 className="text-headline" style={{ color: 'var(--primary)', marginBottom: '4px' }}>
+            CONNECTING TO HAVELI BASE...
+          </h2>
+          <p style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>
+            Joining living room screen with code <strong>{playerData.roomCode}</strong>
+          </p>
+          <div className="badge-gain" style={{ fontSize: '0.75rem', padding: '6px 14px' }}>
+            {networkStatus || 'Connecting to base station...'}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              if (networkRef.current) networkRef.current.destroy();
+              sessionStorage.removeItem('kaminey_player_session');
+              setPlayerData(null);
+            }}
+            className="spring-btn"
+            style={{
+              background: 'transparent',
+              border: 'none',
+              color: 'var(--outline)',
+              fontSize: '0.8125rem',
+              marginTop: '16px',
+              cursor: 'pointer',
+              textDecoration: 'underline'
+            }}
+          >
+            Wrong Room Code? Tap to Change
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   const myAvatar = getAvatarById(playerData.avatarId);
   const myPlayerInfo = gameState?.players?.find(p => p.id === playerData.id);
   const isAlive = myPlayerInfo ? myPlayerInfo.isAlive : true;

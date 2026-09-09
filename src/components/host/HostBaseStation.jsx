@@ -165,6 +165,21 @@ export default function HostBaseStation({ onExit }) {
             isBot: false
           }];
         });
+
+        // Instant direct state sync back to newly connected player
+        setTimeout(() => {
+          try {
+            if (conn && conn.open) {
+              const directState = getPlayerPersonalizedState(playerData.id);
+              conn.send({
+                type: 'STATE_SYNC',
+                payload: directState
+              });
+            }
+          } catch (e) {
+            console.warn('Initial state sync direct send error:', e);
+          }
+        }, 50);
       },
       handlePlayerMessage,
       (playerId) => {

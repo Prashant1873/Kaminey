@@ -13,7 +13,7 @@ export default function App() {
       const hostParam = params.get('host');
 
       if (hash === '#/host' || hostParam) return 'HOST';
-      if (hash.startsWith('#/join/')) return 'JOIN';
+      if (hash.startsWith('#/join/')) return 'PLAYER';
       if (hash === '#/play' || joinParam) return 'PLAYER';
 
       // Check persisted sessions on refresh

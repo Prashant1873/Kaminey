@@ -1,10 +1,24 @@
 // Host-Authoritative Realtime Peer-to-Peer Networking for Kaminey
-// Powered by PeerJS (Free, Zero-Config WebRTC)
+// Powered by PeerJS with Multi-STUN fallback for cross-network mobile connectivity
 // Strict Anti-Cheat: Host holds the master state; players only receive their private secrets.
 
 import Peer from 'peerjs';
 
 const PEER_PREFIX = 'kaminey-v2-';
+
+const PEER_CONFIG = {
+  debug: 1,
+  config: {
+    iceServers: [
+      { urls: 'stun:stun.l.google.com:19302' },
+      { urls: 'stun:stun1.l.google.com:19302' },
+      { urls: 'stun:stun2.l.google.com:19302' },
+      { urls: 'stun:stun3.l.google.com:19302' },
+      { urls: 'stun:stun4.l.google.com:19302' },
+      { urls: 'stun:global.stun.twilio.com:3478' }
+    ]
+  }
+};
 
 // Generate 6-character room code
 export function generateRoomCode() {
@@ -30,9 +44,7 @@ export class HostNetwork {
   init() {
     this.onStatusChange?.('Connecting host base to network...');
 
-    this.peer = new Peer(this.peerId, {
-      debug: 1
-    });
+    this.peer = new Peer(this.peerId, PEER_CONFIG);
 
     this.peer.on('open', () => {
       this.isReady = true;
@@ -40,25 +52,37 @@ export class HostNetwork {
     });
 
     this.peer.on('connection', (conn) => {
+      const registerPlayer = (data) => {
+        const playerId = data?.id || conn.metadata?.id || conn.peer;
+        const name = data?.name || conn.metadata?.name || 'Guest';
+        const avatarId = data?.avatarId || conn.metadata?.avatarId || 'lion';
+        conn.playerId = playerId;
+        this.connections.set(playerId, conn);
+        this.onPlayerJoin?.({ id: playerId, name, avatarId }, conn);
+      };
+
+      // If connection arrives with metadata, pre-register immediately
+      if (conn.metadata?.id) {
+        registerPlayer(conn.metadata);
+      }
+
       conn.on('open', () => {
-        // Player channel opened. Wait for explicit JOIN payload with persistent playerId
+        if (conn.metadata?.id) {
+          registerPlayer(conn.metadata);
+        }
       });
 
       conn.on('data', (data) => {
         if (data && data.type === 'PLAYER_JOIN') {
-          const { id, name, avatarId } = data.payload;
-          const playerId = id || conn.peer;
-          conn.playerId = playerId;
-          this.connections.set(playerId, conn);
-          this.onPlayerJoin?.({ id: playerId, name, avatarId }, conn);
+          registerPlayer(data.payload);
         } else {
-          const playerId = conn.playerId || conn.peer;
+          const playerId = conn.playerId || conn.metadata?.id || conn.peer;
           this.onPlayerMessage?.(data, playerId);
         }
       });
 
       conn.on('close', () => {
-        const playerId = conn.playerId || conn.peer;
+        const playerId = conn.playerId || conn.metadata?.id || conn.peer;
         this.connections.delete(playerId);
         this.onPlayerLeave?.(playerId);
       });
@@ -79,7 +103,6 @@ export class HostNetwork {
   }
 
   // Send tailored state to every connected player
-  // Ensures Bhole NEVER receive Kaminey identities
   broadcastState(getCustomStateForPlayer) {
     this.connections.forEach((conn, playerId) => {
       if (conn && conn.open) {
@@ -138,13 +161,13 @@ export class PlayerNetwork {
     this.onKicked = onKicked;
     this.peer = null;
     this.conn = null;
+    this.receivedFirstSync = false;
+    this.syncRetryTimer = null;
   }
 
   init() {
-    this.onStatusChange?.('Connecting...');
-    this.peer = new Peer(undefined, {
-      debug: 1
-    });
+    this.onStatusChange?.('Connecting to network...');
+    this.peer = new Peer(undefined, PEER_CONFIG);
 
     this.peer.on('open', () => {
       this.connectToHost();
@@ -157,19 +180,33 @@ export class PlayerNetwork {
   }
 
   connectToHost() {
-    this.onStatusChange?.(`Joining ${this.roomCode}...`);
+    this.onStatusChange?.(`Joining room ${this.roomCode}...`);
     this.conn = this.peer.connect(this.hostPeerId, {
-      reliable: true
+      metadata: this.playerData
     });
 
     this.conn.on('open', () => {
-      this.onStatusChange?.('Connected!');
+      this.onStatusChange?.('Connected! Entering lobby...');
       // Send unambiguous JOIN message with our unique player ID, name, avatar
       this.send('PLAYER_JOIN', this.playerData);
+
+      // Periodically ping JOIN until first state sync is received
+      if (this.syncRetryTimer) clearInterval(this.syncRetryTimer);
+      this.syncRetryTimer = setInterval(() => {
+        if (this.receivedFirstSync) {
+          clearInterval(this.syncRetryTimer);
+          return;
+        }
+        if (this.conn && this.conn.open) {
+          this.send('PLAYER_JOIN', this.playerData);
+        }
+      }, 1200);
     });
 
     this.conn.on('data', (msg) => {
       if (msg && msg.type === 'STATE_SYNC') {
+        this.receivedFirstSync = true;
+        if (this.syncRetryTimer) clearInterval(this.syncRetryTimer);
         this.onStateSync?.(msg.payload);
       } else if (msg && msg.type === 'PLAYER_KICKED') {
         this.onKicked?.(msg.payload?.reason || 'Host removed you from the game');
@@ -177,13 +214,14 @@ export class PlayerNetwork {
     });
 
     this.conn.on('close', () => {
+      if (this.syncRetryTimer) clearInterval(this.syncRetryTimer);
       this.onStatusChange?.('Disconnected from host');
       this.onDisconnect?.();
     });
 
     this.conn.on('error', (err) => {
       console.error('Host connection error:', err);
-      this.onStatusChange?.('Connection lost');
+      this.onStatusChange?.('Could not reach room. Check code or refresh.');
     });
   }
 
@@ -194,6 +232,7 @@ export class PlayerNetwork {
   }
 
   destroy() {
+    if (this.syncRetryTimer) clearInterval(this.syncRetryTimer);
     if (this.conn) this.conn.close();
     if (this.peer) this.peer.destroy();
   }
