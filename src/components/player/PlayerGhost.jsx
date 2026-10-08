@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
 import { Ghost, Skull, Flame, Eye, Zap, Sparkles, Heart, HelpCircle, Check } from 'lucide-react';
 
-const GHOST_REACTIONS = [
-  { id: 'ghost', icon: Ghost, label: 'Spook', color: '#94A3B8' },
-  { id: 'skull', icon: Skull, label: 'Doom', color: '#EF4444' },
-  { id: 'flame', icon: Flame, label: 'Burn', color: '#F97316' },
-  { id: 'eye', icon: Eye, label: 'Watching', color: '#60A5FA' },
-  { id: 'zap', icon: Zap, label: 'Shock', color: '#FBBF24' },
-  { id: 'sparkles', icon: Sparkles, label: 'Glow', color: '#E5B869' },
-  { id: 'heart', icon: Heart, label: 'Pity', color: '#F472B6' },
-  { id: 'help', icon: HelpCircle, label: 'Clueless', color: '#A8A29E' }
+export const GHOST_REACTIONS = [
+  { id: 'ghost', icon: Ghost, label: 'Spook', color: '#94A3B8', emoji: '👻' },
+  { id: 'skull', icon: Skull, label: 'Doom', color: '#EF4444', emoji: '💀' },
+  { id: 'flame', icon: Flame, label: 'Burn', color: '#F97316', emoji: '🔥' },
+  { id: 'eye', icon: Eye, label: 'Watching', color: '#60A5FA', emoji: '👁️' },
+  { id: 'zap', icon: Zap, label: 'Shock', color: '#FBBF24', emoji: '⚡' },
+  { id: 'sparkles', icon: Sparkles, label: 'Glow', color: '#E5B869', emoji: '✨' },
+  { id: 'heart', icon: Heart, label: 'Pity', color: '#F472B6', emoji: '💔' },
+  { id: 'help', icon: HelpCircle, label: 'Clueless', color: '#A8A29E', emoji: '❓' }
 ];
 
-export default function PlayerGhost({ playerName, isExiled }) {
+export const getGhostReactionById = (id) => {
+  return GHOST_REACTIONS.find(r => r.id === id) || GHOST_REACTIONS[0];
+};
+
+export default function PlayerGhost({ playerName, isExiled, onSendSignal }) {
   const [reactionSent, setReactionSent] = useState('');
 
   const sendReaction = (reactionId) => {
     setReactionSent(reactionId);
     if (typeof navigator !== 'undefined' && navigator.vibrate) {
       try { navigator.vibrate([25]); } catch (e) {}
+    }
+    if (onSendSignal) {
+      onSendSignal(reactionId);
     }
     setTimeout(() => setReactionSent(''), 1500);
   };

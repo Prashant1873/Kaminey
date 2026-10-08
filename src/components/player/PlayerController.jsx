@@ -271,7 +271,18 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
       }}>
         {/* If Player is dead/exiled and match is in progress, show Ghost Spectator mode */}
         {isDead && phase !== 'LOBBY' && phase !== 'ROLE_REVEAL' && phase !== 'GAME_OVER' ? (
-          <PlayerGhost playerName={playerData.name} isExiled={isExiled} />
+          <PlayerGhost
+            playerName={playerData.name}
+            isExiled={isExiled}
+            onSendSignal={(reactionId) => {
+              if (networkRef.current) {
+                networkRef.current.send('GHOST_SIGNAL', {
+                  reactionId,
+                  senderName: playerData.name
+                });
+              }
+            }}
+          />
         ) : (
           <>
             {/* LOBBY PHASE */}

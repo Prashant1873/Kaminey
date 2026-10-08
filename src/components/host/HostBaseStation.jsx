@@ -15,6 +15,7 @@ import { HostNetwork, generateRoomCode } from '../../network/peerManager';
 import { ANIMAL_AVATARS } from '../../data/animalAvatars';
 import { getRandomTeamMission } from '../../data/partyDares';
 import { sounds } from '../../audio/soundEffects';
+import { getGhostReactionById } from '../player/PlayerGhost';
 
 const BOT_NAMES = ['Aarav', 'Meera', 'Rohan', 'Ananya', 'Kabir', 'Tara', 'Arjun', 'Diya', 'Vikram', 'Pooja'];
 
@@ -60,6 +61,33 @@ export default function HostBaseStation({ onExit }) {
     kamineyCount: 'auto',
     enableDares: true
   });
+
+  const [ghostSignals, setGhostSignals] = useState([]);
+  const [ghostFlicker, setGhostFlicker] = useState(false);
+
+  const triggerGhostSignal = useCallback((reactionId, senderName) => {
+    const reaction = getGhostReactionById(reactionId);
+    sounds.playGhostWhisper();
+
+    setGhostFlicker(true);
+    setTimeout(() => setGhostFlicker(false), 450);
+
+    const sig = {
+      id: `ghost-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+      reactionId,
+      label: reaction.label,
+      color: reaction.color,
+      emoji: reaction.emoji,
+      senderName: senderName || 'A Ghost',
+      x: 10 + Math.random() * 75
+    };
+
+    setGhostSignals(prev => [...prev.slice(-4), sig]);
+
+    setTimeout(() => {
+      setGhostSignals(prev => prev.filter(s => s.id !== sig.id));
+    }, 2400);
+  }, []);
 
   const networkRef = useRef(null);
 
@@ -149,10 +177,17 @@ export default function HostBaseStation({ onExit }) {
         break;
       }
 
+      case 'GHOST_SIGNAL': {
+        const payload = msg.payload !== undefined ? msg.payload : msg;
+        const { reactionId, senderName } = payload || {};
+        triggerGhostSignal(reactionId, senderName);
+        break;
+      }
+
       default:
         break;
     }
-  }, []);
+  }, [triggerGhostSignal]);
 
   // Bot auto-ready behavior during DARES phase so host counter shows progression
   useEffect(() => {
@@ -693,6 +728,50 @@ export default function HostBaseStation({ onExit }) {
           />
         )}
       </main>
+
+      {/* Ghost Spectator TV Haunting Overlay */}
+      {ghostFlicker && <div className="ghost-tv-flicker-overlay" />}
+
+      {ghostSignals.length > 0 && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          pointerEvents: 'none',
+          zIndex: 9999,
+          overflow: 'hidden'
+        }}>
+          {ghostSignals.map(sig => (
+            <div
+              key={sig.id}
+              className="ghost-reaction-bubble"
+              style={{
+                left: `${sig.x}%`,
+                bottom: '50px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '10px 20px',
+                background: 'rgba(15, 23, 42, 0.92)',
+                backdropFilter: 'blur(16px)',
+                border: `1.5px solid ${sig.color || '#94A3B8'}`,
+                borderRadius: '999px',
+                boxShadow: `0 10px 30px rgba(0, 0, 0, 0.6), 0 0 24px ${sig.color}50`,
+                color: '#ffffff'
+              }}
+            >
+              <span style={{ fontSize: '1.6rem', lineHeight: 1 }}>{sig.emoji}</span>
+              <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
+                <span style={{ fontSize: '0.8125rem', fontWeight: 800, color: sig.color, letterSpacing: '0.06em' }}>
+                  {sig.label.toUpperCase()}
+                </span>
+                <span style={{ fontSize: '0.75rem', color: '#CBD5E1', fontWeight: 600 }}>
+                  👻 {sig.senderName}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

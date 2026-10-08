@@ -383,4 +383,65 @@ test('End-to-End Cellular Network Simulation Suite', async (t) => {
     p2.destroy();
     host.destroy();
   });
+
+  await t.test('5. Dead ghost spectator sends GHOST_SIGNAL and host base station receives it', async () => {
+    let receivedGhostSignals = [];
+
+    const host = new HostNetwork(
+      'GHOST9',
+      () => ({
+        onPlayerJoin: () => {},
+        onPlayerMessage: (envelope) => {
+          const type = envelope.type;
+          const payload = envelope.payload !== undefined ? envelope.payload : envelope;
+          if (type === 'GHOST_SIGNAL') {
+            receivedGhostSignals.push(payload);
+          }
+        },
+        onPlayerLeave: () => {},
+        onStatusChange: () => {},
+        getCustomStateForPlayer: () => ({ phase: 'DISCUSSION' })
+      })
+    );
+    host.bridge.serverUrl = TEST_SERVER_URL;
+    host.init();
+
+    await new Promise((resolve) => {
+      host.bridge.onRoomCreated = resolve;
+    });
+
+    const ghostPlayer = new PlayerNetwork(
+      'GHOST9',
+      { id: 'ghost-vikram', name: 'Exiled Vikram' },
+      () => {},
+      () => {},
+      () => {}
+    );
+    ghostPlayer.bridge.serverUrl = TEST_SERVER_URL;
+    ghostPlayer.init();
+
+    await new Promise((resolve) => setTimeout(resolve, 80));
+
+    // Ghost sends skull reaction signal
+    ghostPlayer.send('GHOST_SIGNAL', {
+      reactionId: 'skull',
+      senderName: 'Exiled Vikram'
+    });
+
+    await new Promise((resolve) => {
+      const check = setInterval(() => {
+        if (receivedGhostSignals.length >= 1) {
+          clearInterval(check);
+          resolve();
+        }
+      }, 20);
+    });
+
+    assert.equal(receivedGhostSignals.length, 1);
+    assert.equal(receivedGhostSignals[0].reactionId, 'skull');
+    assert.equal(receivedGhostSignals[0].senderName, 'Exiled Vikram');
+
+    ghostPlayer.destroy();
+    host.destroy();
+  });
 });
