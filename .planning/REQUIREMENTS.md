@@ -16,10 +16,10 @@ Requirements for Milestone v1.0: Network & Backend Robustness (Hybrid Relay & Si
 
 ### Hybrid Client Network Bridge (`BRIDGE`)
 
-- [ ] **BRIDGE-01**: Client initiates simultaneous WebSocket connection and WebRTC P2P DataChannel negotiation with a 4.0s timeout.
-- [ ] **BRIDGE-02**: Client automatically falls back to WebSocket relay mode without user intervention if WebRTC ICE negotiation fails or times out.
-- [ ] **BRIDGE-03**: `HybridNetworkBridge` provides a unified `send(type, payload)` API that abstracts transport mode away from host and player UI components.
-- [ ] **BRIDGE-04**: Monotonic message sequence numbering and deduplication window prevents duplicate votes or actions during transport handover.
+- [x] **BRIDGE-01**: Client initiates simultaneous WebSocket connection and WebRTC P2P DataChannel negotiation with a 4.0s timeout.
+- [x] **BRIDGE-02**: Client automatically falls back to WebSocket relay mode without user intervention if WebRTC ICE negotiation fails or times out.
+- [x] **BRIDGE-03**: `HybridNetworkBridge` provides a unified `send(type, payload)` API that abstracts transport mode away from host and player UI components.
+- [x] **BRIDGE-04**: Monotonic message sequence numbering and deduplication window prevents duplicate votes or actions during transport handover.
 
 ### Mobile Resiliency & Session Persistence (`RESILIENCE`)
 
@@ -65,10 +65,10 @@ Which phases cover which requirements.
 | SERVER-02 | Phase 1 | Complete |
 | SERVER-03 | Phase 1 | Complete |
 | SERVER-04 | Phase 1 | Complete |
-| BRIDGE-01 | Phase 2 | Pending |
-| BRIDGE-02 | Phase 2 | Pending |
-| BRIDGE-03 | Phase 2 | Pending |
-| BRIDGE-04 | Phase 2 | Pending |
+| BRIDGE-01 | Phase 2 | Complete |
+| BRIDGE-02 | Phase 2 | Complete |
+| BRIDGE-03 | Phase 2 | Complete |
+| BRIDGE-04 | Phase 2 | Complete |
 | RESILIENCE-01 | Phase 3 | Pending |
 | RESILIENCE-02 | Phase 3 | Pending |
 | RESILIENCE-03 | Phase 3 | Pending |

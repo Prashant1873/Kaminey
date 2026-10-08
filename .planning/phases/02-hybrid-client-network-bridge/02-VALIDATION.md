@@ -38,10 +38,10 @@ created: 2026-10-08
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 2-01-01 | 01 | 1 | BRIDGE-01 | T-2-01 | WebRTC negotiation initiates with 4s race timer | unit | `node --test test/hybridBridge.test.js` | ❌ W0 | ⬜ pending |
-| 2-01-02 | 01 | 1 | BRIDGE-02 | T-2-02 | Automatic fallback to WebSocket relay upon timeout | unit/integration | `node --test test/hybridBridge.test.js` | ❌ W0 | ⬜ pending |
-| 2-02-01 | 02 | 2 | BRIDGE-03 | T-2-03 | Unified send API routes through active transport | integration | `node --test test/hybridBridge.test.js` | ❌ W0 | ⬜ pending |
-| 2-02-02 | 02 | 2 | BRIDGE-04 | T-2-04 | Monotonic sequence & dedup window prevents double action execution | unit | `node --test test/hybridBridge.test.js` | ❌ W0 | ⬜ pending |
+| 2-01-01 | 01 | 1 | BRIDGE-01 | T-2-01 | WebRTC negotiation initiates with 4s race timer | unit | `node --test test/hybridBridge.test.js` | ✅ | ✅ green |
+| 2-01-02 | 01 | 1 | BRIDGE-02 | T-2-02 | Automatic fallback to WebSocket relay upon timeout | unit/integration | `node --test test/hybridBridge.test.js` | ✅ | ✅ green |
+| 2-02-01 | 02 | 2 | BRIDGE-03 | T-2-03 | Unified send API routes through active transport | integration | `node --test test/hybridBridge.test.js` | ✅ | ✅ green |
+| 2-02-02 | 02 | 2 | BRIDGE-04 | T-2-04 | Monotonic sequence & dedup window prevents double action execution | unit | `node --test test/hybridBridge.test.js` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
