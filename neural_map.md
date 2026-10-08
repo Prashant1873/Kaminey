@@ -5,13 +5,17 @@ Subsystem architecture, state machines, and logic flows.
 ## 1. System Topology
 
 ```text
-[ Living Room Base Station (Host) ]
-               │
-               ▼ WebRTC Mesh (PeerJS + STUN)
- ┌─────────────┼─────────────┐
- ▼             ▼             ▼
-[ Player 1 ]  [ Player 2 ]  [ Player N ]
-(Smartphone)  (Smartphone)  (Smartphone)
+                       ┌───────────────────────────────┐
+                       │ Dedicated Node/WS Server      │
+                       │ (Signaling + Fallback Relay)  │
+                       └───────────────┬───────────────┘
+                                       │ (WSS)
+            ┌──────────────────────────┴──────────────────────────┐
+            ▼                                                     ▼
+[ Living Room Base Station (Host) ]                  [ Mobile Player Controller ]
+            │                                                     │
+            └──────◄► Direct WebRTC DataChannel (P2P Mesh) ───────┘
+                      (Falls back to Server Relay if NAT blocked)
 ```
 
 ## 2. Host Game State Machine
