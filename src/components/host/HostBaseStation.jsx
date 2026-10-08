@@ -107,14 +107,15 @@ export default function HostBaseStation({ onExit }) {
         nightVotes: isKamina ? nightVotes : null
       }
     };
-  }, [roomCode, phase, settings, players, roles, currentMission, nightVotes, votes, morningVictim, exiledPlayer, winner]);
+  }, [roomCode, phase, settings, players, roles, currentMission, readyPlayers, nightVotes, votes, morningVictim, exiledPlayer, winner]);
 
   // Sync state across network whenever relevant state changes
   useEffect(() => {
-    if (networkRef.current && networkRef.current.isReady) {
-      networkRef.current.broadcastState(getPlayerPersonalizedState);
+    if (networkRef.current) {
+      const humanPlayerIds = players.filter(p => !p.isBot).map(p => p.id);
+      networkRef.current.broadcastState(getPlayerPersonalizedState, humanPlayerIds);
     }
-  }, [getPlayerPersonalizedState]);
+  }, [getPlayerPersonalizedState, players]);
 
   // Handle incoming message from players' mobile devices
   const handlePlayerMessage = useCallback((msg, senderId) => {

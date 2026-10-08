@@ -255,4 +255,132 @@ test('End-to-End Cellular Network Simulation Suite', async (t) => {
     player.destroy();
     host.destroy();
   });
+
+  await t.test('4. Live phase progression broadcast pushes updates in real time to phones without page refresh', async () => {
+    let currentPhase = 'LOBBY';
+    let roles = { 'live-p1': 'kamina', 'live-p2': 'bhola' };
+    let currentMission = null;
+
+    const host = new HostNetwork(
+      'LIVE88',
+      () => ({
+        onPlayerJoin: () => {},
+        onPlayerMessage: () => {},
+        onPlayerLeave: () => {},
+        onStatusChange: () => {},
+        getCustomStateForPlayer: (playerId) => ({
+          phase: currentPhase,
+          mission: currentMission,
+          mySecret: {
+            role: roles[playerId] || null
+          }
+        })
+      })
+    );
+    host.bridge.serverUrl = TEST_SERVER_URL;
+    host.init();
+
+    await new Promise((resolve) => {
+      host.bridge.onRoomCreated = resolve;
+    });
+
+    assert.equal(host.isReady, true, 'Host isReady should be true once room is created');
+
+    const p1States = [];
+    const p2States = [];
+
+    const p1 = new PlayerNetwork(
+      'LIVE88',
+      { id: 'live-p1', name: 'Live Player 1' },
+      (state) => p1States.push(state),
+      () => {},
+      () => {}
+    );
+    const p2 = new PlayerNetwork(
+      'LIVE88',
+      { id: 'live-p2', name: 'Live Player 2' },
+      (state) => p2States.push(state),
+      () => {},
+      () => {}
+    );
+
+    p1.bridge.serverUrl = TEST_SERVER_URL;
+    p2.bridge.serverUrl = TEST_SERVER_URL;
+    p1.init();
+    p2.init();
+
+    // 1. Wait for initial lobby connection
+    await new Promise((resolve) => {
+      const check = setInterval(() => {
+        if (p1States.length >= 1 && p2States.length >= 1) {
+          clearInterval(check);
+          resolve();
+        }
+      }, 20);
+    });
+
+    assert.equal(p1States[0].phase, 'LOBBY');
+    assert.equal(p2States[0].phase, 'LOBBY');
+
+    // 2. Host starts game -> ROLE_REVEAL phase
+    currentPhase = 'ROLE_REVEAL';
+    host.broadcastState(null, ['live-p1', 'live-p2']);
+
+    await new Promise((resolve) => {
+      const check = setInterval(() => {
+        const lastP1 = p1States[p1States.length - 1];
+        const lastP2 = p2States[p2States.length - 1];
+        if (lastP1?.phase === 'ROLE_REVEAL' && lastP2?.phase === 'ROLE_REVEAL') {
+          clearInterval(check);
+          resolve();
+        }
+      }, 20);
+    });
+
+    assert.equal(p1States[p1States.length - 1].phase, 'ROLE_REVEAL');
+    assert.equal(p1States[p1States.length - 1].mySecret.role, 'kamina');
+    assert.equal(p2States[p2States.length - 1].phase, 'ROLE_REVEAL');
+    assert.equal(p2States[p2States.length - 1].mySecret.role, 'bhola');
+
+    // 3. Host advances to DARES / Cover Mission phase
+    currentPhase = 'DARES';
+    currentMission = { title: 'Cover Task: Mimic Amitabh Bachchan' };
+    host.broadcastState();
+
+    await new Promise((resolve) => {
+      const check = setInterval(() => {
+        const lastP1 = p1States[p1States.length - 1];
+        const lastP2 = p2States[p2States.length - 1];
+        if (lastP1?.phase === 'DARES' && lastP2?.phase === 'DARES') {
+          clearInterval(check);
+          resolve();
+        }
+      }, 20);
+    });
+
+    assert.equal(p1States[p1States.length - 1].mission.title, 'Cover Task: Mimic Amitabh Bachchan');
+    assert.equal(p2States[p2States.length - 1].mission.title, 'Cover Task: Mimic Amitabh Bachchan');
+
+    // 4. Host advances to NIGHT phase
+    currentPhase = 'NIGHT';
+    host.broadcastState();
+
+    await new Promise((resolve) => {
+      const check = setInterval(() => {
+        const lastP1 = p1States[p1States.length - 1];
+        const lastP2 = p2States[p2States.length - 1];
+        if (lastP1?.phase === 'NIGHT' && lastP2?.phase === 'NIGHT') {
+          clearInterval(check);
+          resolve();
+        }
+      }, 20);
+    });
+
+    assert.equal(p1States[p1States.length - 1].phase, 'NIGHT');
+    assert.equal(p2States[p2States.length - 1].phase, 'NIGHT');
+
+    p1.destroy();
+    p2.destroy();
+    host.destroy();
+  });
 });

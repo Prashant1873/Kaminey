@@ -97,6 +97,17 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
     };
   }, [playerData?.id, connectWithData]);
 
+  // Periodic background state sync (every 4s) so mobile device stays live and never requires manual page refresh
+  useEffect(() => {
+    if (!playerData) return;
+    const syncTimer = setInterval(() => {
+      if (networkRef.current && typeof networkRef.current.requestStateSync === 'function') {
+        networkRef.current.requestStateSync();
+      }
+    }, 4000);
+    return () => clearInterval(syncTimer);
+  }, [playerData]);
+
   const handleNightTargetSelect = (targetId) => {
     if (networkRef.current) {
       networkRef.current.send('NIGHT_VOTE', { targetId });

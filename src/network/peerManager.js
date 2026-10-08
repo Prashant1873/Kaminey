@@ -38,6 +38,7 @@ export class HostNetwork {
 
     this.connectedPlayers = new Map(); // playerId -> playerData
     this.isDestroyed = false;
+    this._isReady = false;
 
     // Instantiate Hybrid Bridge as Host
     this.bridge = new HybridNetworkBridge({
@@ -82,6 +83,9 @@ export class HostNetwork {
         // Immediately resolve and dispatch state sync to requesting player
         if (msgType === 'REQUEST_STATE_SYNC') {
           const requestingPlayerId = senderId || payload?.playerId || envelope.senderId;
+          if (requestingPlayerId && !this.connectedPlayers.has(requestingPlayerId)) {
+            this.connectedPlayers.set(requestingPlayerId, { id: requestingPlayerId });
+          }
           const handlers = this.getHandlers();
           if (handlers.getCustomStateForPlayer && requestingPlayerId) {
             try {
@@ -100,7 +104,13 @@ export class HostNetwork {
         this.getHandlers().onPlayerMessage?.(messageToPass, senderId);
       },
       onStatusChange: (status) => {
+        if (this.bridge?.ws?.readyState === 1) {
+          this._isReady = true;
+        }
         this.getHandlers().onStatusChange?.(status);
+      },
+      onRoomCreated: () => {
+        this._isReady = true;
       },
       onModeChange: (mode) => {
         this.getHandlers().onModeChange?.(mode);
@@ -110,17 +120,34 @@ export class HostNetwork {
     });
   }
 
+  get isReady() {
+    return !this.isDestroyed && Boolean(
+      this._isReady || (this.bridge && this.bridge.ws && this.bridge.ws.readyState === 1)
+    );
+  }
+
+  set isReady(val) {
+    this._isReady = Boolean(val);
+  }
+
   init() {
     if (this.isDestroyed) return;
     this.bridge.init();
   }
 
   // Broadcast tailored state to every registered player
-  broadcastState(getCustomStateForPlayer) {
+  broadcastState(getCustomStateForPlayer, targetPlayerIds) {
+    if (this.isDestroyed) return;
     const resolver = getCustomStateForPlayer || this.getHandlers().getCustomStateForPlayer;
     if (!resolver) return;
 
-    this.connectedPlayers.forEach((player, playerId) => {
+    // Collect recipient player IDs
+    const recipientIds = new Set([
+      ...Array.from(this.connectedPlayers.keys()),
+      ...(targetPlayerIds || [])
+    ]);
+
+    recipientIds.forEach((playerId) => {
       try {
         const personalizedPayload = resolver(playerId);
         if (personalizedPayload) {
