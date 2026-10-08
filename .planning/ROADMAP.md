@@ -13,7 +13,7 @@ Milestone v1.0 establishes rock-solid backend robustness and mobile connectivity
 - [x] **Phase 1: Dedicated Node.js WebSocket Signaling & Relay Server** - Standalone room registry, WebRTC signaling router, and fallback message forwarder.
 - [x] **Phase 2: Hybrid Client Network Bridge** - Dual-transport client bridge with 4-second P2P race and transparent WebSocket relay fallback.
 - [x] **Phase 3: Mobile Resiliency & Session Persistence** - Sleep/wake recovery (`visibilitychange`), 15s host grace period, state resync, and UI status badges.
-- [ ] **Phase 4: Cloud Deployment & Production Integration** - Render/Railway deployment profiles, Vite environment wiring, and end-to-end cellular validation.
+- [x] **Phase 4: Cloud Deployment & Production Integration** - Render/Railway deployment profiles, Vite environment wiring, and end-to-end cellular validation.
 
 ## Phase Details
 
@@ -79,8 +79,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 04-01: Add deployment configuration (`render.yaml`, `Dockerfile` / Procfile, `package.json` scripts) and client environment resolution.
-- [ ] 04-02: End-to-end verification of mobile connection over cellular network, simulating transport fallback and screen sleep.
+- [x] 04-01: Add deployment configuration (`render.yaml`, `Dockerfile` / Procfile, `package.json` scripts) and client environment resolution.
+- [x] 04-02: End-to-end verification of mobile connection over cellular network, simulating transport fallback and screen sleep.
 
 ---
 
@@ -94,7 +94,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 | 1. Dedicated Node.js WebSocket Signaling & Relay Server | 2/2 | Complete | 2026-10-08 |
 | 2. Hybrid Client Network Bridge | 2/2 | Complete | 2026-10-08 |
 | 3. Mobile Resiliency & Session Persistence | 2/2 | Complete | 2026-10-08 |
-| 4. Cloud Deployment & Production Integration | 0/2 | Not started | - |
+| 4. Cloud Deployment & Production Integration | 2/2 | Complete | 2026-10-08 |
 
 ---
 *Roadmap defined: 2026-10-08*

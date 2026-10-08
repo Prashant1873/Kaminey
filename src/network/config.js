@@ -11,6 +11,9 @@ export const ICE_SERVERS = [
 
 export const FALLBACK_P2P_TIMEOUT_MS = 4000;
 
+// Default production cloud relay on Render (can be overridden via VITE_WS_SERVER_URL)
+export const DEFAULT_PRODUCTION_WS_URL = 'wss://kaminey-server.onrender.com';
+
 export function getWebSocketServerUrl() {
   // 1. Explicit Vite environment variable override
   if (typeof import.meta !== 'undefined' && import.meta.env?.VITE_WS_SERVER_URL) {
@@ -31,10 +34,18 @@ export function getWebSocketServerUrl() {
       return `ws://${hostname}:3001`;
     }
 
-    // Production / Deployed environment (GitHub Pages, etc.)
-    // Uses secure WSS protocol
+    // Static hosting platforms (e.g. GitHub Pages, Vercel, Netlify)
+    // Automatically routes to production cloud relay rather than hitting closed port 3001 on CDN
+    if (
+      hostname.includes('github.io') ||
+      hostname.includes('vercel.app') ||
+      hostname.includes('netlify.app')
+    ) {
+      return DEFAULT_PRODUCTION_WS_URL;
+    }
+
+    // Custom domain / self-hosted server
     const wsProto = protocol === 'https:' ? 'wss:' : 'ws:';
-    // If a deployed backend hostname is configured:
     return `${wsProto}//${hostname}:3001`;
   }
 

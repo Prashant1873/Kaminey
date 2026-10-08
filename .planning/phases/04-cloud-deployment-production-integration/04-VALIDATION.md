@@ -1,9 +1,9 @@
 ---
 phase: 4
 slug: cloud-deployment-production-integration
-status: draft
+status: passed
 nyquist_compliant: true
-wave_0_complete: false
+wave_0_complete: true
 created: 2026-10-08
 ---
 
@@ -38,10 +38,10 @@ created: 2026-10-08
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 4-01-01 | 01 | 1 | DEPLOY-01 | T-4-01 | Cloud configuration files exist and validate syntax | syntax/lint | `node -c server/server.js` | ❌ W0 | ⬜ pending |
-| 4-01-02 | 01 | 1 | DEPLOY-02 | T-4-02 | Config resolves production cloud URL on GitHub Pages domain | unit | `npm run build` | ❌ W0 | ⬜ pending |
-| 4-02-01 | 02 | 2 | DEPLOY-03 | T-4-03 | Full game cycle succeeds over simulated cellular relay | integration | `node --test test/e2e-cellular.test.js` | ❌ W0 | ⬜ pending |
-| 4-02-02 | 02 | 2 | DEPLOY-03 | T-4-04 | Screen sleep/wake simulation maintains session continuity | integration | `node --test test/e2e-cellular.test.js` | ❌ W0 | ⬜ pending |
+| 4-01-01 | 01 | 1 | DEPLOY-01 | T-4-01 | Cloud configuration files exist and validate syntax | syntax/lint | `node -c server/server.js` | ✅ yes | ✅ green |
+| 4-01-02 | 01 | 1 | DEPLOY-02 | T-4-02 | Config resolves production cloud URL on GitHub Pages domain | unit | `npm run build` | ✅ yes | ✅ green |
+| 4-02-01 | 02 | 2 | DEPLOY-03 | T-4-03 | Full game cycle succeeds over simulated cellular relay | integration | `node --test test/e2e-cellular.test.js` | ✅ yes | ✅ green |
+| 4-02-02 | 02 | 2 | DEPLOY-03 | T-4-04 | Screen sleep/wake simulation maintains session continuity | integration | `node --test test/e2e-cellular.test.js` | ✅ yes | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -49,7 +49,7 @@ created: 2026-10-08
 
 ## Wave 0 Requirements
 
-- [ ] `test/e2e-cellular.test.js` — test suite simulating multi-phone cellular network relay, voting, and sleep/wake resync
+- [x] `test/e2e-cellular.test.js` — test suite simulating multi-phone cellular network relay, voting, and sleep/wake resync
 
 ---
 

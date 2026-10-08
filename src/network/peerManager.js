@@ -96,7 +96,8 @@ export class HostNetwork {
           return;
         }
 
-        this.getHandlers().onPlayerMessage?.(payload, senderId);
+        const messageToPass = envelope.type ? envelope : payload;
+        this.getHandlers().onPlayerMessage?.(messageToPass, senderId);
       },
       onStatusChange: (status) => {
         this.getHandlers().onStatusChange?.(status);

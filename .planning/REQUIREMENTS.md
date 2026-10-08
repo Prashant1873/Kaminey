@@ -30,9 +30,9 @@ Requirements for Milestone v1.0: Network & Backend Robustness (Hybrid Relay & Si
 
 ### Cloud Deployment & Environment Config (`DEPLOY`)
 
-- [ ] **DEPLOY-01**: Backend includes production configuration (`server/package.json`, environment variable handling, Render/Railway deployment profiles).
-- [ ] **DEPLOY-02**: Frontend build configures `VITE_WS_SERVER_URL` with automatic fallback to production cloud relay on GitHub Pages and localhost during dev.
-- [ ] **DEPLOY-03**: Verification suite tests end-to-end phone join, mobile sleep wake cycle, and cellular-to-Wi-Fi relay fallback.
+- [x] **DEPLOY-01**: Backend includes production configuration (`server/package.json`, environment variable handling, Render/Railway deployment profiles).
+- [x] **DEPLOY-02**: Frontend build configures `VITE_WS_SERVER_URL` with automatic fallback to production cloud relay on GitHub Pages and localhost during dev.
+- [x] **DEPLOY-03**: Verification suite tests end-to-end phone join, mobile sleep wake cycle, and cellular-to-Wi-Fi relay fallback.
 
 ## v2 Requirements
 
