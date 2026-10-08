@@ -1,0 +1,16 @@
+{
+  "name": "kaminey-server",
+  "version": "1.0.0",
+  "description": "Dedicated WebSocket signaling and fallback relay server for Kaminey",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ws": "^8.18.0"
+  }
+}

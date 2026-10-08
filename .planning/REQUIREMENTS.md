@@ -9,10 +9,10 @@ Requirements for Milestone v1.0: Network & Backend Robustness (Hybrid Relay & Si
 
 ### Dedicated WebSocket Server (`SERVER`)
 
-- [ ] **SERVER-01**: Node.js WebSocket server manages room lifecycle (creation, player join, leave, destroy) with 6-character room codes.
-- [ ] **SERVER-02**: Server routes WebRTC SDP (offer/answer) and ICE candidate signaling payloads between host and mobile clients.
-- [ ] **SERVER-03**: Server acts as fallback message forwarder, relaying game state and player actions when direct WebRTC P2P is inactive.
-- [ ] **SERVER-04**: Server provides a lightweight HTTP health endpoint (`/health`) and socket ping/pong cleanup for inactive connections.
+- [x] **SERVER-01**: Node.js WebSocket server manages room lifecycle (creation, player join, leave, destroy) with 6-character room codes.
+- [x] **SERVER-02**: Server routes WebRTC SDP (offer/answer) and ICE candidate signaling payloads between host and mobile clients.
+- [x] **SERVER-03**: Server acts as fallback message forwarder, relaying game state and player actions when direct WebRTC P2P is inactive.
+- [x] **SERVER-04**: Server provides a lightweight HTTP health endpoint (`/health`) and socket ping/pong cleanup for inactive connections.
 
 ### Hybrid Client Network Bridge (`BRIDGE`)
 
@@ -61,10 +61,10 @@ Which phases cover which requirements.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SERVER-01 | Phase 1 | Pending |
-| SERVER-02 | Phase 1 | Pending |
-| SERVER-03 | Phase 1 | Pending |
-| SERVER-04 | Phase 1 | Pending |
+| SERVER-01 | Phase 1 | Complete |
+| SERVER-02 | Phase 1 | Complete |
+| SERVER-03 | Phase 1 | Complete |
+| SERVER-04 | Phase 1 | Complete |
 | BRIDGE-01 | Phase 2 | Pending |
 | BRIDGE-02 | Phase 2 | Pending |
 | BRIDGE-03 | Phase 2 | Pending |

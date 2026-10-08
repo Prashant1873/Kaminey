@@ -38,11 +38,11 @@ created: 2026-10-08
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 1-01-01 | 01 | 1 | SERVER-04 | T-1-01 | Rejects malformed JSON and answers `/health` | unit/integration | `node --test server/test/server.test.js` | ❌ W0 | ⬜ pending |
-| 1-01-02 | 01 | 1 | SERVER-01 | T-1-02 | Room creation and joining validates 6-char room code | integration | `node --test server/test/server.test.js` | ❌ W0 | ⬜ pending |
-| 1-01-03 | 01 | 1 | SERVER-02 | T-1-03 | WebRTC signal routing delivered only to intended peer | integration | `node --test server/test/server.test.js` | ❌ W0 | ⬜ pending |
-| 1-02-01 | 02 | 2 | SERVER-03 | T-1-04 | Fallback relay routes application payloads | integration | `node --test server/test/server.test.js` | ❌ W0 | ⬜ pending |
-| 1-02-02 | 02 | 2 | SERVER-04 | T-1-05 | Heartbeat ping cleans inactive rooms | integration | `node --test server/test/server.test.js` | ❌ W0 | ⬜ pending |
+| 1-01-01 | 01 | 1 | SERVER-04 | T-1-01 | Rejects malformed JSON and answers `/health` | unit/integration | `node --test server/test/server.test.js` | ✅ | ✅ green |
+| 1-01-02 | 01 | 1 | SERVER-01 | T-1-02 | Room creation and joining validates 6-char room code | integration | `node --test server/test/server.test.js` | ✅ | ✅ green |
+| 1-01-03 | 01 | 1 | SERVER-02 | T-1-03 | WebRTC signal routing delivered only to intended peer | integration | `node --test server/test/server.test.js` | ✅ | ✅ green |
+| 1-02-01 | 02 | 2 | SERVER-03 | T-1-04 | Fallback relay routes application payloads | integration | `node --test server/test/server.test.js` | ✅ | ✅ green |
+| 1-02-02 | 02 | 2 | SERVER-04 | T-1-05 | Heartbeat ping cleans inactive rooms | integration | `node --test server/test/server.test.js` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
