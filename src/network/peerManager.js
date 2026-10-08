@@ -77,12 +77,32 @@ export class HostNetwork {
       },
       onMessage: (envelope, senderId) => {
         const payload = envelope.payload !== undefined ? envelope.payload : envelope;
+        const msgType = envelope.type || payload?.type;
+
+        // Immediately resolve and dispatch state sync to requesting player
+        if (msgType === 'REQUEST_STATE_SYNC') {
+          const requestingPlayerId = senderId || payload?.playerId || envelope.senderId;
+          const handlers = this.getHandlers();
+          if (handlers.getCustomStateForPlayer && requestingPlayerId) {
+            try {
+              const state = handlers.getCustomStateForPlayer(requestingPlayerId);
+              if (state) {
+                this.sendToPlayer(requestingPlayerId, 'STATE_SYNC', state);
+              }
+            } catch (e) {
+              console.warn('[HostNetwork] REQUEST_STATE_SYNC reply error:', e);
+            }
+          }
+          return;
+        }
+
         this.getHandlers().onPlayerMessage?.(payload, senderId);
       },
       onStatusChange: (status) => {
         this.getHandlers().onStatusChange?.(status);
       },
       onModeChange: (mode) => {
+        this.getHandlers().onModeChange?.(mode);
         const modeLabel = mode === 'P2P_DIRECT' ? 'Direct P2P' : 'Server Relay';
         this.getHandlers().onStatusChange?.(`Online (${modeLabel})`);
       }
@@ -132,13 +152,14 @@ export class HostNetwork {
 }
 
 export class PlayerNetwork {
-  constructor(roomCode, playerData, onStateSync, onDisconnect, onStatusChange, onKicked) {
+  constructor(roomCode, playerData, onStateSync, onDisconnect, onStatusChange, onKicked, onModeChange) {
     this.roomCode = (roomCode || '').toUpperCase().trim();
     this.playerData = playerData; // { id, name, avatarId }
     this.onStateSync = onStateSync;
     this.onDisconnect = onDisconnect;
     this.onStatusChange = onStatusChange;
     this.onKicked = onKicked;
+    this.onModeChange = onModeChange;
     this.isDestroyed = false;
 
     // Instantiate Hybrid Bridge as Player
@@ -162,6 +183,7 @@ export class PlayerNetwork {
         this.onStatusChange?.(status);
       },
       onModeChange: (mode) => {
+        this.onModeChange?.(mode);
         const modeLabel = mode === 'P2P_DIRECT' ? 'Direct P2P' : 'Server Relay';
         this.onStatusChange?.(`Connected (${modeLabel})`);
       },
@@ -179,6 +201,11 @@ export class PlayerNetwork {
   send(type, payload) {
     if (this.isDestroyed) return;
     this.bridge.send(type, payload, 'host');
+  }
+
+  requestStateSync() {
+    if (this.isDestroyed) return;
+    this.send('REQUEST_STATE_SYNC', { playerId: this.playerData.id });
   }
 
   destroy() {

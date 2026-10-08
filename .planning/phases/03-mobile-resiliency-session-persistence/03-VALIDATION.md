@@ -1,9 +1,9 @@
 ---
 phase: 3
 slug: mobile-resiliency-session-persistence
-status: draft
+status: passed
 nyquist_compliant: true
-wave_0_complete: false
+wave_0_complete: true
 created: 2026-10-08
 ---
 
@@ -38,10 +38,10 @@ created: 2026-10-08
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 3-01-01 | 01 | 1 | RESILIENCE-01 | T-3-01 | Waking mobile screen tests socket liveness and auto-reconnects | unit | `node --test test/resilience.test.js` | ❌ W0 | ⬜ pending |
-| 3-01-02 | 01 | 1 | RESILIENCE-03 | T-3-02 | Bridge issues REQUEST_STATE_SYNC and updates game state | unit/integration | `node --test test/resilience.test.js` | ❌ W0 | ⬜ pending |
-| 3-02-01 | 02 | 2 | RESILIENCE-02 | T-3-03 | Disconnected player held in grace period before eviction | unit | `node --test test/resilience.test.js` | ❌ W0 | ⬜ pending |
-| 3-02-02 | 02 | 2 | RESILIENCE-04 | T-3-04 | Host and player UI render real-time connection badges | integration/build | `npm run build` | ❌ W0 | ⬜ pending |
+| 3-01-01 | 01 | 1 | RESILIENCE-01 | T-3-01 | Waking mobile screen tests socket liveness and auto-reconnects | unit | `node --test test/resilience.test.js` | ✅ yes | ✅ green |
+| 3-01-02 | 01 | 1 | RESILIENCE-03 | T-3-02 | Bridge issues REQUEST_STATE_SYNC and updates game state | unit/integration | `node --test test/resilience.test.js` | ✅ yes | ✅ green |
+| 3-02-01 | 02 | 2 | RESILIENCE-02 | T-3-03 | Disconnected player held in grace period before eviction | unit | `node --test test/resilience.test.js` | ✅ yes | ✅ green |
+| 3-02-02 | 02 | 2 | RESILIENCE-04 | T-3-04 | Host and player UI render real-time connection badges | integration/build | `npm run build` | ✅ yes | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -49,7 +49,7 @@ created: 2026-10-08
 
 ## Wave 0 Requirements
 
-- [ ] `test/resilience.test.js` — test suite exercising wakeup hooks, state sync requests, and grace period countdown
+- [x] `test/resilience.test.js` — test suite exercising wakeup hooks, state sync requests, and grace period countdown
 
 ---
 

@@ -79,4 +79,21 @@ Win Condition?  No Win Yet?
 | `CAST_VOTE` | Player -> Host | `{ targetId }` | Council exile ballot |
 | `HEARTBEAT_PING` | Host -> Player | `{ timestamp }` | Keep-alive check every 2.5s |
 | `HEARTBEAT_PONG` | Player -> Host | `{ timestamp }` | Client alive confirmation |
+| `REQUEST_STATE_SYNC` | Player -> Host | `{ playerId }` | Instant mobile wake / reconnect state resync |
 | `PLAYER_KICKED` | Host -> Player | `{ reason }` | Host manual removal |
+
+## 4. Mobile Resiliency & Session Preservation
+
+```text
+[ Mobile Screen Lock / Background Sleep ]
+                 │
+                 ▼ (Wake: document.visibilitychange)
+[ Immediate Socket Health Probe ]
+  ├── Socket OPEN:  Issue REQUEST_STATE_SYNC ──► Host replies with personalized STATE_SYNC
+  └── Socket DEAD:  Trigger bridge.init() ────► Re-register room ──► REQUEST_STATE_SYNC
+
+[ Transient Connection Loss ]
+  └── Host starts 15-second grace period timer:
+        ├── Reconnected within 15s: Cancel timer, retain role, alive status, and votes
+        └── Expired after 15s: Evict player from active roster
+```

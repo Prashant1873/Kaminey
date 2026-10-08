@@ -23,10 +23,10 @@ Requirements for Milestone v1.0: Network & Backend Robustness (Hybrid Relay & Si
 
 ### Mobile Resiliency & Session Persistence (`RESILIENCE`)
 
-- [ ] **RESILIENCE-01**: Mobile client detects screen sleep and tab wake via `visibilitychange` and `online` events, instantly verifying socket liveness.
-- [ ] **RESILIENCE-02**: Host Base Station maintains a 15-second disconnection grace period before evicting a disconnected player from active game state.
-- [ ] **RESILIENCE-03**: Mobile client automatically issues `REQUEST_STATE_SYNC` upon reconnecting to restore the exact active phase screen without page refresh.
-- [ ] **RESILIENCE-04**: Host and mobile player UIs display real-time connection status badges ("Direct P2P", "Server Relay", "Reconnecting").
+- [x] **RESILIENCE-01**: Mobile client detects screen sleep and tab wake via `visibilitychange` and `online` events, instantly verifying socket liveness.
+- [x] **RESILIENCE-02**: Host Base Station maintains a 15-second disconnection grace period before evicting a disconnected player from active game state.
+- [x] **RESILIENCE-03**: Mobile client automatically issues `REQUEST_STATE_SYNC` upon reconnecting to restore the exact active phase screen without page refresh.
+- [x] **RESILIENCE-04**: Host and mobile player UIs display real-time connection status badges ("Direct P2P", "Server Relay", "Reconnecting").
 
 ### Cloud Deployment & Environment Config (`DEPLOY`)
 

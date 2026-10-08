@@ -41,8 +41,10 @@ export default function HostBaseStation({ onExit }) {
   }, [onExit]);
 
   const [networkStatus, setNetworkStatus] = useState('Initializing base station...');
+  const [networkMode, setNetworkMode] = useState('CONNECTING');
   const [phase, setPhase] = useState('LOBBY');
   const [players, setPlayers] = useState([]);
+  const gracePeriodTimers = useRef(new Map());
   const [roles, setRoles] = useState({}); // Master secret: playerId -> 'kamina' | 'bhola'
   const [currentMission, setCurrentMission] = useState(() => getRandomTeamMission());
   const [readyPlayers, setReadyPlayers] = useState({}); // playerId -> true
@@ -171,6 +173,13 @@ export default function HostBaseStation({ onExit }) {
   const callbacksRef = useRef({});
   callbacksRef.current = {
     onPlayerJoin: (playerData, conn) => {
+      // Clear 15s disconnection grace timer if player reconnected
+      if (gracePeriodTimers.current.has(playerData.id)) {
+        console.log(`[Host] Player ${playerData.id} reconnected within grace period. Grace timer cancelled.`);
+        clearTimeout(gracePeriodTimers.current.get(playerData.id));
+        gracePeriodTimers.current.delete(playerData.id);
+      }
+
       setPlayers(prev => {
         // If player with this exact ID already exists, update info (reconnect)
         const index = prev.findIndex(p => p.id === playerData.id);
@@ -220,10 +229,22 @@ export default function HostBaseStation({ onExit }) {
     },
     onPlayerMessage: handlePlayerMessage,
     onPlayerLeave: (playerId) => {
-      console.log('Player disconnected:', playerId);
+      console.log(`[Host] Player ${playerId} disconnected. Starting 15s grace period.`);
+      if (gracePeriodTimers.current.has(playerId)) {
+        clearTimeout(gracePeriodTimers.current.get(playerId));
+      }
+      const timer = setTimeout(() => {
+        gracePeriodTimers.current.delete(playerId);
+        setPlayers(prev => prev.filter(p => p.id !== playerId));
+        console.log(`[Host] Grace period expired for player ${playerId}. Evicted from room.`);
+      }, 15000);
+      gracePeriodTimers.current.set(playerId, timer);
     },
     onStatusChange: (status) => {
       setNetworkStatus(status);
+    },
+    onModeChange: (mode) => {
+      setNetworkMode(mode);
     },
     onCodeUnavailable: () => {
       handleRegenerateCode();
@@ -243,12 +264,18 @@ export default function HostBaseStation({ onExit }) {
     net.init();
 
     return () => {
+      gracePeriodTimers.current.forEach(timer => clearTimeout(timer));
+      gracePeriodTimers.current.clear();
       net.destroy();
     };
   }, [roomCode]);
 
   // Remove / kick player from lobby setup screen
   const handleRemovePlayer = useCallback((playerId) => {
+    if (gracePeriodTimers.current.has(playerId)) {
+      clearTimeout(gracePeriodTimers.current.get(playerId));
+      gracePeriodTimers.current.delete(playerId);
+    }
     setPlayers(prev => prev.filter(p => p.id !== playerId));
     if (networkRef.current) {
       networkRef.current.kickPlayer(playerId);
@@ -567,6 +594,7 @@ export default function HostBaseStation({ onExit }) {
         playerCount={players.length}
         currentPhase={phase}
         onLeave={handleExit}
+        networkMode={networkMode}
       />
 
       <main style={{

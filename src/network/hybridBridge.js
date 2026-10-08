@@ -62,6 +62,34 @@ export class HybridNetworkBridge {
     this.seqNumber = 0;
     this.isDestroyed = false;
     this.p2pSupported = typeof RTCPeerConnection !== 'undefined';
+
+    // Lifecycle handlers for mobile sleep/wake & network drops
+    this.handleVisibilityChange = () => {
+      if (typeof document === 'undefined' || this.isDestroyed) return;
+      if (document.visibilityState === 'visible') {
+        const isDead = !this.ws || this.ws.readyState === (typeof WebSocket !== 'undefined' ? WebSocket.CLOSED : 3) || this.ws.readyState === (typeof WebSocket !== 'undefined' ? WebSocket.CLOSING : 2);
+        if (isDead) {
+          this.onStatusChange?.('Reconnecting after sleep...');
+          this.init();
+        } else if (this.ws.readyState === (typeof WebSocket !== 'undefined' ? WebSocket.OPEN : 1) && this.role === 'player') {
+          this.onStatusChange?.('Syncing palace chamber...');
+          this.send('REQUEST_STATE_SYNC', { playerId: this.id }, 'host');
+        }
+      }
+    };
+
+    this.handleOnline = () => {
+      if (this.isDestroyed) return;
+      if (!this.ws || this.ws.readyState !== (typeof WebSocket !== 'undefined' ? WebSocket.OPEN : 1)) {
+        this.onStatusChange?.('Network restored. Reconnecting...');
+        this.init();
+      }
+    };
+
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      document.addEventListener('visibilitychange', this.handleVisibilityChange);
+      window.addEventListener('online', this.handleOnline);
+    }
   }
 
   setTransportMode(mode) {
@@ -73,6 +101,9 @@ export class HybridNetworkBridge {
 
   init() {
     if (this.isDestroyed) return;
+    if (this.ws && (this.ws.readyState === (typeof WebSocket !== 'undefined' ? WebSocket.OPEN : 1) || this.ws.readyState === (typeof WebSocket !== 'undefined' ? WebSocket.CONNECTING : 0))) {
+      return;
+    }
     this.onStatusChange?.('Connecting to signaling network...');
 
     try {
@@ -165,9 +196,11 @@ export class HybridNetworkBridge {
     if (type === 'ROOM_JOINED') {
       this.onRoomJoined?.(msg);
       this.onStatusChange?.('Joined room! Connecting to host...');
-      // If we are a player and WebRTC is supported, initiate P2P offer to host
-      if (this.role === 'player' && this.p2pSupported) {
-        this.initiatePlayerP2POffer('host');
+      if (this.role === 'player') {
+        this.send('REQUEST_STATE_SYNC', { playerId: this.id }, 'host');
+        if (this.p2pSupported) {
+          this.initiatePlayerP2POffer('host');
+        }
       }
       return;
     }
@@ -412,6 +445,10 @@ export class HybridNetworkBridge {
 
   destroy() {
     this.isDestroyed = true;
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+      window.removeEventListener('online', this.handleOnline);
+    }
     if (this.fallbackTimer) clearTimeout(this.fallbackTimer);
     this.dataChannels.forEach(dc => {
       try { dc.close(); } catch (e) {}

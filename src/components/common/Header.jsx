@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { Volume2, VolumeX, Users, Tv, Smartphone, Sun, Moon, Crown } from 'lucide-react';
 import { sounds } from '../../audio/soundEffects';
 import { useTheme } from '../../context/ThemeContext';
+import NetworkBadge from './NetworkBadge';
 
-export default function Header({ isHost, roomCode, playerCount, onLeave, currentPhase }) {
+export default function Header({ isHost, roomCode, playerCount, onLeave, currentPhase, networkMode }) {
   const [muted, setMuted] = useState(false);
   const { dark, toggle: toggleTheme } = useTheme();
 
@@ -134,6 +135,10 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
 
       {/* Right controls */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+        {networkMode && (
+          <NetworkBadge mode={networkMode} />
+        )}
+
         {roomCode && (
           <div style={{
             background: 'var(--surface-container-low)',

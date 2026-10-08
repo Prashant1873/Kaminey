@@ -41,6 +41,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
   }, [initialRoomCode, playerData]);
 
   const [networkStatus, setNetworkStatus] = useState('');
+  const [networkMode, setNetworkMode] = useState('CONNECTING');
   const [gameState, setGameState] = useState(null); // Synced state from host
   const networkRef = useRef(null);
 
@@ -65,6 +66,9 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
         setPlayerData(null);
         setGameState(null);
         setNetworkStatus(reason || 'Removed from room by host');
+      },
+      (mode) => {
+        setNetworkMode(mode);
       }
     );
     networkRef.current = net;
@@ -222,6 +226,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
         isHost={false}
         roomCode={playerData.roomCode}
         currentPhase={phase}
+        networkMode={networkMode}
         onLeave={() => {
           if (networkRef.current) networkRef.current.destroy();
           sessionStorage.removeItem('kaminey_player_session');
