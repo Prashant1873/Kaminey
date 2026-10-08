@@ -91,7 +91,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Dedicated Node.js WebSocket Signaling & Relay Server | 0/2 | Not started | - |
+| 1. Dedicated Node.js WebSocket Signaling & Relay Server | 0/2 | Planned | - |
 | 2. Hybrid Client Network Bridge | 0/2 | Not started | - |
 | 3. Mobile Resiliency & Session Persistence | 0/2 | Not started | - |
 | 4. Cloud Deployment & Production Integration | 0/2 | Not started | - |
