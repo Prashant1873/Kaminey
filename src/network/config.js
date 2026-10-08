@@ -11,6 +11,10 @@ export const ICE_SERVERS = [
 
 export const FALLBACK_P2P_TIMEOUT_MS = 4000;
 
+// Pure Server Relay Mode: routes all traffic through WebSocket server for 100% rock-solid stability
+// Completely eliminates flaky WebRTC DataChannel drops, NAT timeouts, and mode flapping
+export const USE_PURE_SERVER_RELAY = true;
+
 // Default production cloud relay on Render (can be overridden via VITE_WS_SERVER_URL)
 export const DEFAULT_PRODUCTION_WS_URL = 'wss://kaminey-server.onrender.com';
 

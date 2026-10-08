@@ -20,8 +20,8 @@ export default function NetworkBadge({ mode = 'CONNECTING', compact = false, sty
       pulse = false;
       break;
     case 'WS_RELAY':
-      label = 'Server Relay';
-      dotColor = '#F59E0B'; // Amber
+      label = 'Online (Server)';
+      dotColor = '#10B981'; // Green (Stable)
       pulse = false;
       break;
     case 'DISCONNECTED':

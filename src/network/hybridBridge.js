@@ -3,7 +3,7 @@
 // an automatic 4-second fallback to WebSocket server relaying.
 // Features monotonic message sequence IDs and deduplication cache.
 
-import { getWebSocketServerUrl, ICE_SERVERS, FALLBACK_P2P_TIMEOUT_MS } from './config.js';
+import { getWebSocketServerUrl, ICE_SERVERS, FALLBACK_P2P_TIMEOUT_MS, USE_PURE_SERVER_RELAY } from './config.js';
 
 export class DeduplicationCache {
   constructor(ttlMs = 10000) {
@@ -60,8 +60,8 @@ export class HybridNetworkBridge {
     this.fallbackTimer = null;
     this.dedupCache = new DeduplicationCache(10000);
     this.seqNumber = 0;
-    this.isDestroyed = false;
-    this.p2pSupported = typeof RTCPeerConnection !== 'undefined';
+    this.pureRelay = options.pureRelay !== undefined ? options.pureRelay : USE_PURE_SERVER_RELAY;
+    this.p2pSupported = !this.pureRelay && typeof RTCPeerConnection !== 'undefined';
 
     // Lifecycle handlers for mobile sleep/wake & network drops
     this.handleVisibilityChange = () => {
@@ -137,8 +137,13 @@ export class HybridNetworkBridge {
         }));
       }
 
-      // Start the 4-second P2P fallback race timer
-      this.startFallbackRace();
+      // Use pure server relay or start P2P fallback race
+      if (this.pureRelay) {
+        this.setTransportMode('WS_RELAY');
+        this.onStatusChange?.('Online (Server Relay)');
+      } else {
+        this.startFallbackRace();
+      }
     };
 
     this.ws.onmessage = (event) => {
@@ -188,17 +193,19 @@ export class HybridNetworkBridge {
     const { type } = msg;
 
     if (type === 'ROOM_CREATED') {
+      this.setTransportMode('WS_RELAY');
       this.onRoomCreated?.(msg.roomCode);
       this.onStatusChange?.('Online - Room created. Ready for guests');
       return;
     }
 
     if (type === 'ROOM_JOINED') {
+      this.setTransportMode('WS_RELAY');
       this.onRoomJoined?.(msg);
-      this.onStatusChange?.('Joined room! Connecting to host...');
+      this.onStatusChange?.('Connected (Server Relay)');
       if (this.role === 'player') {
         this.send('REQUEST_STATE_SYNC', { playerId: this.id }, 'host');
-        if (this.p2pSupported) {
+        if (!this.pureRelay && this.p2pSupported) {
           this.initiatePlayerP2POffer('host');
         }
       }
@@ -335,6 +342,7 @@ export class HybridNetworkBridge {
     this.dataChannels.set(peerId, dc);
 
     dc.onopen = () => {
+      if (this.pureRelay) return;
       if (this.fallbackTimer) clearTimeout(this.fallbackTimer);
       this.setTransportMode('P2P_DIRECT');
       this.onStatusChange?.('Direct P2P channel connected');
@@ -399,18 +407,20 @@ export class HybridNetworkBridge {
     };
 
     // If in P2P mode and data channel is open, transmit directly
-    const dc = this.dataChannels.get(targetId);
-    if (this.transportMode === 'P2P_DIRECT' && dc && dc.readyState === 'open') {
-      try {
-        dc.send(JSON.stringify(envelope));
-        return;
-      } catch (err) {
-        console.warn('[HybridBridge] Direct DataChannel send error, falling back to relay:', err);
+    if (!this.pureRelay && this.transportMode === 'P2P_DIRECT') {
+      const dc = this.dataChannels.get(targetId);
+      if (dc && dc.readyState === 'open') {
+        try {
+          dc.send(JSON.stringify(envelope));
+          return;
+        } catch (err) {
+          console.warn('[HybridBridge] Direct DataChannel send error, falling back to relay:', err);
+        }
       }
     }
 
-    // Fallback: transmit via WebSocket Relay
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+    // Direct transmission via WebSocket Relay
+    if (this.ws && this.ws.readyState === (typeof WebSocket !== 'undefined' ? WebSocket.OPEN : 1)) {
       this.ws.send(JSON.stringify({
         action: 'RELAY',
         roomCode: this.roomCode,
