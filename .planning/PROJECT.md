@@ -18,13 +18,19 @@ Frictionless, instant smartphone join and unbreakable session connection during 
 - [x] Procedural audio synthesis via Web Audio API (`src/audio/soundEffects.js`)
 - [x] Curated Indian royal avatar taxonomy and 6-character room codes (`HAV412`, `SHI829`)
 - [x] GitHub Pages static frontend deployment workflow
+- [x] Lightweight Node.js/WebSocket signaling & relay server for dedicated room orchestration (Milestone v1.0)
+- [x] Hybrid network bridge with automatic WebSocket relay fallback (Milestone v1.0)
+- [x] Mobile background sleep/wake resilience and 15s host grace period (Milestone v1.0)
+- [x] 1-click cloud server deployment profiles for Render/Railway (Milestone v1.0)
 
 ### Active
 
-- [ ] Lightweight Node.js/WebSocket signaling & relay server for dedicated room orchestration
-- [ ] Hybrid network bridge: attempt direct WebRTC P2P for low latency, automatically falling back to WebSocket relay if ICE / symmetric NAT fails
-- [ ] Resilient heartbeat, keep-alive, and auto-reconnect logic for mobile devices surviving background sleep and tab switches
-- [ ] 1-click cloud server deployment profile (Render, Railway, Fly.io, or self-hosted) with configurable frontend backend URL fallback
+- [ ] Royal Haveli luxury color palette and semantic tokens (from `frontend-skill`)
+- [ ] Tactile buttons, toggles, segmented controls with concentric radii & optical centering (from `frontend-skill`)
+- [ ] Apple fluid spring physics and micro-animations with critically damped settling (from `frontend-skill`)
+- [ ] Coordinated atomic skeleton loading system eliminating staggered DOM pop-in
+- [ ] UI/UX cognitive flow overhaul enforcing Doherty 400ms threshold, Hick's & Fitts's laws
+- [ ] Official GitHub release: comprehensive README, gameplay diagrams, release badges, launch packaging
 
 ### Out of Scope
 
@@ -32,26 +38,41 @@ Frictionless, instant smartphone join and unbreakable session connection during 
 - [ ] User authentication / permanent account databases — ephemeral room sessions maintain party game spontaneity
 - [ ] Video/Audio WebRTC streaming — only structured JSON state payloads are transmitted
 
+## Current Milestone: v2.0 UI/UX Overhaul, Anti-Slop Design System and Production Release
+
+**Goal:** Transform Kaminey into a luxury, anti-slop party game experience with fluid physics, atomic skeleton loading, and an official GitHub release.
+
+**Target features:**
+- Haveli color palette & semantic tokens (frontend-skill)
+- Tactile buttons, toggles & concentric controls (frontend-skill)
+- Apple fluid spring physics & layout transitions (frontend-skill)
+- Coordinated atomic skeleton loading system
+- UI/UX flow overhaul & cognitive UX laws
+- Official GitHub release documentation, launch assets, and polish
+
 ## Context
 
 - Real-world playtesting revealed mobile players on cellular (LTE/5G) or restrictive guest Wi-Fi networks could not connect to hosts due to symmetric NAT and public PeerJS cloud signaling (`0.peerjs.com`) downtime/rate limits.
-- The hybrid approach preserves zero-latency direct P2P when available while providing an unbreakable fallback relay via a lightweight Node/WebSocket server.
+- Milestone v1.0 successfully delivered a dedicated Node.js signaling/relay server, hybrid network bridge, mobile resilience, and cloud deployment.
+- Milestone v2.0 elevates the visual craft, motion physics, perceived performance, and GitHub presence to production release grade.
 
 ## Constraints
 
 - **Tech Stack**: Frontend: React 18, Vite, Vanilla CSS tokens. Backend: Node.js with `ws` or lightweight server.
-- **Network Compatibility**: Must work seamlessly across asymmetric Wi-Fi and mobile carrier networks (cellular 4G/5G).
-- **Deployment**: Frontend deployed to GitHub Pages; backend deployable to free/low-cost platforms (e.g. Render, Railway) with zero mandatory credit card barrier.
+- **Design System**: Strict anti-slop craft standards, Apple fluid spring physics, WCAG 2.2 AA accessibility, zero layout pop-in.
+- **Deployment**: Frontend deployed to GitHub Pages; backend deployable to free/low-cost platforms (e.g. Render, Railway).
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Hybrid WebRTC + WebSocket Relay | Pure STUN P2P fails on symmetric NAT/cellular; pure WebSocket increases server load. Hybrid gets best of both worlds. | — Pending |
+| Hybrid WebRTC + WebSocket Relay | Pure STUN P2P fails on symmetric NAT/cellular; pure WebSocket increases server load. Hybrid gets best of both worlds. | ✓ Validated (v1.0) |
 | Ephemeral Room Sessions | Avoids auth friction and database overhead for living room party games. | ✓ Good |
+| Anti-Slop Design Tokens & Apple Springs | Replaces generic styling with an immersive royal Haveli palace aesthetic and fluid physics. | — Pending |
+| Coordinated Atomic Skeletons | Prevents piecemeal DOM pops and jarring reflows during phase transitions and asset loading. | — Pending |
 
 ---
-*Last updated: 2026-10-08 after Milestone v1.0 initialization*
+*Last updated: 2026-10-12 after Milestone v2.0 initialization*
 
 ## Evolution
 
