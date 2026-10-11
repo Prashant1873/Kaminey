@@ -13,7 +13,7 @@ Milestone v2.0 elevates Kaminey to a production-grade party game experience. Fol
 
 - [x] **Phase 5: Royal Haveli Color System & Anti-Slop Visual Tokens** - Implement rich Indian Haveli palette, semantic design tokens, and WCAG 2.2 AA contrast.
 - [x] **Phase 6: Tactile Controls, Toggles & Concentric Affordances** - Build button hierarchy with optical centering, concentric radii, and viscoelastic WAAPI toggles.
-- [ ] **Phase 7: Apple Fluid Spring Motion & Micro-Interactions** - Critically damped settling physics, underdamped momentum gestures, and 100% interruptible transitions.
+- [x] **Phase 7: Apple Fluid Spring Motion & Micro-Interactions** - Critically damped settling physics, underdamped momentum gestures, and 100% interruptible transitions.
 - [ ] **Phase 8: Coordinated Atomic Skeleton Loading System** - Synchronized component skeleton loading with zero CLS layout shifts and atomic reveals.
 - [ ] **Phase 9: UI/UX Flow & Cognitive Ergonomics Overhaul** - Enforce Fitts's Law 44px thumb reach, Hick's Law progressive disclosure, Doherty <400ms feedback, and Peak-End rule.
 - [ ] **Phase 10: Official GitHub Launch & Production Release** - Comprehensive README, system diagrams, gameplay guides, release badges, and production release tagging.
@@ -63,8 +63,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 07-01: Spring physics animation utility & transition engine (`src/styles/springs.js`).
-- [ ] 07-02: Wire fluid springs into Role Reveal, voting cards, and host announcements.
+- [x] 07-01: Spring physics animation utility & transition engine (`src/styles/springs.js`).
+- [x] 07-02: Wire fluid springs into Role Reveal, voting cards, and host announcements.
 
 ---
 
@@ -125,7 +125,7 @@ Phases execute in numeric order: 5 → 6 → 7 → 8 → 9 → 10
 |---|---|---|---|
 | 5. Royal Haveli Color System & Anti-Slop Visual Tokens | 2/2 | Complete | 2026-10-12 |
 | 6. Tactile Controls, Toggles & Concentric Affordances | 2/2 | Complete | 2026-10-12 |
-| 7. Apple Fluid Spring Motion & Micro-Interactions | 0/2 | Pending | — |
+| 7. Apple Fluid Spring Motion & Micro-Interactions | 2/2 | Complete | 2026-10-12 |
 | 8. Coordinated Atomic Skeleton Loading System | 0/2 | Pending | — |
 | 9. UI/UX Flow & Cognitive Ergonomics Overhaul | 0/2 | Pending | — |
 | 10. Official GitHub Launch & Production Release | 0/2 | Pending | — |

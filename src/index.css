@@ -951,3 +951,58 @@ html:has(.theme-simsim-night) {
   border-radius: 0 !important;
   box-shadow: none !important;
 }
+
+/* ==========================================================================
+   Apple Fluid Spring Animation Utilities
+   ========================================================================== */
+
+@keyframes springSettleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.94) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes springCardReveal {
+  0% {
+    opacity: 0;
+    transform: perspective(1000px) rotateX(12deg) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0deg) scale(1);
+  }
+}
+
+@keyframes springStampSlam {
+  0% {
+    opacity: 0;
+    transform: scale(1.4) rotate(-8deg);
+  }
+  60% {
+    transform: scale(0.97) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.spring-settle-in {
+  animation: springSettleIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.spring-card-reveal {
+  animation: springCardReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.spring-stamp-slam {
+  animation: springStampSlam 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  will-change: transform, opacity;
+}

@@ -64,19 +64,18 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
       {/* 3D Touch & Hold Wax Envelope Card */}
       <div style={{ perspective: '1200px', width: '100%' }}>
         <div
-          onMouseDown={startPeek}
-          onMouseUp={endPeek}
-          onMouseLeave={endPeek}
-          onTouchStart={startPeek}
-          onTouchEnd={endPeek}
-          className="secret-reveal-box"
+          onPointerDown={startPeek}
+          onPointerUp={endPeek}
+          onPointerCancel={endPeek}
+          onPointerLeave={endPeek}
+          className="secret-reveal-box spring-settle-in"
           style={{
             width: '100%',
             minHeight: '300px',
             position: 'relative',
             transformStyle: 'preserve-3d',
             transform: isRevealed ? 'rotateY(180deg)' : 'rotateY(0deg)',
-            transition: 'transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1)',
+            transition: 'transform 0.38s var(--spring-timing-apple)',
             cursor: 'pointer',
             touchAction: 'none',
             WebkitTouchCallout: 'none',

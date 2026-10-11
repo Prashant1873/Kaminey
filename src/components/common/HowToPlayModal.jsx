@@ -88,6 +88,7 @@ export default function HowToPlayModal({ isOpen, onClose }) {
       }}
     >
       <div
+        className="spring-settle-in"
         onClick={(e) => e.stopPropagation()}
         style={{
           background: 'var(--surface-container-lowest)',
