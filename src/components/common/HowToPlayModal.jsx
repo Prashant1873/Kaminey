@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { X, QrCode, Moon, MessageSquare, Scale, ShieldCheck, Skull, Ghost, Sparkles, CheckCircle2 } from 'lucide-react';
+import Button from './Button';
 
 export default function HowToPlayModal({ isOpen, onClose }) {
   useEffect(() => {
@@ -348,16 +349,14 @@ export default function HowToPlayModal({ isOpen, onClose }) {
           borderBottomLeftRadius: 'var(--rounded-2xl)',
           borderBottomRightRadius: 'var(--rounded-2xl)'
         }}>
-          <button
-            type="button"
+          <Button
+            variant="primary"
             onClick={onClose}
-            className="btn-primary spring-btn"
-            aria-label="Understood, return to game"
-            style={{ minHeight: '44px', padding: '10px 24px', fontSize: '0.875rem' }}
+            icon={<CheckCircle2 size={16} />}
+            ariaLabel="Understood, return to game"
           >
-            <CheckCircle2 size={16} />
-            <span>Got It, Let's Play!</span>
-          </button>
+            Got It, Let's Play!
+          </Button>
         </div>
       </div>
     </div>

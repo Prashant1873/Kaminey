@@ -178,7 +178,9 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
           aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
           style={{ ...btnStyle, color: dark ? '#FBBF24' : '#64748B' }}
         >
-          {dark ? <Sun size={17} /> : <Moon size={17} />}
+          <span style={{ display: 'inline-flex', transform: 'translateY(-0.5px)' }}>
+            {dark ? <Sun size={17} /> : <Moon size={17} />}
+          </span>
         </button>
 
         {/* Audio Mute Toggle */}
@@ -189,7 +191,9 @@ export default function Header({ isHost, roomCode, playerCount, onLeave, current
           aria-label={muted ? 'Unmute audio' : 'Mute audio'}
           style={{ ...btnStyle, color: muted ? 'var(--loss)' : 'var(--on-surface-variant)' }}
         >
-          {muted ? <VolumeX size={17} /> : <Volume2 size={17} />}
+          <span style={{ display: 'inline-flex', transform: 'translateY(-0.5px)' }}>
+            {muted ? <VolumeX size={17} /> : <Volume2 size={17} />}
+          </span>
         </button>
 
         {onLeave && (

@@ -359,6 +359,52 @@ input:focus-visible {
   transform: scale(0.98) translateY(1px);
 }
 
+.btn-ghost {
+  background-color: transparent;
+  color: var(--on-surface-variant);
+  border: 1px solid transparent;
+  border-radius: var(--rounded-lg);
+  padding: 8px 16px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: all 0.2s var(--spring-timing-apple);
+}
+
+.btn-ghost:hover {
+  background-color: var(--surface-container-low);
+  color: var(--on-surface);
+  border-color: var(--outline-variant);
+}
+
+.btn-ghost:active {
+  transform: scale(0.98);
+}
+
+/* Concentric Container & Card Geometry */
+.concentric-container-xl {
+  border-radius: var(--r-2xl);
+  padding: 16px;
+}
+
+.concentric-item-xl {
+  border-radius: calc(var(--r-2xl) - 16px);
+}
+
+.concentric-container-lg {
+  border-radius: var(--r-xl);
+  padding: 12px;
+}
+
+.concentric-item-lg {
+  border-radius: calc(var(--r-xl) - 12px);
+}
+
 /* Category Pill / Segmented Switches */
 .category-pill {
   background-color: var(--surface-container-low);
