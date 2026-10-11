@@ -11,7 +11,7 @@ Milestone v2.0 elevates Kaminey to a production-grade party game experience. Fol
 - Integer phases (5, 6, 7, 8, 9, 10): Planned milestone work
 - Decimal phases (e.g. 5.1): Urgent insertions if needed
 
-- [ ] **Phase 5: Royal Haveli Color System & Anti-Slop Visual Tokens** - Implement rich Indian Haveli palette, semantic design tokens, and WCAG 2.2 AA contrast.
+- [x] **Phase 5: Royal Haveli Color System & Anti-Slop Visual Tokens** - Implement rich Indian Haveli palette, semantic design tokens, and WCAG 2.2 AA contrast.
 - [ ] **Phase 6: Tactile Controls, Toggles & Concentric Affordances** - Build button hierarchy with optical centering, concentric radii, and viscoelastic WAAPI toggles.
 - [ ] **Phase 7: Apple Fluid Spring Motion & Micro-Interactions** - Critically damped settling physics, underdamped momentum gestures, and 100% interruptible transitions.
 - [ ] **Phase 8: Coordinated Atomic Skeleton Loading System** - Synchronized component skeleton loading with zero CLS layout shifts and atomic reveals.
@@ -31,8 +31,8 @@ Milestone v2.0 elevates Kaminey to a production-grade party game experience. Fol
 **Plans**: 2 plans
 
 Plans:
-- [ ] 05-01: Token definitions & color scale architecture in `src/styles/tokens.css`.
-- [ ] 05-02: Apply palette tokens across Host Base Station and Player Controller views.
+- [x] 05-01: Token definitions & color scale architecture in `src/styles/tokens.css`.
+- [x] 05-02: Apply palette tokens across Host Base Station and Player Controller views.
 
 ---
 
@@ -123,7 +123,7 @@ Phases execute in numeric order: 5 → 6 → 7 → 8 → 9 → 10
 
 | Phase | Plans Complete | Status | Completed |
 |---|---|---|---|
-| 5. Royal Haveli Color System & Anti-Slop Visual Tokens | 0/2 | Pending | — |
+| 5. Royal Haveli Color System & Anti-Slop Visual Tokens | 2/2 | Complete | 2026-10-12 |
 | 6. Tactile Controls, Toggles & Concentric Affordances | 0/2 | Pending | — |
 | 7. Apple Fluid Spring Motion & Micro-Interactions | 0/2 | Pending | — |
 | 8. Coordinated Atomic Skeleton Loading System | 0/2 | Pending | — |

@@ -1,60 +1,62 @@
+@import './styles/tokens.css';
+
 /* Kaminey - Global Styles & Design System */
 /* Minimal Apple Design & Dark Haveli Aesthetic */
 
 :root,
 [data-theme="light"] {
-  /* Initial Theme: Royal Blue & Clean Slate (High Contrast) */
-  --primary: #003d9b;
-  --primary-container: #0052cc;
-  --primary-rgb: 0, 82, 204;
-  --primary-subtle: rgba(0, 82, 204, 0.08);
-  --primary-subtle-border: rgba(0, 82, 204, 0.22);
+  /* Royal Haveli Sandstone & Palace Crimson Theme (Light) */
+  --primary: #801D1E; /* Palace Crimson */
+  --primary-container: #9E2A2B;
+  --primary-rgb: 158, 42, 43;
+  --primary-subtle: rgba(158, 42, 43, 0.08);
+  --primary-subtle-border: rgba(158, 42, 43, 0.22);
   --primary-contrast: #ffffff;
   
-  --secondary: #285ab9;
-  --secondary-container: #709bfe;
+  --secondary: #A27525; /* Royal Sandstone Gold */
+  --secondary-container: #C99738;
   
-  --gain: #36B37E;
-  --gain-text: #00875A;
-  --loss: #FF5630;
-  --loss-text: #DE350B;
-  --warning: #FF9F0A;
-  --warning-text: #B76E00;
+  --gain: var(--haveli-emerald-500);
+  --gain-text: #047857;
+  --loss: #DE350B;
+  --loss-text: #991B1B;
+  --warning: #D97706;
+  --warning-text: #92400E;
   
-  --simsim-neon: #00F090;
-  --simsim-surface: #0B0F19;
-  --simsim-header: #070A12;
+  --simsim-neon: #059669;
+  --simsim-surface: #F5EFE6;
+  --simsim-header: #E8DFD0;
   
-  --surface: #f8f9fb;
-  --surface-container-lowest: #ffffff;
-  --surface-container-low: #f3f4f6;
-  --surface-container: #edeef0;
-  --surface-container-high: #e7e8ea;
-  --surface-container-highest: #e1e2e4;
+  --surface: #FAF7F2;
+  --surface-container-lowest: #FFFFFF;
+  --surface-container-low: #F5EFE6;
+  --surface-container: #ECE3D4;
+  --surface-container-high: #E0D4C0;
+  --surface-container-highest: #D5C4AC;
   
-  --on-surface: #191c1e;
-  --on-surface-variant: #434654;
-  --outline: #737685;
-  --outline-variant: #c3c6d6;
+  --on-surface: #1C150C;
+  --on-surface-variant: #584B3A;
+  --outline: #8C7D68;
+  --outline-variant: #D4C7B5;
 
   /* Typography */
-  --font-family: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+  --font-family: var(--font-family-sans);
   
-  /* Radii */
-  --rounded-sm: 4px;
-  --rounded-md: 8px;
-  --rounded-lg: 12px;
-  --rounded-xl: 16px;
-  --rounded-2xl: 20px;
-  --rounded-full: 9999px;
+  /* Radii (Concentric system) */
+  --rounded-sm: var(--r-sm);
+  --rounded-md: var(--r-md);
+  --rounded-lg: var(--r-lg);
+  --rounded-xl: var(--r-xl);
+  --rounded-2xl: var(--r-2xl);
+  --rounded-full: var(--r-full);
 
-  /* Crisp Light Shadows */
-  --shadow-resting: 0px 4px 12px rgba(9, 30, 66, 0.08);
-  --shadow-elevated: 0px 16px 36px -6px rgba(9, 30, 66, 0.12);
-  --shadow-floating: 0px 16px 40px rgba(9, 30, 66, 0.16);
-  --shadow-glow-primary: 0 8px 24px -3px rgba(0, 82, 204, 0.35);
-  --shadow-glow-loss: 0 8px 24px -3px rgba(255, 86, 48, 0.4);
-  --shadow-glow-neon: 0 8px 24px -3px rgba(0, 240, 144, 0.35);
+  /* Warm Sandstone Shadows */
+  --shadow-resting: 0px 4px 12px rgba(92, 60, 20, 0.08);
+  --shadow-elevated: 0px 16px 36px -6px rgba(92, 60, 20, 0.12);
+  --shadow-floating: 0px 16px 40px rgba(92, 60, 20, 0.16);
+  --shadow-glow-primary: 0 8px 24px -3px rgba(158, 42, 43, 0.35);
+  --shadow-glow-loss: 0 8px 24px -3px rgba(222, 53, 11, 0.4);
+  --shadow-glow-neon: 0 8px 24px -3px rgba(16, 185, 129, 0.35);
 
   /* Spacing */
   --space-xs: 4px;
@@ -64,53 +66,53 @@
   --space-xl: 32px;
   
   /* Spring transition timing */
-  --spring-timing: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --spring-duration: 0.18s;
+  --spring-timing: var(--spring-timing-apple);
+  --spring-duration: var(--spring-duration-settle);
 }
 
 /* Dark Theme: Haveli Obsidian & Imperial Warm Gold */
 [data-theme="dark"] {
-  --primary: #E5B869; /* Imperial warm gold */
-  --primary-container: #C99738;
-  --primary-rgb: 229, 184, 105;
+  --primary: var(--haveli-gold-500); /* Imperial warm gold */
+  --primary-container: var(--haveli-gold-600);
+  --primary-rgb: var(--haveli-gold-rgb);
   --primary-subtle: rgba(229, 184, 105, 0.12);
   --primary-subtle-border: rgba(229, 184, 105, 0.30);
   --primary-contrast: #0A0B0E;
   
-  --secondary: #9E2A2B; /* Deep palace crimson */
-  --secondary-container: #540B0E;
+  --secondary: var(--haveli-crimson-500); /* Deep palace crimson */
+  --secondary-container: var(--haveli-crimson-600);
   
-  --gain: #10B981;
-  --gain-text: #34D399;
+  --gain: var(--haveli-emerald-500);
+  --gain-text: var(--haveli-emerald-400);
   --loss: #EF4444;
   --loss-text: #F87171;
   --warning: #F59E0B;
   --warning-text: #FBBF24;
   
-  --simsim-neon: #10B981;
-  --simsim-surface: #07080B;
+  --simsim-neon: var(--haveli-emerald-500);
+  --simsim-surface: var(--haveli-onyx-950);
   --simsim-header: #040507;
   
-  /* Surfaces: Dark Obsidian */
-  --surface: #090A0F;
-  --surface-container-lowest: #0F1118;
-  --surface-container-low: #151822;
-  --surface-container: #1C202E;
-  --surface-container-high: #24293B;
-  --surface-container-highest: #2D3349;
+  /* Surfaces: Tinted Midnight Onyx */
+  --surface: var(--haveli-onyx-900);
+  --surface-container-lowest: var(--haveli-onyx-950);
+  --surface-container-low: var(--haveli-onyx-850);
+  --surface-container: var(--haveli-onyx-800);
+  --surface-container-high: var(--haveli-onyx-700);
+  --surface-container-highest: var(--haveli-onyx-600);
   
-  --on-surface: #F8FAFC;
-  --on-surface-variant: #94A3B8;
+  --on-surface: var(--text-high-contrast);
+  --on-surface-variant: var(--text-secondary);
   --outline: #475569;
   --outline-variant: rgba(255, 255, 255, 0.08);
 
   /* Tinted Obsidian Shadows */
   --shadow-resting: 0px 4px 20px rgba(5, 7, 12, 0.45);
   --shadow-elevated: 0px 16px 40px -8px rgba(5, 7, 12, 0.65);
-  --shadow-floating: 0px 24px 48px rgba(5, 7, 12, 0.80);
-  --shadow-glow-primary: 0 8px 30px -4px rgba(229, 184, 105, 0.28);
-  --shadow-glow-loss: 0 8px 30px -4px rgba(239, 68, 68, 0.32);
-  --shadow-glow-neon: 0 8px 30px -4px rgba(16, 185, 129, 0.28);
+  --shadow-floating: var(--shadow-onyx-floating);
+  --shadow-glow-primary: var(--glow-gold);
+  --shadow-glow-loss: var(--glow-crimson);
+  --shadow-glow-neon: var(--glow-emerald);
 }
 
 

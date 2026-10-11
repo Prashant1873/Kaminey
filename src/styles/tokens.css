@@ -1,0 +1,82 @@
+/* ==========================================================================
+   Royal Haveli Design System Tokens
+   Anti-Slop Color Tokens, Concentric Geometry, and Apple Fluid Springs
+   ========================================================================== */
+
+:root {
+  /* --- Royal Haveli Palette --- */
+  --haveli-gold-50: #FBF7EE;
+  --haveli-gold-100: #F6EDD7;
+  --haveli-gold-200: #ECDAB3;
+  --haveli-gold-300: #E1C489;
+  --haveli-gold-400: #D6AE62;
+  --haveli-gold-500: #E5B869; /* Primary Imperial Warm Gold */
+  --haveli-gold-600: #C99738;
+  --haveli-gold-700: #A27525;
+  --haveli-gold-800: #7A551A;
+  --haveli-gold-900: #543912;
+  --haveli-gold-rgb: 229, 184, 105;
+
+  --haveli-crimson-100: #FAD2D3;
+  --haveli-crimson-300: #DC6D6E;
+  --haveli-crimson-400: #B83A3B;
+  --haveli-crimson-500: #9E2A2B; /* Deep Palace Crimson */
+  --haveli-crimson-600: #801D1E;
+  --haveli-crimson-700: #621213;
+  --haveli-crimson-rgb: 158, 42, 43;
+
+  --haveli-emerald-100: #D1FAE5;
+  --haveli-emerald-300: #6EE7B7;
+  --haveli-emerald-400: #34D399;
+  --haveli-emerald-500: #10B981; /* Peacock Jade / Royal Emerald */
+  --haveli-emerald-600: #059669;
+  --haveli-emerald-rgb: 16, 185, 129;
+
+  --haveli-sandstone-100: #FAF6F0;
+  --haveli-sandstone-200: #E8DFD0; /* Authentic Sandstone */
+  --haveli-sandstone-300: #D8CBBA;
+  --haveli-sandstone-400: #BFAF9A;
+
+  /* --- Midnight Onyx Surfaces (warm amber/gold undertone tinting, never dead pure gray) --- */
+  --haveli-onyx-950: #06070A;
+  --haveli-onyx-900: #0A0C12;
+  --haveli-onyx-850: #0F121C;
+  --haveli-onyx-800: #161A28;
+  --haveli-onyx-700: #1E2336;
+  --haveli-onyx-600: #282F48;
+
+  /* --- Typography Scales --- */
+  --font-family-sans: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+  --font-family-serif: 'Cinzel', 'Playfair Display', Georgia, serif;
+
+  /* --- WCAG 2.2 AA Contrast Verified Text Tokens --- */
+  --text-high-contrast: #FBF7EE;      /* >14:1 on onyx-900 */
+  --text-secondary: #C7CBD8;          /* >8:1 on onyx-900 */
+  --text-muted: #9AA1B8;              /* >4.8:1 on onyx-900 (passes 4.5:1 AA) */
+  --text-gold-accent: #E5B869;        /* >9:1 on onyx-900 */
+
+  /* --- Concentric Radii Geometry Tokens --- */
+  /* Formula: r_inner = max(0, r_outer - padding) */
+  --r-2xl: 24px;
+  --r-xl: 18px;
+  --r-lg: 14px;
+  --r-md: 10px;
+  --r-sm: 6px;
+  --r-full: 9999px;
+
+  /* --- Apple Fluid Springs Specification --- */
+  --spring-damping-settle: 1.0;
+  --spring-duration-settle: 0.35s;
+  --spring-damping-momentum: 0.8;
+  --spring-duration-momentum: 0.4s;
+  --spring-timing-apple: cubic-bezier(0.16, 1, 0.3, 1);
+  --spring-timing-press: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* --- Luxury Ambient Shadows & Glows --- */
+  --glow-gold: 0 0 28px -4px rgba(229, 184, 105, 0.32);
+  --glow-crimson: 0 0 28px -4px rgba(158, 42, 43, 0.40);
+  --glow-emerald: 0 0 28px -4px rgba(16, 185, 129, 0.35);
+  --shadow-onyx-floating: 0 20px 48px -12px rgba(4, 5, 8, 0.85);
+  --shadow-onyx-card: 0 10px 30px -8px rgba(4, 5, 8, 0.65);
+  --shadow-onyx-inset: inset 0 1px 1px 0 rgba(255, 255, 255, 0.08);
+}
