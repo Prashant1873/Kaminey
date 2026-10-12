@@ -8,6 +8,8 @@ import PlayerDrinksBreather from './PlayerDrinksBreather';
 import PlayerDiscussion from './PlayerDiscussion';
 import PlayerVoting from './PlayerVoting';
 import PlayerGhost from './PlayerGhost';
+import AtomicLoadingBarrier from '../common/AtomicLoadingBarrier';
+import { PlayerScreenSkeleton } from '../common/Skeleton';
 
 import { PlayerNetwork } from '../../network/peerManager';
 import { Wifi, Clock, Users, ArrowLeft, ShieldCheck, Scale, Trophy, RotateCcw, Sun } from 'lucide-react';
@@ -284,7 +286,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
             }}
           />
         ) : (
-          <>
+          <AtomicLoadingBarrier isLoading={!gameState} fallback={<PlayerScreenSkeleton />}>
             {/* LOBBY PHASE */}
             {phase === 'LOBBY' && (
               <div style={{
@@ -645,7 +647,7 @@ export default function PlayerController({ initialRoomCode = '', onExit }) {
                 </button>
               </div>
             )}
-          </>
+          </AtomicLoadingBarrier>
         )}
       </main>
     </div>

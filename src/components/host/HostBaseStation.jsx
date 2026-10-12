@@ -10,6 +10,8 @@ import HostDiscussion from './HostDiscussion';
 import HostVoting from './HostVoting';
 import HostExile from './HostExile';
 import HostGameOver from './HostGameOver';
+import AtomicLoadingBarrier from '../common/AtomicLoadingBarrier';
+import { HostLobbySkeleton } from '../common/Skeleton';
 
 import { HostNetwork, generateRoomCode } from '../../network/peerManager';
 import { ANIMAL_AVATARS } from '../../data/animalAvatars';
@@ -637,7 +639,8 @@ export default function HostBaseStation({ onExit }) {
         flex: 1,
         backgroundColor: isNight ? '#000000' : undefined
       }}>
-        {phase === 'LOBBY' && (
+        <AtomicLoadingBarrier isLoading={!roomCode} fallback={<HostLobbySkeleton />}>
+          {phase === 'LOBBY' && (
           <HostLobby
             roomCode={roomCode}
             players={players}
@@ -727,6 +730,7 @@ export default function HostBaseStation({ onExit }) {
             onRestart={handleRestart}
           />
         )}
+        </AtomicLoadingBarrier>
       </main>
 
       {/* Ghost Spectator TV Haunting Overlay */}

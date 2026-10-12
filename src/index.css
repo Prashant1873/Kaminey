@@ -1006,3 +1006,30 @@ html:has(.theme-simsim-night) {
   animation: springStampSlam 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   will-change: transform, opacity;
 }
+
+/* ==========================================================================
+   Skeleton Shimmer Animation
+   ========================================================================== */
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--surface-container-high) 0%,
+    var(--surface-container-highest) 45%,
+    rgba(229, 184, 105, 0.08) 50%,
+    var(--surface-container-highest) 55%,
+    var(--surface-container-high) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.8s ease-in-out infinite;
+  will-change: background-position;
+}
