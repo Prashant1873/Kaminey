@@ -34,7 +34,7 @@ export default function PlayerNight({
   const potentialVictims = players.filter(p => p.isAlive && !p.isExiled && !partnerIds.has(p.id));
 
   return (
-    <div className="theme-simsim-night" style={{
+    <div className="theme-simsim-night spring-settle-in" style={{
       width: '100%',
       minHeight: 'auto',
       flex: 1,
@@ -48,9 +48,9 @@ export default function PlayerNight({
       boxSizing: 'border-box'
     }}>
       {/* Top Ambience */}
-      <div style={{
-        width: '72px',
-        height: '72px',
+      <div className="spring-settle-in" style={{
+        width: '76px',
+        height: '76px',
         borderRadius: '50%',
         background: isKamina ? 'rgba(239, 68, 68, 0.15)' : 'var(--primary-subtle)',
         border: isKamina ? '1.5px solid var(--loss)' : '1.5px solid var(--primary)',
@@ -59,7 +59,7 @@ export default function PlayerNight({
         justifyContent: 'center',
         boxShadow: isKamina ? 'var(--shadow-glow-loss)' : 'var(--shadow-glow-primary)'
       }}>
-        {isKamina ? <Skull size={36} color="var(--loss)" /> : <Moon size={36} color="var(--primary)" />}
+        {isKamina ? <Skull size={38} color="var(--loss)" /> : <Moon size={38} color="var(--primary)" />}
       </div>
 
       <div>
@@ -77,7 +77,7 @@ export default function PlayerNight({
       </div>
 
       {/* Atmospheric Night Waiting Screen for all players */}
-      <div style={{
+      <div className="card-interactive spring-settle-in" style={{
         width: '100%',
         maxWidth: '360px',
         background: '#0F131D',
@@ -87,11 +87,12 @@ export default function PlayerNight({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '16px'
+        gap: '16px',
+        boxShadow: 'var(--shadow-elevated)'
       }}>
         <div className="animate-heartbeat" style={{
-          width: '80px',
-          height: '80px',
+          width: '84px',
+          height: '84px',
           borderRadius: '50%',
           background: isKamina ? 'rgba(239, 68, 68, 0.15)' : 'var(--primary-subtle)',
           border: isKamina ? '1.5px solid var(--loss)' : '1px solid var(--primary-subtle-border)',
@@ -100,9 +101,9 @@ export default function PlayerNight({
           justifyContent: 'center',
           color: isKamina ? 'var(--loss)' : 'var(--primary)'
         }}>
-          {isKamina ? <Skull size={40} strokeWidth={2.2} /> : <Moon size={40} strokeWidth={2.2} />}
+          {isKamina ? <Skull size={42} strokeWidth={2.2} /> : <Moon size={42} strokeWidth={2.2} />}
         </div>
-        <div style={{ fontSize: '1.05rem', fontWeight: 700, color: isKamina ? 'var(--loss-text)' : 'var(--primary)' }}>
+        <div style={{ fontSize: '1.1rem', fontWeight: 700, color: isKamina ? 'var(--loss-text)' : 'var(--primary)' }}>
           {isKamina ? 'Prowl In The Shadows' : 'The Haveli is in Silence'}
         </div>
         <p style={{ fontSize: '0.8125rem', color: '#94A3B8', lineHeight: 1.5 }}>
@@ -114,3 +115,4 @@ export default function PlayerNight({
     </div>
   );
 }
+

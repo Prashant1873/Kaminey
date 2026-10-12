@@ -15,7 +15,7 @@ Milestone v2.0 elevates Kaminey to a production-grade party game experience. Fol
 - [x] **Phase 6: Tactile Controls, Toggles & Concentric Affordances** - Build button hierarchy with optical centering, concentric radii, and viscoelastic WAAPI toggles.
 - [x] **Phase 7: Apple Fluid Spring Motion & Micro-Interactions** - Critically damped settling physics, underdamped momentum gestures, and 100% interruptible transitions.
 - [x] **Phase 8: Coordinated Atomic Skeleton Loading System** - Synchronized component skeleton loading with zero CLS layout shifts and atomic reveals.
-- [ ] **Phase 9: UI/UX Flow & Cognitive Ergonomics Overhaul** - Enforce Fitts's Law 44px thumb reach, Hick's Law progressive disclosure, Doherty <400ms feedback, and Peak-End rule.
+- [x] **Phase 9: UI/UX Flow & Cognitive Ergonomics Overhaul** - Enforce Fitts's Law 44px thumb reach, Hick's Law progressive disclosure, Doherty <400ms feedback, and Peak-End rule.
 - [ ] **Phase 10: Official GitHub Launch & Production Release** - Comprehensive README, system diagrams, gameplay guides, release badges, and production release tagging.
 
 ## Phase Details
@@ -95,8 +95,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 09-01: Mobile thumb ergonomics & progressive disclosure audit across game stages.
-- [ ] 09-02: Tactile feedback loops, <400ms optimistic reactions, and climax celebrations.
+- [x] 09-01: Mobile thumb ergonomics & progressive disclosure audit across game stages.
+- [x] 09-02: Tactile feedback loops, <400ms optimistic reactions, and climax celebrations.
 
 ---
 
@@ -127,7 +127,7 @@ Phases execute in numeric order: 5 → 6 → 7 → 8 → 9 → 10
 | 6. Tactile Controls, Toggles & Concentric Affordances | 2/2 | Complete | 2026-10-12 |
 | 7. Apple Fluid Spring Motion & Micro-Interactions | 2/2 | Complete | 2026-10-12 |
 | 8. Coordinated Atomic Skeleton Loading System | 2/2 | Complete | 2026-10-12 |
-| 9. UI/UX Flow & Cognitive Ergonomics Overhaul | 0/2 | Pending | — |
+| 9. UI/UX Flow & Cognitive Ergonomics Overhaul | 2/2 | Complete | 2026-10-12 |
 | 10. Official GitHub Launch & Production Release | 0/2 | Pending | — |
 
 ---

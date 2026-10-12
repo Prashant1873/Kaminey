@@ -2,33 +2,34 @@ import React, { useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { getAvatarById } from '../../data/animalAvatars';
 import AvatarBadge from '../common/AvatarBadge';
-import { Trophy, RotateCcw, Award, ShieldCheck, Skull } from 'lucide-react';
+import { Trophy, RotateCcw, Award, ShieldCheck, Skull, Sparkles } from 'lucide-react';
 import { sounds } from '../../audio/soundEffects';
+import Button from '../common/Button';
 
 export default function HostGameOver({ winner, players, roles, onRestart }) {
   const isBholeWin = winner === 'bhole';
 
   useEffect(() => {
     sounds.playVictory();
-    // Launch celebratory confetti
+    // Launch celebratory confetti sequence
     confetti({
-      particleCount: 120,
-      spread: 80,
+      particleCount: 140,
+      spread: 85,
       origin: { y: 0.6 }
     });
     const t = setTimeout(() => {
       confetti({
-        particleCount: 80,
-        spread: 100,
-        origin: { y: 0.5 }
+        particleCount: 90,
+        spread: 110,
+        origin: { y: 0.45 }
       });
-    }, 600);
+    }, 500);
 
     return () => clearTimeout(t);
   }, []);
 
   return (
-    <div style={{
+    <div className="spring-settle-in" style={{
       maxWidth: '1000px',
       margin: '0 auto',
       padding: '40px 20px',
@@ -39,9 +40,9 @@ export default function HostGameOver({ winner, players, roles, onRestart }) {
       gap: '32px'
     }}>
       {/* Trophy Header */}
-      <div style={{
-        width: '100px',
-        height: '100px',
+      <div className="spring-stamp-slam" style={{
+        width: '110px',
+        height: '110px',
         borderRadius: 'var(--rounded-full)',
         background: isBholeWin
           ? 'linear-gradient(135deg, var(--gain), var(--gain-text))'
@@ -52,44 +53,49 @@ export default function HostGameOver({ winner, players, roles, onRestart }) {
         boxShadow: isBholeWin ? 'var(--shadow-glow-neon)' : 'var(--shadow-glow-loss)',
         animation: 'float-slow 3s infinite ease-in-out'
       }}>
-        <Trophy size={50} color="#ffffff" />
+        <Trophy size={56} color="#ffffff" />
       </div>
 
       <div>
         <div className={isBholeWin ? 'badge-gain' : 'badge-loss'} style={{
           fontSize: '0.8125rem',
-          padding: '4px 16px',
-          marginBottom: '8px',
+          padding: '6px 18px',
+          marginBottom: '10px',
           display: 'inline-flex',
           alignItems: 'center',
-          gap: '6px'
+          gap: '8px',
+          borderRadius: 'var(--rounded-full)',
+          letterSpacing: '0.06em'
         }}>
-          {isBholeWin ? <ShieldCheck size={14} /> : <Skull size={14} />}
-          <span>{isBholeWin ? 'VICTORY: THE BHOLE' : 'VICTORY: THE KAMINEY'}</span>
+          {isBholeWin ? <ShieldCheck size={16} /> : <Skull size={16} />}
+          <span>{isBholeWin ? 'VICTORY: THE BHOLE TRIUMPH' : 'VICTORY: THE KAMINEY CONQUEST'}</span>
         </div>
         <h1 className="text-display" style={{
           color: isBholeWin ? 'var(--gain-text)' : 'var(--loss-text)',
-          marginBottom: '6px'
+          marginBottom: '8px'
         }}>
-          {isBholeWin ? 'ALL KAMINEY UNMASKED!' : 'THE KAMINEY OVERRUN THE HAVELI!'}
+          {isBholeWin ? 'ALL KAMINEY UNMASKED!' : 'THE KAMINEY RULE THE HAVELI!'}
         </h1>
-        <p style={{ color: 'var(--on-surface-variant)', fontSize: '1rem' }}>
+        <p style={{ color: 'var(--on-surface-variant)', fontSize: '1.05rem', maxWidth: '600px', lineHeight: 1.5 }}>
           {isBholeWin
-            ? 'Truth prevails. The innocent Bhole identified and banished every traitor.'
-            : 'Deception succeeds. The Kaminey outsmarted the council and took control of the Haveli.'}
+            ? 'Truth and solidarity prevail. The innocent citizens saw through the deception and purged the traitors.'
+            : 'Cunning and darkness reign. The secret conspirators dismantled the council from within.'}
         </p>
       </div>
 
       {/* Full Cast Secret Revelation */}
       <div style={{ width: '100%' }}>
-        <h2 className="text-title" style={{ color: 'var(--primary)', marginBottom: '16px' }}>
-          FINAL DOSSIER: TRUE IDENTITIES REVEALED
-        </h2>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', marginBottom: '18px' }}>
+          <Sparkles size={18} color="var(--primary)" />
+          <h2 className="text-title" style={{ color: 'var(--primary)', margin: 0, letterSpacing: '0.04em' }}>
+            FINAL HAVELI DOSSIER: UNMASKED IDENTITIES
+          </h2>
+        </div>
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(185px, 1fr))',
           gap: '16px',
-          maxWidth: '850px',
+          maxWidth: '880px',
           margin: '0 auto'
         }}>
           {players.map(p => {
@@ -99,36 +105,39 @@ export default function HostGameOver({ winner, players, roles, onRestart }) {
             return (
               <div
                 key={p.id}
-                className="card-interactive"
+                className="card-interactive spring-settle-in"
                 style={{
-                  padding: '18px 12px',
+                  padding: '20px 14px',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
-                  gap: '8px',
+                  gap: '10px',
+                  borderRadius: 'var(--rounded-2xl)',
                   border: isKamina ? '1.5px solid var(--loss)' : '1.5px solid var(--gain)',
-                  backgroundColor: isKamina ? 'rgba(239, 68, 68, 0.12)' : 'rgba(16, 185, 129, 0.12)'
+                  backgroundColor: isKamina ? 'rgba(239, 68, 68, 0.12)' : 'rgba(16, 185, 129, 0.12)',
+                  boxShadow: isKamina ? 'var(--shadow-glow-loss)' : 'var(--shadow-glow-neon)'
                 }}
               >
-                <AvatarBadge avatarId={p.avatarId} size={54} />
-                <div style={{ fontWeight: 800, fontSize: '1.0625rem' }}>{p.name}</div>
+                <AvatarBadge avatarId={p.avatarId} size={58} />
+                <div style={{ fontWeight: 800, fontSize: '1.1rem', color: 'var(--on-surface)' }}>{p.name}</div>
                 <div
                   className={isKamina ? 'badge-loss' : 'badge-gain'}
                   style={{
                     fontSize: '0.75rem',
                     fontWeight: 800,
-                    marginTop: '4px',
+                    marginTop: '2px',
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '4px',
-                    padding: '3px 10px'
+                    padding: '4px 12px',
+                    borderRadius: 'var(--rounded-full)'
                   }}
                 >
-                  {isKamina ? <Skull size={12} /> : <ShieldCheck size={12} />}
+                  {isKamina ? <Skull size={13} /> : <ShieldCheck size={13} />}
                   <span>{isKamina ? 'KAMINA (TRAITOR)' : 'BHOLA (INNOCENT)'}</span>
                 </div>
-                <div style={{ fontSize: '0.6875rem', color: 'var(--outline)', marginTop: '2px' }}>
-                  {p.isAlive && !p.isExiled ? 'Survived' : p.isExiled ? 'Exiled by Council' : 'Eliminated in Night'}
+                <div style={{ fontSize: '0.75rem', color: 'var(--outline)', marginTop: '2px' }}>
+                  {p.isAlive && !p.isExiled ? 'Survived to the End' : p.isExiled ? 'Exiled by Council' : 'Eliminated in the Night'}
                 </div>
               </div>
             );
@@ -138,16 +147,17 @@ export default function HostGameOver({ winner, players, roles, onRestart }) {
 
       {/* Restart Button */}
       <div style={{ marginTop: '16px' }}>
-        <button
-          type="button"
+        <Button
+          variant="primary"
           onClick={onRestart}
-          className="btn-primary spring-btn"
-          style={{ padding: '16px 36px', fontSize: '1.0625rem' }}
+          aria-label="Restart match"
+          style={{ padding: '16px 40px', fontSize: '1.125rem', minHeight: '56px' }}
         >
-          <RotateCcw size={18} />
+          <RotateCcw size={20} />
           <span>Play Again (Rematch)</span>
-        </button>
+        </Button>
       </div>
     </div>
   );
 }
+
