@@ -1,7 +1,8 @@
 {
   "name": "kaminey",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "description": "Multiplayer Royal Haveli social deduction party game for living rooms with TV Base Station and smartphone controllers",
   "type": "module",
   "scripts": {
     "start": "node server/server.js",
