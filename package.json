@@ -5,7 +5,7 @@
   "description": "Multiplayer Royal Haveli social deduction party game for living rooms with TV Base Station and smartphone controllers",
   "type": "module",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "vite",
     "dev": "vite",
     "server": "node server/server.js",
     "test:server": "node --test server/test/*.test.js",
