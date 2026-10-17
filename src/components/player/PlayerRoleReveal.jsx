@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { Eye, EyeOff, ShieldAlert, ShieldCheck, Skull, Key, Lock, Sparkles } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Eye, EyeOff, ShieldAlert, ShieldCheck, Skull, Lock } from 'lucide-react';
 import { getAvatarById } from '../../data/animalAvatars';
 import AvatarBadge from '../common/AvatarBadge';
 
 export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
-  const [isRevealed, setIsRevealed] = useState(false);
+  const [isHolding, setIsHolding] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  const isRevealed = isHolding || isSticky;
+  const pressStartTimeRef = useRef(0);
   const isKamina = role === 'kamina';
 
   const triggerHaptic = (pattern) => {
@@ -17,35 +20,97 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
     }
   };
 
-  const startPeek = (e) => {
-    e.preventDefault();
-    if (!isRevealed) {
-      setIsRevealed(true);
-      triggerHaptic([40, 50]);
+  const handlePointerDown = (e) => {
+    if (e.button !== undefined && e.button !== 0) return;
+    if (e.cancelable) e.preventDefault();
+    pressStartTimeRef.current = Date.now();
+
+    try {
+      if (e.currentTarget?.setPointerCapture && e.pointerId !== undefined) {
+        e.currentTarget.setPointerCapture(e.pointerId);
+      }
+    } catch (err) {}
+
+    setIsHolding(true);
+    triggerHaptic([40, 50]);
+  };
+
+  const handlePointerUp = (e) => {
+    if (e.cancelable) e.preventDefault();
+    try {
+      if (e.currentTarget?.hasPointerCapture?.(e.pointerId)) {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      }
+    } catch (err) {}
+
+    const pressDuration = Date.now() - pressStartTimeRef.current;
+    if (pressDuration < 250) {
+      // Quick tap: toggle sticky reveal
+      setIsSticky((prev) => {
+        const next = !prev;
+        triggerHaptic(next ? [35, 45] : [25]);
+        return next;
+      });
+      setIsHolding(false);
+    } else {
+      // Hold release: conceal if not pinned open
+      setIsHolding(false);
+      if (!isSticky) {
+        triggerHaptic([25]);
+      }
     }
   };
 
-  const endPeek = (e) => {
+  const handlePointerCancel = (e) => {
+    try {
+      if (e.currentTarget?.hasPointerCapture?.(e.pointerId)) {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      }
+    } catch (err) {}
+    setIsHolding(false);
+  };
+
+  const handleContextMenu = (e) => {
     e.preventDefault();
-    if (isRevealed) {
-      setIsRevealed(false);
-      triggerHaptic([25]);
-    }
+    e.stopPropagation();
+    return false;
+  };
+
+  const toggleStickyReveal = (e) => {
+    e?.stopPropagation?.();
+    setIsSticky((prev) => {
+      const next = !prev;
+      triggerHaptic(next ? [35, 45] : [25]);
+      return next;
+    });
+  };
+
+  const concealIdentity = (e) => {
+    e?.stopPropagation?.();
+    setIsHolding(false);
+    setIsSticky(false);
+    triggerHaptic([25]);
   };
 
   return (
-    <div style={{
-      width: '100%',
-      maxWidth: '420px',
-      margin: '0 auto',
-      padding: '20px 14px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      textAlign: 'center',
-      gap: '16px',
-      boxSizing: 'border-box'
-    }}>
+    <div
+      onContextMenu={handleContextMenu}
+      style={{
+        width: '100%',
+        maxWidth: '420px',
+        margin: '0 auto',
+        padding: '20px 14px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+        gap: '16px',
+        boxSizing: 'border-box',
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
+        WebkitTouchCallout: 'none'
+      }}
+    >
       {/* Warning Notice */}
       <div className="badge-warning" style={{ padding: '6px 14px', fontSize: '0.75rem', letterSpacing: '0.04em' }}>
         <ShieldAlert size={14} />
@@ -57,21 +122,22 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
           SECRET DOSSIER
         </h1>
         <p className="text-body" style={{ color: 'var(--on-surface-variant)', fontSize: '0.8125rem' }}>
-          Press and hold the wax seal below. Releasing your finger instantly conceals your identity!
+          Press and hold the wax seal, or tap to inspect your secret faction.
         </p>
       </div>
 
       {/* 3D Touch & Hold Wax Envelope Card */}
       <div style={{ perspective: '1200px', width: '100%' }}>
         <div
-          onPointerDown={startPeek}
-          onPointerUp={endPeek}
-          onPointerCancel={endPeek}
-          onPointerLeave={endPeek}
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerCancel}
+          onPointerLeave={handlePointerCancel}
+          onContextMenu={handleContextMenu}
           className="secret-reveal-box spring-settle-in"
           style={{
             width: '100%',
-            minHeight: '300px',
+            minHeight: '320px',
             position: 'relative',
             transformStyle: 'preserve-3d',
             transform: isRevealed ? 'rotateY(180deg)' : 'rotateY(0deg)',
@@ -79,7 +145,8 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
             cursor: 'pointer',
             touchAction: 'none',
             WebkitTouchCallout: 'none',
-            userSelect: 'none'
+            userSelect: 'none',
+            WebkitUserSelect: 'none'
           }}
         >
           {/* FRONT FACE (Concealed Seal) */}
@@ -124,10 +191,10 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
                 color: 'var(--primary)',
                 letterSpacing: '0.06em'
               }}>
-                HOLD SEAL TO REVEAL
+                HOLD OR TAP TO REVEAL
               </div>
               <p style={{ fontSize: '0.8125rem', color: 'var(--on-surface-variant)', marginTop: '4px', maxWidth: '260px' }}>
-                Hold down to inspect your secret faction.
+                Hold down to peek, or tap to keep open while reading.
               </p>
             </div>
           </div>
@@ -157,8 +224,8 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
             gap: '12px'
           }}>
             <div style={{
-              width: '76px',
-              height: '76px',
+              width: '72px',
+              height: '72px',
               borderRadius: '50%',
               background: isKamina ? 'rgba(239, 68, 68, 0.15)' : 'var(--primary-subtle)',
               border: isKamina ? '1.5px solid rgba(239, 68, 68, 0.4)' : '1.5px solid var(--primary-subtle-border)',
@@ -167,9 +234,9 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
               justifyContent: 'center'
             }}>
               {isKamina ? (
-                <Skull size={44} color="var(--loss-text)" strokeWidth={2.2} />
+                <Skull size={40} color="var(--loss-text)" strokeWidth={2.2} />
               ) : (
-                <ShieldCheck size={44} color="var(--primary)" strokeWidth={2.2} />
+                <ShieldCheck size={40} color="var(--primary)" strokeWidth={2.2} />
               )}
             </div>
 
@@ -178,7 +245,7 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
                 YOUR SECRET IDENTITY
               </div>
               <div style={{
-                fontSize: '1.75rem',
+                fontSize: '1.65rem',
                 fontWeight: 900,
                 color: isKamina ? 'var(--loss-text)' : '#FFFFFF',
                 letterSpacing: '0.04em'
@@ -196,7 +263,7 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
             {/* If Kamina, reveal fellow traitors */}
             {isKamina && kamineyPartners.length > 0 && (
               <div style={{
-                marginTop: '6px',
+                marginTop: '4px',
                 width: '100%',
                 background: 'rgba(0, 0, 0, 0.4)',
                 padding: '8px 12px',
@@ -232,12 +299,69 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
                 </div>
               </div>
             )}
+
+            {/* Quick Conceal button on card back */}
+            <button
+              type="button"
+              onClick={concealIdentity}
+              className="card-interactive"
+              style={{
+                marginTop: '4px',
+                padding: '6px 14px',
+                borderRadius: 'var(--rounded-full)',
+                background: 'rgba(255, 255, 255, 0.12)',
+                border: '1px solid rgba(255, 255, 255, 0.25)',
+                color: '#FFFFFF',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                touchAction: 'manipulation'
+              }}
+            >
+              <EyeOff size={14} />
+              <span>Conceal Immediately</span>
+            </button>
           </div>
         </div>
       </div>
 
-      <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)' }}>
-        Keep thumb held while reading. Once all guests peek, night will descend on the Haveli.
+      {/* Tap-to-Toggle Control Button */}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', width: '100%' }}>
+        <button
+          type="button"
+          onClick={toggleStickyReveal}
+          className="card-interactive"
+          style={{
+            width: '100%',
+            maxWidth: '300px',
+            padding: '11px 16px',
+            borderRadius: 'var(--rounded-xl)',
+            background: isRevealed ? 'var(--surface-container-high)' : 'var(--primary-subtle)',
+            border: isRevealed ? '1.5px solid var(--outline-variant)' : '1.5px solid var(--primary-subtle-border)',
+            color: isRevealed ? 'var(--on-surface)' : 'var(--primary)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            fontSize: '0.875rem',
+            fontWeight: 700,
+            cursor: 'pointer',
+            touchAction: 'manipulation',
+            boxShadow: isRevealed ? 'none' : 'var(--shadow-resting)'
+          }}
+        >
+          {isRevealed ? <EyeOff size={16} /> : <Eye size={16} />}
+          <span>{isRevealed ? 'Conceal Dossier (Hide)' : 'Tap to Reveal & Keep Open'}</span>
+        </button>
+
+        <div style={{ fontSize: '0.75rem', color: 'var(--on-surface-variant)', maxWidth: '320px', lineHeight: 1.4 }}>
+          {isRevealed
+            ? 'Dossier open. Tap button above or card to conceal before others glance.'
+            : 'Hold wax seal to peek, or tap button above to read comfortably.'}
+        </div>
       </div>
     </div>
   );
