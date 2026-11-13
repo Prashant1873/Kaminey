@@ -95,6 +95,7 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
   return (
     <div
       onContextMenu={handleContextMenu}
+      className="spring-settle-in"
       style={{
         width: '100%',
         maxWidth: '420px',
@@ -127,19 +128,20 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
       </div>
 
       {/* 3D Touch & Hold Wax Envelope Card */}
-      <div style={{ perspective: '1200px', width: '100%' }}>
+      <div style={{ perspective: '1200px', WebkitPerspective: '1200px', width: '100%' }}>
         <div
           onPointerDown={handlePointerDown}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerCancel}
           onPointerLeave={handlePointerCancel}
           onContextMenu={handleContextMenu}
-          className="secret-reveal-box spring-settle-in"
+          className="secret-reveal-box"
           style={{
             width: '100%',
-            minHeight: '320px',
+            minHeight: isKamina && kamineyPartners.length > 0 ? '390px' : '340px',
             position: 'relative',
             transformStyle: 'preserve-3d',
+            WebkitTransformStyle: 'preserve-3d',
             transform: isRevealed ? 'rotateY(180deg)' : 'rotateY(0deg)',
             transition: 'transform 0.38s var(--spring-timing-apple)',
             cursor: 'pointer',
@@ -152,10 +154,17 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
           {/* FRONT FACE (Concealed Seal) */}
           <div style={{
             position: 'absolute',
+            top: 0,
+            left: 0,
             width: '100%',
             height: '100%',
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
+            transform: 'rotateY(0deg)',
+            WebkitTransform: 'rotateY(0deg)',
+            pointerEvents: isRevealed ? 'none' : 'auto',
+            opacity: isRevealed ? 0 : 1,
+            transition: 'opacity 0.2s ease',
             background: 'linear-gradient(180deg, var(--surface-container-high) 0%, var(--surface-container-lowest) 100%)',
             borderRadius: 'var(--rounded-2xl)',
             border: '1.5px solid var(--primary-subtle-border)',
@@ -202,11 +211,17 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
           {/* BACK FACE (Revealed Identity) */}
           <div style={{
             position: 'absolute',
+            top: 0,
+            left: 0,
             width: '100%',
             height: '100%',
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
+            WebkitTransform: 'rotateY(180deg)',
+            pointerEvents: isRevealed ? 'auto' : 'none',
+            opacity: isRevealed ? 1 : 0,
+            transition: 'opacity 0.2s ease',
             background: isKamina
               ? 'linear-gradient(180deg, #2D080A 0%, #150506 100%)'
               : 'linear-gradient(180deg, #161D2E 0%, #0D111A 100%)',
@@ -303,6 +318,8 @@ export default function PlayerRoleReveal({ role, kamineyPartners = [] }) {
             {/* Quick Conceal button on card back */}
             <button
               type="button"
+              onPointerDown={(e) => e.stopPropagation()}
+              onTouchStart={(e) => e.stopPropagation()}
               onClick={concealIdentity}
               className="card-interactive"
               style={{
